@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "516411847765",
+    "firebase_url": "https://practica-final-cd6bc-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "practica-final-cd6bc",
+    "storage_bucket": "practica-final-cd6bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516411847765:android:27c1f18fbfe2bf174810dc",
+        "android_client_info": {
+          "package_name": "com.example.practica_final"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516411847765-ani43cisje9pcfgtmvfhe3j6jh1o8cqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHlYem5b8c9e7vxx9ou3oL2L0qtKBlGKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516411847765-ani43cisje9pcfgtmvfhe3j6jh1o8cqf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
