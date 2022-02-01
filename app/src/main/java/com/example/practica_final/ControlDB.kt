@@ -4,9 +4,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 
 class ControlDB {
+    val dbRef by lazy { FirebaseDatabase.getInstance().reference }
+    val stoRef by lazy { FirebaseStorage.getInstance().reference }
+
     companion object{
-        val dbRef by lazy { FirebaseDatabase.getInstance().reference }
-        val stoRef by lazy { FirebaseStorage.getInstance().reference }
         val rutaUsuario = dbRef.child("tienda").child("usuarios")
         val rutaEvento = dbRef.child("tienda").child("eventos")
         val rutacartas = dbRef.child("tienda").child("cartas")
