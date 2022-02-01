@@ -12,11 +12,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fanc_img_carta">
+        app:layout_constraintTop_toBottomOf="@+id/fanc_reverso">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fanc_nom"
@@ -27,13 +27,13 @@
 
     <ImageView
         android:id="@+id/fanc_img_carta"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:adjustViewBounds="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/fanc_reverso"
+        app:layout_constraintEnd_toEndOf="@+id/fanc_reverso"
+        app:layout_constraintStart_toStartOf="@+id/fanc_reverso"
+        app:layout_constraintTop_toTopOf="@+id/fanc_reverso"
         tools:src="@drawable/magic_card_back" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -71,11 +71,10 @@
         android:id="@+id/fanc_reverso"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
+        android:layout_marginTop="32dp"
         android:adjustViewBounds="true"
         android:src="@drawable/magic_card_back"
-        app:layout_constraintBottom_toBottomOf="@+id/fanc_img_carta"
-        app:layout_constraintEnd_toEndOf="@+id/fanc_img_carta"
-        app:layout_constraintStart_toStartOf="@+id/fanc_img_carta"
-        app:layout_constraintTop_toTopOf="@+id/fanc_img_carta"
-        tools:visibility="gone" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

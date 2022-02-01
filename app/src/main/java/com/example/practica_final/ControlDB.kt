@@ -13,5 +13,7 @@ class ControlDB {
         val rutacartas = dbRef.child("tienda").child("cartas")
         val rutaResEventos = dbRef.child("tienda").child("reserva_eventos")
         val rutaResCartas = dbRef.child("tienda").child("reserva_cartas")
+
+        val stoRutaCartas = stoRef.child("tienda").child("cartas")
     }
 }

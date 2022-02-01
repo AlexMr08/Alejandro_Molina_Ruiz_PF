@@ -42,14 +42,14 @@ class UserHomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-//        binding.fuhSwitch.bringToFront()
-//        binding.fuhSwitch.setOnCheckedChangeListener { compoundButton, b ->
-//            if (b){
-//                binding.fuhCv.animate().translationY(0.0f);
-//            }else{
-//                binding.fuhCv.animate().translationY(-binding.fuhCv.height.toFloat());
-//            }
-//        }
+        binding.fuhSwitch.bringToFront()
+        binding.fuhSwitch.setOnCheckedChangeListener { compoundButton, b ->
+            if (b){
+                binding.fuhCv.animate().translationY(0.0f);
+            }else{
+                binding.fuhCv.animate().translationY(-binding.fuhCv.height.toFloat());
+            }
+        }
     }
 
     override fun onResume() {

@@ -17,8 +17,7 @@ lateinit var stoRef : StorageReference
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    val sp by lazy { getSharedPreferences("com_example.practica_final",0) }
-    val controlSp by lazy{ ControlSP(this, sp) }
+    val controlSp by lazy{ ControlSP(this) }
 
     private lateinit var buscado : Usuario
 
@@ -81,7 +80,8 @@ class MainActivity : AppCompatActivity() {
                 if(snapshot.hasChildren()){
                     pojoId = snapshot.children.iterator().next().getValue(Usuario::class.java) ?: Usuario()
                     if (pojoId.pass==pass){
-                        controlSp.cambiarSPPerfil(pojoId.id?:"", pojoId.tipo?:1)
+                        controlSp.id = pojoId.id?:""
+                        controlSp.tipo = pojoId.tipo?:1
                         if (pojoId.tipo==1){
                             Intent(applicationContext,UserActivity::class.java).also{startActivity(it)}
                         }else{

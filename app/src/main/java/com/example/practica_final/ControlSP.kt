@@ -3,7 +3,7 @@ package com.example.practica_final
 import android.content.Context
 import android.content.SharedPreferences
 
-class ControlSP(c: Context, sp: SharedPreferences) {
+class ControlSP(c: Context) {
     val contexto = c
     val ID = "com.example.practica_final"
     val shared_name = "${ID}_sp"
