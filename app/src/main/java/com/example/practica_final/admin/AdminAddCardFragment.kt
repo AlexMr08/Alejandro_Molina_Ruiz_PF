@@ -98,7 +98,7 @@ class AdminAddCardFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        ma.FAB_manager(3, this::algoraro)
+        ma.FAB_manager(3, this::subirCarta)
     }
 
     override fun onDestroyView() {
@@ -130,7 +130,7 @@ class AdminAddCardFragment : Fragment() {
         }
     }
 
-    fun algoraro(v: View) {
+    fun subirCarta(v: View) {
 
         GlobalScope.launch(Dispatchers.IO) {
 
