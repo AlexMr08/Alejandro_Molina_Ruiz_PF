@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import com.example.practica_final.Carta
+import com.example.practica_final.ControlDB
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentAdminAddCardBinding
 
@@ -58,12 +60,27 @@ class AdminAddCardFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        ma.FAB_manager(3, {})
+        ma.FAB_manager(3, this::nuevaCarta)
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun nuevaCarta(v:View){
+        val nom = binding.fancNom.text.toString()
+        var pre = binding.fancPre.text.toString().toFloatOrNull()
+        if (pre==null){
+            pre=0.0f
+        }
+        val cat = "blanca"
+        val dis = binding.fancDis.isChecked
+        val img = "hola manolo"
+        val id = ControlDB.rutacartas.push().key
+        val carta = Carta(id,nom,cat,img,pre,dis)
+        ControlDB.rutacartas.child(id?:"").setValue(carta)
     }
 
 }

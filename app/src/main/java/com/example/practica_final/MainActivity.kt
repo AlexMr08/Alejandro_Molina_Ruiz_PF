@@ -18,7 +18,7 @@ lateinit var stoRef : StorageReference
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     val sp by lazy { getSharedPreferences("com_example.practica_final",0) }
-    val controlSp by lazy{ controlSP(this, sp) }
+    val controlSp by lazy{ ControlSP(this, sp) }
 
     private lateinit var buscado : Usuario
 

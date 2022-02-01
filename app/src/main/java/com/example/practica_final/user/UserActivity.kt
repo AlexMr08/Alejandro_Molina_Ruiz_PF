@@ -1,5 +1,6 @@
 package com.example.practica_final.user
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -32,6 +33,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
+        navView.setBackgroundColor(Color.parseColor("#55ffffff"))
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

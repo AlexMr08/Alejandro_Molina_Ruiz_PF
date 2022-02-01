@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentAdminEventBinding
-import com.example.practica_final.databinding.FragmentSlideshowBinding
 
 class AdminEventFragment : Fragment() {
 

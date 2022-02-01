@@ -3,7 +3,7 @@ package com.example.practica_final
 import android.content.Context
 import android.content.SharedPreferences
 
-class controlSP(c : Context, sp : SharedPreferences) {
+class ControlSP(c : Context, sp : SharedPreferences) {
         val contexto = c
         val sp = sp
         var tipo = sp.getInt(c.getString(R.string.sp_tipo),1)
