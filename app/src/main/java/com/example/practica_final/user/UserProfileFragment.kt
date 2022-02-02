@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserProfileBinding
 
 class UserProfileFragment : Fragment() {
@@ -39,7 +42,8 @@ class UserProfileFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
+        binding.fupNom.text = ma.usuario.nombre
+        Glide.with(ma).load(ma.usuario.img).placeholder(R.drawable.magic_card_back).into(binding.fupImg)
     }
 
 

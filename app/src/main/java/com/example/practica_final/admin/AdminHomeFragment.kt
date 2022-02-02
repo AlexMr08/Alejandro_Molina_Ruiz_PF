@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practica_final.databinding.FragmentAdminHomeBinding
 
 class AdminHomeFragment : Fragment() {
@@ -31,7 +33,9 @@ class AdminHomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        binding.fahRv.adapter = ma.adap_carta.also { binding.fahRv.layoutManager = LinearLayoutManager(activity) }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

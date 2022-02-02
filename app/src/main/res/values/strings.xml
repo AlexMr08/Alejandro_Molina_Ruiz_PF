@@ -31,6 +31,14 @@
     <string name="sp_eur_usd">USD</string>
     <string name="sp_eur_usd_def">1.37</string>
 
+    <!--String Carta-->
+    <string name="carta_precio_rv">%1$.2f €</string>
+    <string name="carta_precio">Precio: %1$.2f €</string>
+
+    <!--String Perfil Usuario-->
+    <string name="num_cartas">Cartas</string>
+    <string name="num_eventos">Eventos</string>
+
     <!--Categorias Cartas-->
     <string-array name="categorias">
         <item>Blanco</item>
@@ -39,4 +47,5 @@
         <item>Rojo</item>
         <item>Verde</item>
     </string-array>
+
 </resources>

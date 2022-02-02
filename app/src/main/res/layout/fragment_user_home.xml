@@ -17,7 +17,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fuh_cg" />
+        app:layout_constraintTop_toBottomOf="@+id/fuh_cg"
+        android:paddingBottom="?actionBarSize"
+        android:clipToPadding="false"/>
 
     <Switch
         android:id="@+id/fuh_switch"

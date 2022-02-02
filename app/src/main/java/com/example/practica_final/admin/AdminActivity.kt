@@ -12,16 +12,23 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.example.practica_final.Carta
+import com.example.practica_final.ControlDB
 import com.example.practica_final.MainActivity
 import com.example.practica_final.R
 import com.example.practica_final.databinding.ActivityAdminBinding
+import com.example.practica_final.user.UserCardAdapter
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 
 class AdminActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityAdminBinding
     val navController by lazy { findNavController(R.id.nav_host_fragment_content_admin) }
-
+    lateinit var lista_cartas : MutableList<Carta>
+    val adap_carta by lazy { AdminCardAdapter(lista_cartas, this) }
     val categorias by lazy { resources.getStringArray(R.array.categorias).toList()}
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +70,30 @@ class AdminActivity : AppCompatActivity() {
 //                }
 //            }
 //        }
+
+        lista_cartas = mutableListOf()
+        ControlDB.rutacartas.addChildEventListener( object :
+            ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val carta = snapshot.getValue(Carta::class.java)
+                    lista_cartas.add(carta?: Carta())
+                adap_carta.notifyDataSetChanged()
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val carta = snapshot.getValue(Carta::class.java)
+                val modificada = lista_cartas.indexOf(lista_cartas.filter { it.id==carta?.id }[0])
+                lista_cartas[modificada].disponible = carta?.disponible
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/}
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {/*como no vamos a cambiar la posicion nada no lo usamos*/}
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
 
     }
 

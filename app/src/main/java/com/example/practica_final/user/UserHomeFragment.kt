@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,7 +45,6 @@ class UserHomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         binding.fuhSwitch.bringToFront()
         binding.fuhCg.children.forEachIndexed { index, view -> (view as CheckBox).apply { text = ma.categorias[index]; isChecked=true }}
         binding.fuhSwitch.setOnCheckedChangeListener { compoundButton, b ->
@@ -70,14 +70,13 @@ class UserHomeFragment : Fragment() {
                         binding.fuhCg.visibility = View.GONE
                     }
                 }.start()
-
             }
         }
+        binding.fuhRv.adapter = ma.adap_carta.also { binding.fuhRv.layoutManager = GridLayoutManager(activity, 2)}
     }
 
     override fun onResume() {
         super.onResume()
-        binding.fuhRv.adapter = ma.adap_carta.also { binding.fuhRv.layoutManager = GridLayoutManager(activity, 2)}
     }
 
     override fun onDestroyView() {

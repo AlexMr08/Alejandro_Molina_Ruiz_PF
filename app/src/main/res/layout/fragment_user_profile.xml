@@ -5,4 +5,80 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.UserProfileFragment"/>
+    tools:context=".user.UserProfileFragment">
+
+    <TextView
+        android:id="@+id/fup_num_cartas2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@+id/fup_tv_cartas"
+        app:layout_constraintEnd_toEndOf="@+id/fup_tv_cartas"
+        app:layout_constraintStart_toStartOf="@+id/fup_tv_cartas" />
+
+    <TextView
+        android:id="@+id/fup_tv_cartas2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/num_cartas"
+        app:layout_constraintBottom_toBottomOf="@+id/fup_img"
+        app:layout_constraintEnd_toStartOf="@+id/fup_tv_cartas"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/fup_img" />
+
+    <ImageView
+        android:id="@+id/fup_img"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/magic_card_back"
+        tools:src="@tools:sample/avatars" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fup_rv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fup_img" />
+
+    <TextView
+        android:id="@+id/fup_nom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fup_img"
+        app:layout_constraintTop_toTopOf="@+id/fup_img" />
+
+    <TextView
+        android:id="@+id/fup_tv_cartas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/num_eventos"
+        app:layout_constraintBottom_toBottomOf="@+id/fup_tv_cartas2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/fup_tv_cartas2" />
+
+    <TextView
+        android:id="@+id/fup_num_cartas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@+id/fup_tv_cartas2"
+        app:layout_constraintEnd_toEndOf="@+id/fup_tv_cartas2"
+        app:layout_constraintStart_toStartOf="@+id/fup_tv_cartas2" />
+</androidx.constraintlayout.widget.ConstraintLayout>
