@@ -1,10 +1,13 @@
 package com.example.practica_final.user
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.practica_final.databinding.FragmentUserHomeBinding
@@ -43,11 +46,31 @@ class UserHomeFragment : Fragment() {
         super.onStart()
 
         binding.fuhSwitch.bringToFront()
+        binding.fuhCg.children.forEachIndexed { index, view -> (view as CheckBox).apply { text = ma.categorias[index]; isChecked=true }}
         binding.fuhSwitch.setOnCheckedChangeListener { compoundButton, b ->
             if (b){
-                binding.fuhCv.animate().translationY(0.0f);
+                binding.fuhCg.animate().translationY(0.0f);
+                val  ct = object : CountDownTimer(150L,150L){
+                    override fun onTick(p0: Long) {
+
+                    }
+
+                    override fun onFinish() {
+                        binding.fuhCg.visibility = View.VISIBLE
+                    }
+                }.start()
             }else{
-                binding.fuhCv.animate().translationY(-binding.fuhCv.height.toFloat());
+                binding.fuhCg.animate().translationY(-binding.fuhCg.height.toFloat())
+                val  ct = object : CountDownTimer(150L,150L){
+                    override fun onTick(p0: Long) {
+
+                    }
+
+                    override fun onFinish() {
+                        binding.fuhCg.visibility = View.GONE
+                    }
+                }.start()
+
             }
         }
     }

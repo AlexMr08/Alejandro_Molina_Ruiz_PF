@@ -24,6 +24,7 @@ class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
     val navController by lazy { findNavController(R.id.nav_host_fragment_activity_user) }
     val adap_carta by lazy { UserCardAdapter(lista_cartas, this) }
+    val categorias by lazy { resources.getStringArray(R.array.categorias).toList()}
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

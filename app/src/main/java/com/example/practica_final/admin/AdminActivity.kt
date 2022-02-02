@@ -1,5 +1,6 @@
 package com.example.practica_final.admin
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.example.practica_final.MainActivity
 import com.example.practica_final.R
 import com.example.practica_final.databinding.ActivityAdminBinding
 
@@ -19,6 +21,8 @@ class AdminActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityAdminBinding
     val navController by lazy { findNavController(R.id.nav_host_fragment_content_admin) }
+
+    val categorias by lazy { resources.getStringArray(R.array.categorias).toList()}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

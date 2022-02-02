@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.animation.doOnEnd
@@ -27,6 +29,7 @@ class AdminAddCardFragment : Fragment() {
 
     private var _binding: FragmentAdminAddCardBinding? = null
     lateinit var menu: Menu
+    private var pos_spi = 0
     val ma by lazy {
         activity as AdminActivity
     }
@@ -81,6 +84,21 @@ class AdminAddCardFragment : Fragment() {
             urlPortadaLocal = null
         }
 
+        actualizarAdapter(ma.categorias)
+
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                pos_spi = position
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //hay que ponerlo pero no lo hemos usado :(
+            }
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -143,9 +161,9 @@ class AdminAddCardFragment : Fragment() {
         }
     }
 
-    private suspend fun subirImagenCarta(imagen: Uri): String {
+    private suspend fun subirImagenCarta(id: String, imagen: Uri): String {
         val urlPortadaFirebase: Uri? =
-            ControlDB.stoRutaCartas.putFile(imagen).await().storage.downloadUrl.await()
+            ControlDB.stoRutaCartas.child(id).putFile(imagen).await().storage.downloadUrl.await()
         return urlPortadaFirebase.toString()
     }
 
@@ -155,11 +173,18 @@ class AdminAddCardFragment : Fragment() {
         if (pre == null) {
             pre = 0.0f
         }
-        val cat = "blanca"
+        val cat = ma.categorias[pos_spi]
         val dis = binding.fancDis.isChecked
-        val img = subirImagenCarta(urlPortadaLocal!!)
         val id = ControlDB.rutacartas.push().key
+        val img = subirImagenCarta(id!!, urlPortadaLocal!!)
         val carta = Carta(id, nom, cat, img, pre, dis)
         ControlDB.rutacartas.child(id ?: "").setValue(carta)
     }
+
+    fun actualizarAdapter(lista: List<String>){
+        val spi_adap = ArrayAdapter(ma, android.R.layout.simple_spinner_item, lista)
+        spi_adap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinner.adapter=spi_adap
+    }
+
 }
