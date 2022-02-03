@@ -1,4 +1,4 @@
-package com.example.practica_final.admin
+package com.example.practica_final.user
 
 import android.os.Bundle
 import android.service.controls.Control
@@ -55,7 +55,7 @@ class UserViewCardFragment : Fragment() {
             val formateador = SimpleDateFormat("yyyy-MM-dd")
             val hoy = formateador.format(fecha.time)
             val id = ControlDB.rutaResCartas.push().key
-            ControlDB.rutaResCartas.child(id?:"").setValue(Pedido(id?:"",ma.controlSP.id,elem.id?:"",hoy,0))
+            ControlDB.rutaResCartas.child(id?:"").setValue(Pedido(id?:"",ma.controlSP.id,elem.id?:"",hoy,0,elem.nombre,elem.imagen))
             ma.navController.navigate(R.id.userHomeFragment)
         }
     }

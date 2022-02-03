@@ -1,6 +1,5 @@
 package com.example.practica_final.admin
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -12,24 +11,27 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.practica_final.Carta
-import com.example.practica_final.ControlDB
-import com.example.practica_final.MainActivity
-import com.example.practica_final.R
+import com.example.practica_final.*
 import com.example.practica_final.databinding.ActivityAdminBinding
-import com.example.practica_final.user.UserCardAdapter
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.concurrent.CountDownLatch
 
 class AdminActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityAdminBinding
     val navController by lazy { findNavController(R.id.nav_host_fragment_content_admin) }
-    lateinit var lista_cartas : MutableList<Carta>
+    lateinit var lista_cartas: MutableList<Carta>
     val adap_carta by lazy { AdminCardAdapter(lista_cartas, this) }
-    val categorias by lazy { resources.getStringArray(R.array.categorias).toList()}
+    val categorias by lazy { resources.getStringArray(R.array.categorias).toList() }
+    lateinit var lista_pedidos: MutableList<Pedido>
+    val adap_pedido by lazy { AdminOrdersAdapter(lista_pedidos, this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,44 +53,81 @@ class AdminActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-//        navView.setNavigationItemSelectedListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.admin_navigation_home -> {
-//                    navController.navigate(R.id.adminHomeFragment)
-//                    true
-//                }
-//                R.id.admin_navigation_event -> {
-//                    navController.navigate(R.id.adminEventFragment)
-//                    true
-//                }
-//                R.id.admin_navigation_algo -> {
-//                    Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
-//                    true
-//                }
-//                else -> {
-//                    false
-//                }
-//            }
-//        }
-
         lista_cartas = mutableListOf()
-        ControlDB.rutacartas.addChildEventListener( object :
+        ControlDB.rutacartas.addChildEventListener(object :
             ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val carta = snapshot.getValue(Carta::class.java)
-                    lista_cartas.add(carta?: Carta())
+                lista_cartas.add(carta ?: Carta())
                 adap_carta.notifyDataSetChanged()
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 val carta = snapshot.getValue(Carta::class.java)
-                val modificada = lista_cartas.indexOf(lista_cartas.filter { it.id==carta?.id }[0])
+                val modificada = lista_cartas.indexOf(lista_cartas.filter { it.id == carta?.id }[0])
                 lista_cartas[modificada].disponible = carta?.disponible
             }
 
-            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/}
+            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/
+            }
 
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {/*como no vamos a cambiar la posicion nada no lo usamos*/}
+            override fun onChildMoved(
+                snapshot: DataSnapshot,
+                previousChildName: String?
+            ) {/*como no vamos a cambiar la posicion nada no lo usamos*/
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+        lista_pedidos = mutableListOf()
+        ControlDB.rutaResCartas.addChildEventListener(object :
+            ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    val sem = CountDownLatch(1)
+                    val pedido = snapshot.getValue(Pedido::class.java)
+
+                    //consulta usuario
+                    ControlDB.rutacartas.child(pedido?.idCarta?:"").addListenerForSingleValueEvent(object:ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val carta = snapshot.getValue(Carta::class.java)
+                            pedido?.nombreCarta = carta?.nombre
+                            pedido?.imgCarta = carta?.nombre
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+                        }
+                    })
+                    sem.countDown()
+                    //consulta carta
+                    sem.countDown()
+
+                    sem.await()
+                    lista_pedidos.add(pedido ?: Pedido())
+                }
+
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val pedido = snapshot.getValue(Pedido::class.java)
+                val modificado =
+                    lista_pedidos.indexOf(lista_pedidos.filter { it.id == pedido?.id }[0])
+                lista_pedidos[modificado].estado = pedido?.estado
+                adap_pedido.notifyDataSetChanged()
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/
+            }
+
+            override fun onChildMoved(
+                snapshot: DataSnapshot,
+                previousChildName: String?
+            ) {/*como no vamos a cambiar la posicion nada no lo usamos*/
+            }
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -126,7 +165,7 @@ class AdminActivity : AppCompatActivity() {
                     setImageResource(R.drawable.ic_baseline_add_location_24)
                 }
             }
-            3->{
+            3 -> {
                 (binding.appBarAdmin.fab).apply {
                     visibility = View.VISIBLE
                     setImageResource(R.drawable.ic_baseline_add_24)

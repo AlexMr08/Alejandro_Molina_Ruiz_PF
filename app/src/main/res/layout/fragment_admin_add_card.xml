@@ -8,7 +8,7 @@
     tools:context=".admin.AdminAddCardFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/til_nombre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,7 +37,7 @@
         tools:src="@drawable/magic_card_back" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
+        android:id="@+id/til_pass1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -45,8 +45,8 @@
         app:endIconDrawable="@drawable/ic_baseline_monetization_on_24"
         app:layout_constraintEnd_toStartOf="@+id/fanc_dis"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+        app:layout_constraintStart_toStartOf="@+id/til_nombre"
+        app:layout_constraintTop_toBottomOf="@+id/til_nombre">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fanc_pre"
@@ -61,11 +61,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="Esta disponible?"
-        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
+        app:layout_constraintBottom_toBottomOf="@+id/til_pass1"
+        app:layout_constraintEnd_toEndOf="@+id/til_nombre"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
-        app:layout_constraintTop_toTopOf="@+id/textInputLayout3" />
+        app:layout_constraintStart_toEndOf="@+id/til_pass1"
+        app:layout_constraintTop_toTopOf="@+id/til_pass1" />
 
     <ImageView
         android:id="@+id/fanc_reverso"
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:spinnerMode="dialog"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+        app:layout_constraintEnd_toEndOf="@+id/til_nombre"
+        app:layout_constraintStart_toStartOf="@+id/til_nombre"
+        app:layout_constraintTop_toBottomOf="@+id/til_pass1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

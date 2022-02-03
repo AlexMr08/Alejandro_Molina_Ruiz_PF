@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_user_event" />
     <fragment
         android:id="@+id/userViewCardFragment"
-        android:name="com.example.practica_final.admin.UserViewCardFragment"
+        android:name="com.example.practica_final.user.UserViewCardFragment"
         android:label="fragment_user_view_card"
         tools:layout="@layout/fragment_user_view_card" />
 </navigation>

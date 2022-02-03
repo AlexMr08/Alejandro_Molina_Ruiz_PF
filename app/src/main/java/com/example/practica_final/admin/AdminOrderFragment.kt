@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practica_final.databinding.FragmentAdminOrderBinding
 
 class AdminOrderFragment : Fragment() {
@@ -40,7 +41,8 @@ class AdminOrderFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         binding.switch1.setOnClickListener {  }
-
+        binding.faoRv.adapter = ma.adap_pedido
+        binding.faoRv.layoutManager = LinearLayoutManager(ma)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

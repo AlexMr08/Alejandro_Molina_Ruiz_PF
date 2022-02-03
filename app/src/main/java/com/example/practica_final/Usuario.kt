@@ -2,11 +2,12 @@ package com.example.practica_final
 
 import java.io.Serializable
 
-data class Usuario(var nombre:String?=null,
-                   var pass:String?=null,
+data class Usuario(var nombre:String?="",
+                   var correo:String?="",
+                   var pass:String?="",
                    var tipo:Int?=0,
-                   var id:String?=null,
-                   var fecha:String?=null,
-                   var img:String?=null,
+                   var id:String?="",
+                   var fecha:String?="",
+                   var img:String?="",
                    var estado_noti:Int?=0):
     Serializable

@@ -4,6 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.practica_final.databinding.ActivityRegisterBinding
@@ -17,6 +20,7 @@ import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.CountDownLatch
+import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var bind : ActivityRegisterBinding
@@ -48,10 +52,6 @@ class RegisterActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        bind.button2.setOnClickListener {
-            finish()
-        }
-
         bind.registerIvPp.setOnClickListener {
             obtener_url.launch("image/*")
         }
@@ -60,13 +60,14 @@ class RegisterActivity : AppCompatActivity() {
         bind.registerBtnReg.setOnClickListener {
             var id_user : String? = null
             val nom = bind.registerTieNom.text.toString().trim()
+            val correo = bind.registerTieMail.toString().trim()
             val pass1 = bind.registerTiePass1.text.toString().trim()
             val pass2 = bind.registerTiePass2.text.toString().trim()
             val fecha = Calendar.getInstance()
             val formateador = SimpleDateFormat("yyyy-MM-dd")
             val hoy = formateador.format(fecha.time)
-            if (nom!="" && pass1!="" && pass2!=""){
-                if (pass1==pass2){
+            if (isValid()){
+                if (contraseñasIguales(pass1,pass2)){
                     if (pass1.length>=8){
                         GlobalScope.launch(Dispatchers.IO) {
                             if (!existeUsuario(nom)) {
@@ -75,7 +76,7 @@ class RegisterActivity : AppCompatActivity() {
                                 if (url_perfil_local!=null){
                                     url_portada = subirImagen(id_user!!, url_perfil_local!!)
                                 }
-                                val nuevo_usuario = Usuario(nom,pass1,1,id_user,hoy,url_portada,0)
+                                val nuevo_usuario = Usuario(nom,correo,pass1,1,id_user,hoy,url_portada,0)
                                 ControlDB.rutaUsuario.child(id_user?:"").setValue(nuevo_usuario)
                                 controlSp.id = nuevo_usuario.id?:""
                                 controlSp.tipo = nuevo_usuario.tipo?:1
@@ -84,18 +85,13 @@ class RegisterActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                             }else{
-                                tostadaCorrutina("El nombre de usuario ya existe.")
+                                runOnUiThread {
+                                    bind.registerTieNom.error = "El nombre de usuario ya existe"
+                                }
                             }
                         }
-                    }else{
-                        Toast.makeText(this, "La contraseña debe tener mas de 8 caracteres", Toast.LENGTH_SHORT).show()
                     }
-
-                }else{
-                    Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
                 }
-            }else{
-                Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -110,6 +106,24 @@ class RegisterActivity : AppCompatActivity() {
             ).show()
         }
     }
+
+        fun isValid():Boolean{
+            	var validated = true
+            	val checkers = listOf(
+            		Pair(bind.registerTieNom, this::usuarioValido),
+                    Pair(bind.registerTieMail, this::correoValido),
+                    Pair(bind.registerTiePass1, this::contraseñaValida)
+                    //Pair(binding.textview, this::funcion)
+            	)
+            	for(c in checkers){
+            		val x = c.first
+            		val f = c.second
+            		val y = f(x)
+            		validated = y
+            		if(!validated) break
+            	}
+            	return validated
+            }
 
 
     private suspend fun subirImagen(id:String,imagen:Uri):String{
@@ -136,5 +150,50 @@ class RegisterActivity : AppCompatActivity() {
         })
         sem.await()
         return res!!
+    }
+
+    fun usuarioValido(e: EditText):Boolean{
+        var valid = true
+        if (e.text.toString().trim().length<=2 || e.text.toString().trim().length>16){
+            e.error = "El nombre de usuario debe tener entre 3 y 16 caracteres"
+        }
+        return valid
+    }
+
+    fun correoValido(e: EditText):Boolean{
+        var valid = true
+        if (e.text.isNullOrEmpty() || !Patterns.EMAIL_ADDRESS.matcher(e.text).matches()){
+            e.error = "Introduce un correo valido"
+            valid=false
+        }
+        return valid
+    }
+
+    fun contraseñaValida(e: EditText):Boolean{
+        var valid = true
+        val passwordRegex = Pattern.compile(
+            "^" +
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +        //at least 1 lower case letter
+                    "(?=.*[A-Z])" +        //at least 1 upper case letter
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{8,}" +               //at least 4 characters
+                    "$"
+        )
+
+        if (!passwordRegex.matcher(e.text).matches()){
+            e.error = "La contraseña debe tener al menos 8 caracteres y tener un numero, una minuscula y una mayuscula."
+            valid=false
+        }
+        return valid
+    }
+
+    fun contraseñasIguales(c1 : String, c2: String):Boolean{
+        var valid = true
+        if (!(c1==c2)){
+            bind.tilPass2.error = "Las contraseña no coinciden."
+            valid=false
+        }
+        return valid
     }
 }

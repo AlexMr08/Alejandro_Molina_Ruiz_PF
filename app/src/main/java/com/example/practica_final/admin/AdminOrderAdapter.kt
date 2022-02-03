@@ -10,10 +10,11 @@ import com.bumptech.glide.Glide
 import com.example.practica_final.Pedido
 import com.example.practica_final.databinding.RvAdminOrderBinding
 
-class AdminOrdersFragment(val lista:List<Pedido>, val con:Context) : RecyclerView.Adapter<AdminOrdersFragment.ViewHolder>(), Filterable {
+class AdminOrdersAdapter(lista:List<Pedido>, val con: Context) : RecyclerView.Adapter<AdminOrdersAdapter.ViewHolder>(),
+    Filterable {
     private var listaFiltrada = lista
 
-    class ViewHolder(val bind:RvAdminOrderBinding) : RecyclerView.ViewHolder(bind.root)
+    class ViewHolder(val bind: RvAdminOrderBinding) : RecyclerView.ViewHolder(bind.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = RvAdminOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,6 +25,8 @@ class AdminOrdersFragment(val lista:List<Pedido>, val con:Context) : RecyclerVie
         val elem = listaFiltrada[position]
         with(holder.bind){
             Glide.with(con).load(elem.imgCarta).into(rvAdminPedidoImg)
+            rvAdminPedidoNomCarta.text = elem.nombreCarta
+            rvAdminPedidoPrecio.text = elem.nombreCarta
         }
     }
 
