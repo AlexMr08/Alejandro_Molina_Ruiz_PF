@@ -74,7 +74,6 @@ class RegisterActivity : AppCompatActivity() {
                                 var url_portada = ""
                                 if (url_perfil_local!=null){
                                     url_portada = subirImagen(id_user!!, url_perfil_local!!)
-                                    tostadaCorrutina(url_portada)
                                 }
                                 val nuevo_usuario = Usuario(nom,pass1,1,id_user,hoy,url_portada,0)
                                 ControlDB.rutaUsuario.child(id_user?:"").setValue(nuevo_usuario)

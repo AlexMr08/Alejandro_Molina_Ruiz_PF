@@ -39,6 +39,7 @@ class AdminOrderFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        binding.switch1.setOnClickListener {  }
 
     }
 

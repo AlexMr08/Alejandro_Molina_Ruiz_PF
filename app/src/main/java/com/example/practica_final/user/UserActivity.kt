@@ -37,6 +37,14 @@ class UserActivity : AppCompatActivity() {
             R.id.userHomeFragment, R.id.userEventFragment, R.id.userProfileFragment))}
     val controlSP by lazy { ControlSP(this) }
     lateinit var usuario : Usuario
+
+    val adaptador_pedidos by lazy {
+        UserProfileCardAdapter(lista_pedidos, this)
+    }
+    lateinit var lista_pedidos: MutableList<Pedido>
+
+    var cartas_usuario = 0
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
@@ -86,6 +94,41 @@ class UserActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
 
             }
+        })
+
+        lista_pedidos = mutableListOf()
+        ControlDB.rutaResCartas.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    val sem = CountDownLatch(1)
+                    var pedido = snapshot.getValue(Pedido::class.java)
+                    if (pedido != null && pedido.idCliente == controlSP.id) {
+                        ControlDB.rutacartas.child(pedido.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val carta = snapshot.getValue(Carta::class.java)
+                                pedido.imgCarta = carta?.imagen
+                                pedido.nombreCarta = carta?.nombre
+                                if (pedido.estado==0){
+                                    cartas_usuario++
+                                }
+                                sem.countDown()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+                        sem.await()
+                        lista_pedidos.add(pedido)
+                    }
+                }
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 
