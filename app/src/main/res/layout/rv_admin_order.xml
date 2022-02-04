@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/rv_admin_pedido_img"
+        android:id="@+id/rap_img_carta"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
@@ -19,34 +19,34 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/rv_admin_pedido_nom_carta"
+        android:id="@+id/rap_nom_carta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/rv_admin_pedido_img"
-        app:layout_constraintTop_toTopOf="@+id/rv_admin_pedido_img" />
+        app:layout_constraintStart_toEndOf="@+id/rap_img_carta"
+        app:layout_constraintTop_toTopOf="@+id/rap_img_carta" />
 
     <TextView
-        android:id="@+id/rv_admin_pedido_precio"
+        android:id="@+id/rap_cliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/rv_admin_pedido_nom_carta"
-        app:layout_constraintTop_toBottomOf="@+id/rv_admin_pedido_nom_carta" />
+        app:layout_constraintStart_toStartOf="@+id/rap_nom_carta"
+        app:layout_constraintTop_toBottomOf="@+id/rap_nom_carta" />
 
     <TextView
-        android:id="@+id/rv_admin_pedido_cliente"
+        android:id="@+id/rap_precio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/rv_admin_pedido_nom_carta"
-        app:layout_constraintTop_toBottomOf="@+id/rv_admin_pedido_precio" />
+        app:layout_constraintStart_toStartOf="@+id/rap_nom_carta"
+        app:layout_constraintTop_toBottomOf="@+id/rap_cliente" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/rap_aceptar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

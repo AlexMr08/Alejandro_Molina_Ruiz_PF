@@ -40,7 +40,6 @@ class AdminOrderFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.switch1.setOnClickListener {  }
         binding.faoRv.adapter = ma.adap_pedido
         binding.faoRv.layoutManager = LinearLayoutManager(ma)
     }

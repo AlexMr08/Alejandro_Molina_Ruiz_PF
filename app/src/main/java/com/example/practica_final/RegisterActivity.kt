@@ -60,7 +60,7 @@ class RegisterActivity : AppCompatActivity() {
         bind.registerBtnReg.setOnClickListener {
             var id_user : String? = null
             val nom = bind.registerTieNom.text.toString().trim()
-            val correo = bind.registerTieMail.toString().trim()
+            val correo = bind.registerTieMail.text.toString().trim()
             val pass1 = bind.registerTiePass1.text.toString().trim()
             val pass2 = bind.registerTiePass2.text.toString().trim()
             val fecha = Calendar.getInstance()
@@ -156,6 +156,7 @@ class RegisterActivity : AppCompatActivity() {
         var valid = true
         if (e.text.toString().trim().length<=2 || e.text.toString().trim().length>16){
             e.error = "El nombre de usuario debe tener entre 3 y 16 caracteres"
+            valid = false
         }
         return valid
     }

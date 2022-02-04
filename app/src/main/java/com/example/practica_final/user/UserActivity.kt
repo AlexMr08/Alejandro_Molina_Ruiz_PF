@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.CountDownLatch
 
 class UserActivity : AppCompatActivity() {
-    lateinit var lista_cartas : MutableList<Carta>
+    var lista_cartas = buscarCartas()
     private lateinit var binding: ActivityUserBinding
     var carta_sel = Carta()
     val navController by lazy { findNavController(R.id.nav_host_fragment_activity_user) }
@@ -36,7 +36,7 @@ class UserActivity : AppCompatActivity() {
         setOf(
             R.id.userHomeFragment, R.id.userEventFragment, R.id.userProfileFragment))}
     val controlSP by lazy { ControlSP(this) }
-    lateinit var usuario : Usuario
+    var usuario = Usuario()
 
     val adaptador_pedidos by lazy {
         UserProfileCardAdapter(lista_pedidos, this)
@@ -56,7 +56,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
-        navView.setBackgroundColor(Color.parseColor("#55ffffff"))
+        navView.setBackgroundResource(R.drawable.gradient_bg)
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -65,7 +65,98 @@ class UserActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         buscarUsuario()
-        lista_cartas = mutableListOf()
+
+//        lista_cartas = mutableListOf()
+//        buscarCartas()
+
+
+        lista_pedidos = mutableListOf()
+        ControlDB.rutaResCartas.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    val sem = CountDownLatch(1)
+                    var pedido = snapshot.getValue(Pedido::class.java)
+                    if (pedido != null && pedido.idCliente == controlSP.id) {
+                        ControlDB.rutacartas.child(pedido.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val carta = snapshot.getValue(Carta::class.java)
+                                pedido.imgCarta = carta?.imagen
+                                pedido.nombreCarta = carta?.nombre
+                                if (pedido.estado==1){
+                                    cartas_usuario++
+                                }
+                                sem.countDown()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+                        sem.await()
+                        lista_pedidos.add(pedido)
+                    }
+                }
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    var pedido = snapshot.getValue(Pedido::class.java)
+                    val index = lista_pedidos.map { it.id }.indexOf(pedido?.id)
+                    val sem = CountDownLatch(1)
+                    if (pedido != null && pedido.idCliente == controlSP.id) {
+                        ControlDB.rutacartas.child(pedido.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val carta = snapshot.getValue(Carta::class.java)
+                                pedido.imgCarta = carta?.imagen
+                                pedido.nombreCarta = carta?.nombre
+                                if (pedido.estado==1){
+                                    cartas_usuario++
+                                }
+                                sem.countDown()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+                        sem.await()
+                        runOnUiThread {
+                            lista_pedidos[index]=pedido
+                            adaptador_pedidos.notifyItemChanged(index)
+                        }
+                    }
+
+                }
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.user, menu)
+        return true
+    }
+
+    fun buscarUsuario(){
+        GlobalScope.launch(Dispatchers.IO){
+            val sem = CountDownLatch(1)
+            ControlDB.rutaUsuario.child(controlSP.id).addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    usuario = snapshot?.getValue(Usuario::class.java)!!
+                    sem.countDown()
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+            sem.await()
+        }
+    }
+
+    fun buscarCartas():MutableList<Carta>{
+        var lista_cartas = mutableListOf<Carta>()
         ControlDB.rutacartas.addChildEventListener( object :
             ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -95,61 +186,6 @@ class UserActivity : AppCompatActivity() {
 
             }
         })
-
-        lista_pedidos = mutableListOf()
-        ControlDB.rutaResCartas.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                GlobalScope.launch(Dispatchers.IO) {
-                    val sem = CountDownLatch(1)
-                    var pedido = snapshot.getValue(Pedido::class.java)
-                    if (pedido != null && pedido.idCliente == controlSP.id) {
-                        ControlDB.rutacartas.child(pedido.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                val carta = snapshot.getValue(Carta::class.java)
-                                pedido.imgCarta = carta?.imagen
-                                pedido.nombreCarta = carta?.nombre
-                                if (pedido.estado==0){
-                                    cartas_usuario++
-                                }
-                                sem.countDown()
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {}
-                        })
-                        sem.await()
-                        lista_pedidos.add(pedido)
-                    }
-                }
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onCancelled(error: DatabaseError) {}
-        })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.user, menu)
-        return true
-    }
-
-    fun buscarUsuario(){
-        GlobalScope.launch(Dispatchers.IO){
-            val sem = CountDownLatch(1)
-            ControlDB.rutaUsuario.child(controlSP.id).addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    usuario = snapshot?.getValue(Usuario::class.java)!!
-                    sem.countDown()
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
-            sem.await()
-        }
+        return lista_cartas
     }
 }

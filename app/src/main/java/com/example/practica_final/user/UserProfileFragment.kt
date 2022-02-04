@@ -60,8 +60,6 @@ class UserProfileFragment : Fragment() {
             .into(binding.fupImg)
         binding.fupRv.adapter = ma.adaptador_pedidos
         binding.fupRv.layoutManager = LinearLayoutManager(ma)
-        binding.fupNumCartas.text = ma.cartas_usuario.toString()
-
     }
 
 

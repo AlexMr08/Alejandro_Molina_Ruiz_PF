@@ -7,26 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".user.UserProfileFragment">
 
-    <TextView
-        android:id="@+id/fup_num_cartas2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        app:layout_constraintBottom_toTopOf="@+id/fup_tv_cartas"
-        app:layout_constraintEnd_toEndOf="@+id/fup_tv_cartas"
-        app:layout_constraintStart_toStartOf="@+id/fup_tv_cartas" />
-
-    <TextView
-        android:id="@+id/fup_tv_cartas2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/num_cartas"
-        app:layout_constraintBottom_toBottomOf="@+id/fup_img"
-        app:layout_constraintEnd_toStartOf="@+id/fup_tv_cartas"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/fup_img" />
-
     <ImageView
         android:id="@+id/fup_img"
         android:layout_width="wrap_content"
@@ -48,7 +28,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fup_img" />
+        app:layout_constraintTop_toBottomOf="@+id/fup_img"
+        android:paddingBottom="?actionBarSize"
+        android:clipToPadding="false"/>
 
     <TextView
         android:id="@+id/fup_nom"
@@ -63,22 +45,30 @@
         app:layout_constraintStart_toEndOf="@+id/fup_img"
         app:layout_constraintTop_toTopOf="@+id/fup_img" />
 
-    <TextView
-        android:id="@+id/fup_tv_cartas"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/fup_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/num_eventos"
-        app:layout_constraintBottom_toBottomOf="@+id/fup_tv_cartas2"
+        app:layout_constraintBottom_toTopOf="@+id/fup_rv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/fup_tv_cartas2" />
+        app:layout_constraintStart_toEndOf="@+id/fup_img"
+        app:layout_constraintTop_toBottomOf="@+id/fup_nom"
+        app:singleSelection="true">
 
-    <TextView
-        android:id="@+id/fup_num_cartas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        app:layout_constraintBottom_toTopOf="@+id/fup_tv_cartas2"
-        app:layout_constraintEnd_toEndOf="@+id/fup_tv_cartas2"
-        app:layout_constraintStart_toStartOf="@+id/fup_tv_cartas2" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fup_carta"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cartas" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fup_even"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eventos" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

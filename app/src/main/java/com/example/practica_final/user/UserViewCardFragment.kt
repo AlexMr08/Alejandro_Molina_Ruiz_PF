@@ -55,7 +55,7 @@ class UserViewCardFragment : Fragment() {
             val formateador = SimpleDateFormat("yyyy-MM-dd")
             val hoy = formateador.format(fecha.time)
             val id = ControlDB.rutaResCartas.push().key
-            ControlDB.rutaResCartas.child(id?:"").setValue(Pedido(id?:"",ma.controlSP.id,elem.id?:"",hoy,0,elem.nombre,elem.imagen))
+            ControlDB.rutaResCartas.child(id?:"").setValue(Pedido(id?:"",ma.controlSP.id,elem.id?:"",hoy,0,elem.precio?:0f))
             ma.navController.navigate(R.id.userHomeFragment)
         }
     }

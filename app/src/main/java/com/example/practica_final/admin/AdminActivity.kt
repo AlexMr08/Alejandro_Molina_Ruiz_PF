@@ -83,55 +83,54 @@ class AdminActivity : AppCompatActivity() {
         })
 
         lista_pedidos = mutableListOf()
-        ControlDB.rutaResCartas.addChildEventListener(object :
-            ChildEventListener {
+        ControlDB.rutaResCartas.orderByChild("fecha").addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                var pedido = snapshot.getValue(Pedido::class.java)
                 GlobalScope.launch(Dispatchers.IO) {
-                    val sem = CountDownLatch(1)
-                    val pedido = snapshot.getValue(Pedido::class.java)
+                    val sem = CountDownLatch(2)
+                    if (pedido != null) {
+                        //Consulta carta
+                        ControlDB.rutacartas.child(pedido.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val carta = snapshot.getValue(Carta::class.java)
+                                pedido.imgCarta = carta?.imagen
+                                pedido.nombreCarta = carta?.nombre
+                                sem.countDown()
+                            }
 
-                    //consulta usuario
-                    ControlDB.rutacartas.child(pedido?.idCarta?:"").addListenerForSingleValueEvent(object:ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            val carta = snapshot.getValue(Carta::class.java)
-                            pedido?.nombreCarta = carta?.nombre
-                            pedido?.imgCarta = carta?.nombre
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+
+                        //Consulta usuario
+                        ControlDB.rutaUsuario.child(pedido.idCliente?:"").addListenerForSingleValueEvent(object: ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val cliente = snapshot.getValue(Usuario::class.java)
+                                pedido.imgCliente = cliente?.img
+                                pedido.nombreCliente = cliente?.nombre
+                                sem.countDown()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+                        sem.await()
+                        lista_pedidos.add(pedido)
+                        runOnUiThread {
+                            adap_pedido.notifyDataSetChanged()
                         }
-
-                        override fun onCancelled(error: DatabaseError) {
-
-                        }
-                    })
-                    sem.countDown()
-                    //consulta carta
-                    sem.countDown()
-
-                    sem.await()
-                    lista_pedidos.add(pedido ?: Pedido())
+                    }
                 }
-
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val pedido = snapshot.getValue(Pedido::class.java)
-                val modificado =
-                    lista_pedidos.indexOf(lista_pedidos.filter { it.id == pedido?.id }[0])
-                lista_pedidos[modificado].estado = pedido?.estado
-                adap_pedido.notifyDataSetChanged()
+                    var pedido = snapshot.getValue(Pedido::class.java)
+                    val index = lista_pedidos.map { it.id }.indexOf(pedido?.id)
             }
 
-            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/
-            }
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
 
-            override fun onChildMoved(
-                snapshot: DataSnapshot,
-                previousChildName: String?
-            ) {/*como no vamos a cambiar la posicion nada no lo usamos*/
-            }
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
 
     }

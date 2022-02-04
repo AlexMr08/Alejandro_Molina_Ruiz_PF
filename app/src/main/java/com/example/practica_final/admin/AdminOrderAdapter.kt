@@ -2,15 +2,17 @@ package com.example.practica_final.admin
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.practica_final.Pedido
+import com.example.practica_final.*
 import com.example.practica_final.databinding.RvAdminOrderBinding
 
-class AdminOrdersAdapter(lista:List<Pedido>, val con: Context) : RecyclerView.Adapter<AdminOrdersAdapter.ViewHolder>(),
+class AdminOrdersAdapter(lista:List<Pedido>, val con: AdminActivity) : RecyclerView.Adapter<AdminOrdersAdapter.ViewHolder>(),
     Filterable {
     private var listaFiltrada = lista
 
@@ -24,9 +26,19 @@ class AdminOrdersAdapter(lista:List<Pedido>, val con: Context) : RecyclerView.Ad
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val elem = listaFiltrada[position]
         with(holder.bind){
-            Glide.with(con).load(elem.imgCarta).into(rvAdminPedidoImg)
-            rvAdminPedidoNomCarta.text = elem.nombreCarta
-            rvAdminPedidoPrecio.text = elem.nombreCarta
+            refreshUI(elem,holder)
+            Glide.with(con).load(elem.imgCarta).into(rapImgCarta)
+            rapNomCarta.text = elem.nombreCarta
+            rapPrecio.text = con.getString(R.string.carta_precio,elem.precio)
+            rapCliente.text = elem.nombreCliente
+            rapAceptar.setOnClickListener {
+                elem.estado=EstadoPedido.ACEPTADO
+                con.adap_pedido.notifyItemChanged(position)
+                ControlDB.rutaResCartas.child(elem.id?:"").child("estado").setValue(EstadoPedido.ACEPTADO)
+                if (elem.estado==EstadoPedido.ACEPTADO){
+                    holder.bind.rapAceptar.visibility = View.GONE
+                }
+            }
         }
     }
 
@@ -47,6 +59,14 @@ class AdminOrdersAdapter(lista:List<Pedido>, val con: Context) : RecyclerView.Ad
                 listaFiltrada = resultado?.values as MutableList<Pedido>
                 notifyDataSetChanged()
             }
+        }
+    }
+
+    fun refreshUI(elem: Pedido, holder: ViewHolder){
+        if (elem.estado==EstadoPedido.ACEPTADO){
+            holder.bind.rapAceptar.visibility = View.GONE
+        }else if (elem.estado==EstadoPedido.CREADO){
+            holder.bind.rapAceptar.visibility = View.VISIBLE
         }
     }
 }
