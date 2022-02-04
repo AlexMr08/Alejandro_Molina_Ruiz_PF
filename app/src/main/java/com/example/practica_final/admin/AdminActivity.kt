@@ -32,6 +32,8 @@ class AdminActivity : AppCompatActivity() {
     val categorias by lazy { resources.getStringArray(R.array.categorias).toList() }
     lateinit var lista_pedidos: MutableList<Pedido>
     val adap_pedido by lazy { AdminOrdersAdapter(lista_pedidos, this) }
+    val adap_eventos by lazy { AdminEventAdapter(lista_eventos, this) }
+    lateinit var lista_eventos: MutableList<Evento>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,6 +135,7 @@ class AdminActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {}
         })
 
+        lista_eventos = buscarEventos()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -153,15 +156,16 @@ class AdminActivity : AppCompatActivity() {
                 (binding.appBarAdmin.fab).apply {
                     visibility = View.VISIBLE
                     setImageResource(R.drawable.ic_baseline_post_add_24)
-                    setOnClickListener {
-                        navController.navigate(R.id.action_adminHomeFragment_to_adminAddCardFragment)
-                    }
+                    setOnClickListener { listener }
                 }
             }
             2 -> {
                 (binding.appBarAdmin.fab).apply {
                     visibility = View.VISIBLE
                     setImageResource(R.drawable.ic_baseline_add_location_24)
+                    setOnClickListener {
+                        navController.navigate(R.id.action_adminEventFragment_to_adminAddEventFragment)
+                    }
                 }
             }
             3 -> {
@@ -177,5 +181,26 @@ class AdminActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun buscarEventos():MutableList<Evento>{
+        var lista = mutableListOf<Evento>()
+        ControlDB.rutaEvento.addChildEventListener(object: ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                if (snapshot!=null){
+                    val evento = snapshot.getValue(Evento::class.java)
+                    lista.add(evento?: Evento())
+                }
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+        return lista
     }
 }

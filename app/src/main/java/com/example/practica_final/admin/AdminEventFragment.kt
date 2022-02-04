@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentAdminEventBinding
 
@@ -24,6 +25,12 @@ class AdminEventFragment : Fragment() {
     ): View? {
         _binding = FragmentAdminEventBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.faeRv.adapter = ma.adap_eventos
+        binding.faeRv.layoutManager = LinearLayoutManager(ma)
     }
 
     override fun onResume() {
