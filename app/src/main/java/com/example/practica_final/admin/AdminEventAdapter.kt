@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.practica_final.ControlDB
 import com.example.practica_final.Evento
+import com.example.practica_final.R
 import com.example.practica_final.databinding.RvAdminEventBinding
 
 class AdminEventAdapter(val lista:List<Evento>, val con:AdminActivity) : RecyclerView.Adapter<AdminEventAdapter.ViewHolder>(){
@@ -21,9 +23,14 @@ class AdminEventAdapter(val lista:List<Evento>, val con:AdminActivity) : Recycle
         val elem = lista[position]
         with(holder.bind){
             raeNom.text = elem.nombre
-            raePlazas.text = "Aforo: ${elem.plazas_ocupadas}/${elem.plazas_totales}"
+            raePlazas.text = con.getString(R.string.evento_aforo,elem.plazas_ocupadas,elem.plazas_totales)
+            raePre.text = con.getString(R.string.evento_precio,elem.precio)
             Glide.with(con).load(elem.imagen).into(raeImg)
             raeFecha.text = elem.fecha
+            raeDis.isChecked = elem.disponible?:false
+            raeDis.setOnCheckedChangeListener { button, check ->
+                ControlDB.rutaEvento.child(elem.id?:"").child("disponible").setValue(check)
+            }
         }
     }
 

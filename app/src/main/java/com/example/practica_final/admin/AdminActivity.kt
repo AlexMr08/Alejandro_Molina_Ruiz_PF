@@ -156,7 +156,9 @@ class AdminActivity : AppCompatActivity() {
                 (binding.appBarAdmin.fab).apply {
                     visibility = View.VISIBLE
                     setImageResource(R.drawable.ic_baseline_post_add_24)
-                    setOnClickListener { listener }
+                    setOnClickListener {
+                        navController.navigate(R.id.adminAddCardFragment)
+                    }
                 }
             }
             2 -> {
@@ -193,7 +195,11 @@ class AdminActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val evento = snapshot.getValue(Evento::class.java)
+                val modificado = lista_eventos.indexOf(lista_eventos.filter { it.id == evento?.id }[0])
+                lista_eventos[modificado].disponible = evento?.disponible
+            }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {}
 

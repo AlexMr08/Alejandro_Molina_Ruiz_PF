@@ -7,14 +7,14 @@
         <item
             android:id="@+id/adminHomeFragment"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/menu_home" />
+            android:title="@string/admin_home" />
         <item
             android:id="@+id/adminEventFragment"
             android:icon="@drawable/ic_baseline_event_24"
-            android:title="@string/menu_events" />
+            android:title="@string/admin_events" />
         <item
             android:id="@+id/adminOrderFragment"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_orders" />
+            android:title="@string/admin_orders" />
     </group>
 </menu>

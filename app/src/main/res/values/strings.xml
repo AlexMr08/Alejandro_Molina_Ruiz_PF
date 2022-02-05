@@ -15,9 +15,11 @@
 
 
     <!--STRINGS ADMIN-->
-    <string name="menu_home">Inicio</string>
-    <string name="menu_events">Eventos</string>
-    <string name="menu_orders">Pedidos</string>
+    <string name="admin_home">Inicio</string>
+    <string name="admin_events">Eventos</string>
+    <string name="admin_orders">Pedidos</string>
+    <string name="admin_add_card">Añadir carta</string>
+    <string name="admin_add_event">Añadir evento</string>
 
     <!--SP-->
     <string name="sp_usuario">Usuario</string>
@@ -30,6 +32,11 @@
 
     <string name="sp_eur_usd">USD</string>
     <string name="sp_eur_usd_def">1.37</string>
+
+    <!--String Evento-->
+    <string name="evento_aforo">Aforo: %1$d/%2$d</string>
+    <string name="evento_precio_rv">%1$.2f €</string>
+    <string name="evento_precio">Precio: %1$.2f €</string>
 
     <!--String Carta-->
     <string name="carta_precio_rv">%1$.2f €</string>
@@ -47,7 +54,7 @@
         <item>Rojo</item>
         <item>Verde</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Strings Comunes-->
 
 </resources>

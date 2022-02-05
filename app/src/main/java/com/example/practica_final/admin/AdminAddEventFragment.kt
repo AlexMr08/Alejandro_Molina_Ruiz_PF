@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.example.practica_final.Carta
@@ -81,7 +82,7 @@ class AdminAddEventFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as AdminActivity).FAB_manager(1, this::subirEvento)
+        ma.FAB_manager(3, this::subirEvento)
     }
 
     override fun onDestroyView() {
@@ -90,7 +91,10 @@ class AdminAddEventFragment : Fragment() {
     }
 
     fun subirEvento(v: View) {
+        if (urlPortadaLocal==null){
+            Toast.makeText(ma, "via subi un evento", Toast.LENGTH_SHORT).show()
 
+        }
         GlobalScope.launch(Dispatchers.IO) {
 
             if (urlPortadaLocal != null) {

@@ -41,7 +41,6 @@ class AdminAddCardFragment : Fragment() {
                 urlPortadaLocal = uri
                 Glide.with(ma).load(urlPortadaLocal).into(binding.fancImgCarta)
                 flipCard(ma, binding.fancImgCarta, binding.fancReverso)
-
             }
         }
     }
