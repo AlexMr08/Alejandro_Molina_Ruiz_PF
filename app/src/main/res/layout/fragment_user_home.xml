@@ -40,58 +40,58 @@
         app:layout_constraintTop_toBottomOf="@+id/fuh_switch">
 
         <CheckBox
-            android:id="@+id/checkBox2"
+            android:id="@+id/fuh_cb_blanco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="blanco"
-            app:layout_constraintBottom_toBottomOf="@+id/checkBox3"
-            app:layout_constraintEnd_toStartOf="@+id/checkBox3"
+            app:layout_constraintBottom_toBottomOf="@+id/fuh_cb_negro"
+            app:layout_constraintEnd_toStartOf="@+id/fuh_cb_negro"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/checkBox3" />
+            app:layout_constraintTop_toTopOf="@+id/fuh_cb_negro" />
 
         <CheckBox
-            android:id="@+id/checkBox3"
+            android:id="@+id/fuh_cb_negro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="negro"
-            app:layout_constraintBottom_toBottomOf="@+id/checkBox4"
-            app:layout_constraintEnd_toStartOf="@+id/checkBox4"
+            app:layout_constraintBottom_toBottomOf="@+id/fuh_cb_azul"
+            app:layout_constraintEnd_toStartOf="@+id/fuh_cb_azul"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/checkBox2"
-            app:layout_constraintTop_toTopOf="@+id/checkBox4" />
+            app:layout_constraintStart_toEndOf="@+id/fuh_cb_blanco"
+            app:layout_constraintTop_toTopOf="@+id/fuh_cb_azul" />
 
         <CheckBox
-            android:id="@+id/checkBox4"
+            android:id="@+id/fuh_cb_azul"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="rojo"
-            app:layout_constraintBottom_toBottomOf="@+id/checkBox"
-            app:layout_constraintEnd_toStartOf="@+id/checkBox"
+            app:layout_constraintBottom_toBottomOf="@+id/fuh_cb_rojo"
+            app:layout_constraintEnd_toStartOf="@+id/fuh_cb_rojo"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/checkBox3"
-            app:layout_constraintTop_toTopOf="@+id/checkBox" />
+            app:layout_constraintStart_toEndOf="@+id/fuh_cb_negro"
+            app:layout_constraintTop_toTopOf="@+id/fuh_cb_rojo" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/fuh_cb_rojo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="azul"
-            app:layout_constraintBottom_toBottomOf="@+id/checkBox5"
-            app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+            app:layout_constraintBottom_toBottomOf="@+id/fuh_cb_verde"
+            app:layout_constraintEnd_toStartOf="@+id/fuh_cb_verde"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/checkBox4"
-            app:layout_constraintTop_toTopOf="@+id/checkBox5" />
+            app:layout_constraintStart_toEndOf="@+id/fuh_cb_azul"
+            app:layout_constraintTop_toTopOf="@+id/fuh_cb_verde" />
 
         <CheckBox
-            android:id="@+id/checkBox5"
+            android:id="@+id/fuh_cb_verde"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="verde"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/checkBox"
+            app:layout_constraintStart_toEndOf="@+id/fuh_cb_rojo"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

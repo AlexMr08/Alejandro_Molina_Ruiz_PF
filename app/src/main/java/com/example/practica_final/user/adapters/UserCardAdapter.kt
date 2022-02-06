@@ -1,22 +1,26 @@
-package com.example.practica_final.user
+package com.example.practica_final.user.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.practica_final.Carta
-import com.example.practica_final.MainActivity
 import com.example.practica_final.R
 import com.example.practica_final.databinding.RvUserCardBinding
+import com.example.practica_final.user.UserActivity
+import java.util.*
 
-class UserCardAdapter(val lista:List<Carta>, val con:UserActivity) : RecyclerView.Adapter<UserCardAdapter.ViewHolder>(), Filterable {
-
+class UserCardAdapter(val lista:List<Carta>, val con: UserActivity) : RecyclerView.Adapter<UserCardAdapter.ViewHolder>(), Filterable {
     var listaFiltrada = lista
-
+    var filtroCat = true
+    var blanco = true
+    var negro = true
+    var azul = true
+    var rojo = true
+    var verde = true
+    var listaCategorias = listOf(true,true,true,true,true)
     class ViewHolder(val bind:RvUserCardBinding) : RecyclerView.ViewHolder(bind.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,7 +49,28 @@ class UserCardAdapter(val lista:List<Carta>, val con:UserActivity) : RecyclerVie
     override fun getFilter(): Filter {
         return object : Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
-                listaFiltrada = listaFiltrada.filter { it.disponible == true }
+                var listaCat = listOf(blanco,negro,azul,rojo,verde)
+                val texto = p0.toString()
+                if (texto.isEmpty()) {
+                    listaFiltrada = lista
+                } else {
+                    val elemetosFiltrados2 = mutableListOf<Carta>()
+                    val textoMinuscula = texto.lowercase(Locale.ROOT)
+                    for (e in lista) {
+                        val nombreMinuscula = e.nombre?.lowercase(Locale.ROOT)
+                        if(nombreMinuscula!!.contains(textoMinuscula)){
+                            elemetosFiltrados2.add(e)
+                        }
+                    }
+                    listaFiltrada = elemetosFiltrados2
+                }
+
+                if (filtroCat){
+                    listaFiltrada = listaFiltrada.filterIndexed { index, b -> listaCat[con.categorias.indexOf(b.categoria)] }
+                }else{
+                    listaFiltrada = listaFiltrada
+                }
+
                 val filterResults = FilterResults()
                 filterResults.values = listaFiltrada
                 return filterResults

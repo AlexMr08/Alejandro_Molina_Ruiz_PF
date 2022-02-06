@@ -7,10 +7,12 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserHomeBinding
 
 
@@ -30,7 +32,8 @@ class UserHomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
 
         _binding = FragmentUserHomeBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
@@ -45,38 +48,25 @@ class UserHomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.fuhSwitch.bringToFront()
-        binding.fuhCg.children.forEachIndexed { index, view -> (view as CheckBox).apply { text = ma.categorias[index]; isChecked=true }}
-        binding.fuhSwitch.setOnCheckedChangeListener { compoundButton, b ->
-            if (b){
-                binding.fuhCg.animate().translationY(0.0f);
-                val  ct = object : CountDownTimer(150L,150L){
-                    override fun onTick(p0: Long) {
+        refreshUI()
 
-                    }
+        binding.fuhSwitch.setOnClickListener {
+            refreshSwitch()
+        }
 
-                    override fun onFinish() {
-                        binding.fuhCg.visibility = View.VISIBLE
-                    }
-                }.start()
-            }else{
-                binding.fuhCg.animate().translationY(-binding.fuhCg.height.toFloat())
-                val  ct = object : CountDownTimer(150L,150L){
-                    override fun onTick(p0: Long) {
-
-                    }
-
-                    override fun onFinish() {
-                        binding.fuhCg.visibility = View.GONE
-                    }
-                }.start()
+        binding.fuhCg.children.forEachIndexed { index, view ->
+            (view as CheckBox).apply {
+                text = ma.categorias[index]; isChecked = true
             }
         }
-        binding.fuhRv.adapter = ma.adap_carta.also { binding.fuhRv.layoutManager = GridLayoutManager(activity, 2)}
+
+        binding.fuhRv.adapter =
+            ma.adap_carta.also { binding.fuhRv.layoutManager = GridLayoutManager(activity, 2) }
     }
 
     override fun onResume() {
         super.onResume()
+        ma.algoraro(0)
     }
 
     override fun onDestroyView() {
@@ -84,4 +74,39 @@ class UserHomeFragment : Fragment() {
         _binding = null
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        this.menu = menu
+        this.menu.findItem(R.id.app_bar_search).setVisible(true)
+    }
+
+    override fun onDestroyOptionsMenu() {
+        super.onDestroyOptionsMenu()
+        menu.findItem(R.id.app_bar_search).setVisible(false)
+    }
+
+    fun refreshFilter() {
+        val query = (menu.findItem(R.id.app_bar_search).actionView as SearchView).query
+        ma.adap_carta.filter.filter(query)
+    }
+
+    fun refreshButton(check: Boolean) {
+        binding.fuhCg.children.forEach { it.isEnabled = check }
+        refreshFilter()
+    }
+
+    fun refreshSwitch(){
+        refreshUI()
+        val check = binding.fuhSwitch.isChecked
+        ma.adap_carta.filtroCat = check
+        refreshFilter()
+    }
+
+    fun refreshUI(){
+        if (binding.fuhSwitch.isChecked){
+            binding.fuhCg.children.forEach { it.isEnabled=true }
+        }else{
+            binding.fuhCg.children.forEach { it.isEnabled=false }
+        }
+    }
 }

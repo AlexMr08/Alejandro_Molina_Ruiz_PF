@@ -1,11 +1,10 @@
-package com.example.practica_final.user
+package com.example.practica_final.user.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.practica_final.Carta
 import com.example.practica_final.EstadoPedido
 import com.example.practica_final.Pedido
 import com.example.practica_final.R

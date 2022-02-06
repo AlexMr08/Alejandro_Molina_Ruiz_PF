@@ -12,6 +12,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.practica_final.*
+import com.example.practica_final.admin.adapters.AdminCardAdapter
+import com.example.practica_final.admin.adapters.AdminEventAdapter
 import com.example.practica_final.databinding.ActivityAdminBinding
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot

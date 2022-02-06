@@ -11,10 +11,6 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
-lateinit var dbRef : DatabaseReference
-lateinit var stoRef : StorageReference
-
-
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     val controlSp by lazy{ ControlSP(this) }
@@ -28,9 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        dbRef = FirebaseDatabase.getInstance().reference
-        stoRef = FirebaseStorage.getInstance().reference
-
     }
 
     override fun onStart() {
@@ -55,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             nom = binding.inicioTieUser.text.toString().trim()
             pass = binding.inicioTiePass.text.toString().trim()
             if (nom!="" && pass!="") {
-                buscarUsuario(nom)
+                buscarUsuario(nom, pass)
             }else{
                 Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show()
             }
@@ -72,14 +65,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun buscarUsuario(nombre:String){
+    private fun buscarUsuario(nombre:String, contra:String){
         var pojoId : Usuario
         ControlDB.rutaUsuario.orderByChild("nombre").equalTo(nombre).addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.hasChildren()){
                     pojoId = snapshot.children.iterator().next().getValue(Usuario::class.java) ?: Usuario()
-                    if (pojoId.pass==pass){
+                    if (pojoId.pass==contra){
                         controlSp.id = pojoId.id?:""
                         controlSp.tipo = pojoId.tipo?:1
                         if (pojoId.tipo==1){

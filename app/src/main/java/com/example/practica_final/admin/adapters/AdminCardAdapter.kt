@@ -1,4 +1,4 @@
-package com.example.practica_final.admin
+package com.example.practica_final.admin.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
