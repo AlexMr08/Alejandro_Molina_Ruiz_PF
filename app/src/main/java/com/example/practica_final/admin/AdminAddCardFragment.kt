@@ -83,7 +83,7 @@ class AdminAddCardFragment : Fragment() {
             urlPortadaLocal = null
         }
 
-        actualizarAdapter(ma.categorias)
+        actualizarAdapter(Carta.categorias)
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -172,7 +172,7 @@ class AdminAddCardFragment : Fragment() {
         if (pre == null) {
             pre = 0.0f
         }
-        val cat = ma.categorias[pos_spi]
+        val cat = Carta.categorias[pos_spi]
         val dis = binding.fancDis.isChecked
         val id = ControlDB.rutacartas.push().key
         val img = subirImagenCarta(id!!, urlPortadaLocal!!)

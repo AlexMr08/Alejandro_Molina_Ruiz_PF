@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.CountDownLatch
 
 class UserActivity : AppCompatActivity() {
+    lateinit var Menu : Menu
     val navView by lazy { binding.navView }
     var lista_cartas = buscarCartas()
     var lista_eventos = buscarEventos()
@@ -31,7 +32,6 @@ class UserActivity : AppCompatActivity() {
     val navController by lazy { findNavController(R.id.nav_host_fragment_activity_user) }
     val adap_carta by lazy { UserCardAdapter(lista_cartas, this) }
     val adap_evento by lazy { UserEventAdapter(lista_eventos,this) }
-    val categorias by lazy { resources.getStringArray(R.array.categorias).toList()}
     val appBarConfiguration by lazy { AppBarConfiguration(
         setOf(
             R.id.userHomeFragment, R.id.userEventFragment, R.id.userProfileFragment))}
@@ -79,6 +79,7 @@ class UserActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.user, menu)
+        Menu = menu
         (menu.findItem(R.id.app_bar_search).actionView as SearchView)
             .setOnQueryTextListener(object: SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(p0: String?): Boolean {

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.practica_final.Carta
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserHomeBinding
 
@@ -23,7 +24,7 @@ class UserHomeFragment : Fragment() {
     val ma by lazy {
         activity as UserActivity
     }
-
+    var categorias = mutableListOf(true, true, true, true, true)
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -49,14 +50,19 @@ class UserHomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         refreshUI()
-
         binding.fuhSwitch.setOnClickListener {
             refreshSwitch()
         }
 
         binding.fuhCg.children.forEachIndexed { index, view ->
             (view as CheckBox).apply {
-                text = ma.categorias[index]; isChecked = true
+                text = Carta.categorias[index]; isChecked = true
+                setOnClickListener{
+                    val cb = (it as CheckBox)
+                    categorias[index] = cb.isChecked
+                    ma.adap_carta.listaCategorias = categorias
+                    refreshFilter()
+                }
             }
         }
 

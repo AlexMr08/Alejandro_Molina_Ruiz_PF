@@ -31,7 +31,6 @@ class AdminActivity : AppCompatActivity() {
     val navController by lazy { findNavController(R.id.nav_host_fragment_content_admin) }
     lateinit var lista_cartas: MutableList<Carta>
     val adap_carta by lazy { AdminCardAdapter(lista_cartas, this) }
-    val categorias by lazy { resources.getStringArray(R.array.categorias).toList() }
     lateinit var lista_pedidos: MutableList<Pedido>
     val adap_pedido by lazy { AdminOrdersAdapter(lista_pedidos, this) }
     val adap_eventos by lazy { AdminEventAdapter(lista_eventos, this) }

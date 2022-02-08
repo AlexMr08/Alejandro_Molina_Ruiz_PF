@@ -49,7 +49,6 @@ class UserCardAdapter(val lista:List<Carta>, val con: UserActivity) : RecyclerVi
     override fun getFilter(): Filter {
         return object : Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
-                var listaCat = listOf(blanco,negro,azul,rojo,verde)
                 val texto = p0.toString()
                 if (texto.isEmpty()) {
                     listaFiltrada = lista
@@ -66,11 +65,11 @@ class UserCardAdapter(val lista:List<Carta>, val con: UserActivity) : RecyclerVi
                 }
 
                 if (filtroCat){
-                    listaFiltrada = listaFiltrada.filterIndexed { index, b -> listaCat[con.categorias.indexOf(b.categoria)] }
-                }else{
-                    listaFiltrada = listaFiltrada
+                    listaFiltrada = listaFiltrada.filter{
+                        val index = Carta.categorias.indexOf(it.categoria)
+                        listaCategorias[index]
+                    }
                 }
-
                 val filterResults = FilterResults()
                 filterResults.values = listaFiltrada
                 return filterResults
