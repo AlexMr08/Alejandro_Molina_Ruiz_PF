@@ -34,7 +34,8 @@ class UserActivity : AppCompatActivity() {
     val adap_evento by lazy { UserEventAdapter(lista_eventos,this) }
     val appBarConfiguration by lazy { AppBarConfiguration(
         setOf(
-            R.id.userHomeFragment, R.id.userEventFragment, R.id.userProfileFragment))}
+            R.id.userHomeFragment,R.id.userViewCardFragment, R.id.userEventFragment, R.id.userProfileFragment))}
+
     val controlSP by lazy { ControlSP(this) }
     var usuario = Usuario()
 
@@ -241,9 +242,10 @@ class UserActivity : AppCompatActivity() {
         if (modo == 1){
             navView.setOnItemReselectedListener{ item ->
                 if (item.itemId == R.id.userHomeFragment) {
-                    navController.navigate(R.id.action_userViewCardFragment_to_userHomeFragment)
+                    navController.popBackStack()
                     return@setOnItemReselectedListener
                 }
+
             }
         }else{
             navView.setOnItemReselectedListener{}

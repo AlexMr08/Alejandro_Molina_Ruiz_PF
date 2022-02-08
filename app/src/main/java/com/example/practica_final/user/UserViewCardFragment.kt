@@ -78,7 +78,7 @@ class UserViewCardFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        ma.algoraro(1)
+        //ma.algoraro(1)
     }
 
     override fun onDestroyView() {

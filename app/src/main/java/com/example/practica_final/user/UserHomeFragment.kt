@@ -72,7 +72,7 @@ class UserHomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        ma.algoraro(0)
+        //ma.algoraro(0)
     }
 
     override fun onDestroyView() {

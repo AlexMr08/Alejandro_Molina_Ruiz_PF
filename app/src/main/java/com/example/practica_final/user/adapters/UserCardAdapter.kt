@@ -34,7 +34,7 @@ class UserCardAdapter(val lista:List<Carta>, val con: UserActivity) : RecyclerVi
         with(holder.bind){
             rvUserCardNom.text = elem.nombre
             rvUserCardPre.text = con.getString(R.string.carta_precio_rv,elem.precio)
-            Glide.with(con).load(elem.imagen).into(rvUserCardImg)
+            Glide.with(con).load(elem.imagen).placeholder(R.drawable.magic_card_back).into(rvUserCardImg)
             rvUserCardCl.setOnClickListener {
                 con.carta_sel = elem
                 con.navController.navigate(R.id.userViewCardFragment)

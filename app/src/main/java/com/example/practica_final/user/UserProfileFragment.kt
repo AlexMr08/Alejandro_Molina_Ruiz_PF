@@ -65,7 +65,7 @@ class UserProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        ma.algoraro(0)
+        //ma.algoraro(0)
 
     }
 

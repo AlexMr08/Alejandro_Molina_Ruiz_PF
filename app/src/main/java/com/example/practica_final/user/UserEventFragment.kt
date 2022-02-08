@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practica_final.databinding.FragmentUserEventBinding
 
 class UserEventFragment : Fragment() {
@@ -38,13 +39,13 @@ class UserEventFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         binding.fueRv.adapter = ma.adap_evento
-        binding.fueRv.layoutManager = GridLayoutManager(ma,2)
+        binding.fueRv.layoutManager = LinearLayoutManager(ma)
     }
 
     override fun onResume() {
         super.onResume()
         //(activity as UserActivity).FAB_manager(1, {})
-        ma.algoraro(0)
+        //ma.algoraro(0)
     }
 
     override fun onDestroyView() {
