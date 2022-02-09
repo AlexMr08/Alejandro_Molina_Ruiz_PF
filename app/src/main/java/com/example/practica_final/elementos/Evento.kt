@@ -1,4 +1,4 @@
-package com.example.practica_final
+package com.example.practica_final.elementos
 
 data class Evento(val id:String?="",
                   val nombre:String?="",

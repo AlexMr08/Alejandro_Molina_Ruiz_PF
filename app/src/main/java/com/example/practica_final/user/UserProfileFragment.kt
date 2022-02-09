@@ -1,33 +1,25 @@
 package com.example.practica_final.user
 
 import android.os.Bundle
-import android.service.controls.Control
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.practica_final.Carta
-import com.example.practica_final.ControlDB
-import com.example.practica_final.Pedido
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserProfileBinding
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.concurrent.CountDownLatch
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 
 class UserProfileFragment : Fragment() {
+    data class rep(val nom: String, val num: Float)
 
     private var _binding: FragmentUserProfileBinding? = null
     lateinit var menu: Menu
+    lateinit var pieData: PieData
     val ma by lazy {
         activity as UserActivity
     }
@@ -36,6 +28,11 @@ class UserProfileFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,7 +40,7 @@ class UserProfileFragment : Fragment() {
     ): View? {
 
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
+
         return binding.root
 
     }
@@ -55,18 +52,28 @@ class UserProfileFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.fupNom.text = ma.usuario.nombre
-        Glide.with(ma).load(ma.usuario.img).placeholder(R.drawable.magic_card_back)
-            .into(binding.fupImg)
-        binding.fupRv.adapter = ma.adaptador_pedidos
-        binding.fupRv.layoutManager = LinearLayoutManager(ma)
+
     }
 
 
     override fun onResume() {
         super.onResume()
-        //ma.algoraro(0)
+        val pieEntries = mutableListOf<PieEntry>()
+        ma.generarReporte().map {
+            pieEntries.add(PieEntry(it.num, it.nom))
+        }
+        val label = "JAJA"
+        val pieDataSet = PieDataSet(pieEntries, "JAJA")
+        pieDataSet.valueTextSize = 16f
+        pieData = PieData(pieDataSet)
+        pieData.setDrawValues(true)
 
+        binding.fupNom.text = ma.usuario.nombre
+        Glide.with(ma).load(ma.usuario.img).placeholder(R.drawable.magic_card_back)
+            .into(binding.fupImg)
+        val pieChart = ma.findViewById<PieChart>(R.id.fup_pieChart)
+        pieChart.data = pieData
+        pieChart.legend.isEnabled = false
     }
 
     override fun onDestroyView() {

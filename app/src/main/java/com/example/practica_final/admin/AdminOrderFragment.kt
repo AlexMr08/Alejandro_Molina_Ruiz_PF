@@ -42,6 +42,10 @@ class AdminOrderFragment : Fragment() {
         super.onStart()
         binding.faoRv.adapter = ma.adap_pedido
         binding.faoRv.layoutManager = LinearLayoutManager(ma)
+        binding.switch1.setOnClickListener {
+            ma.adap_pedido.check = binding.switch1.isChecked
+                ma.adap_pedido.filter.filter("")
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

@@ -1,7 +1,7 @@
-package com.example.practica_final
+package com.example.practica_final.aleLib
 
 import android.content.Context
-import android.content.SharedPreferences
+import com.example.practica_final.R
 
 class ControlSP(c: Context) {
     val contexto = c

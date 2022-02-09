@@ -33,4 +33,9 @@
             android:id="@+id/action_userViewCardFragment_to_userHomeFragment"
             app:destination="@id/userHomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/userOrdersFragment"
+        android:name="com.example.practica_final.user.UserOrdersFragment"
+        android:label="fragment_user_orders"
+        tools:layout="@layout/fragment_user_orders" />
 </navigation>

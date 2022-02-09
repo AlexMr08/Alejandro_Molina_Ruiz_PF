@@ -1,4 +1,4 @@
-package com.example.practica_final
+package com.example.practica_final.elementos
 
 data class Pedido(val id:String?="",
                   val idCliente:String?="",
@@ -9,4 +9,5 @@ data class Pedido(val id:String?="",
                   var nombreCarta:String?="",
                   var imgCarta:String?="",
                   var nombreCliente:String?="",
-                  var imgCliente:String?="" )
+                  var imgCliente:String?="",
+                  var estadoNotificacion:Int?=EstadoNotificaciones.CREADO)

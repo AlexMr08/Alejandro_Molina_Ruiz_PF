@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.practica_final.ControlDB
-import com.example.practica_final.Evento
+import com.example.practica_final.aleLib.ControlDB
+import com.example.practica_final.elementos.Evento
 import com.example.practica_final.R
 import com.example.practica_final.admin.AdminActivity
 import com.example.practica_final.databinding.RvAdminEventBinding

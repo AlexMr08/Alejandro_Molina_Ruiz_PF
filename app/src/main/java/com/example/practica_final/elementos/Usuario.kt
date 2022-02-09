@@ -1,7 +1,8 @@
-package com.example.practica_final
+package com.example.practica_final.elementos
 
-import java.io.Serializable
-
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+@Parcelize
 data class Usuario(var nombre:String?="",
                    var correo:String?="",
                    var pass:String?="",
@@ -10,4 +11,4 @@ data class Usuario(var nombre:String?="",
                    var fecha:String?="",
                    var img:String?="",
                    var estado_noti:Int?=0):
-    Serializable
+    Parcelable

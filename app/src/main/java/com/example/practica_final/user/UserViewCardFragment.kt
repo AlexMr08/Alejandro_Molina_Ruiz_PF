@@ -1,17 +1,15 @@
 package com.example.practica_final.user
 
 import android.os.Bundle
-import android.service.controls.Control
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.navigation.ui.AppBarConfiguration
 import com.bumptech.glide.Glide
-import com.example.practica_final.ControlDB
-import com.example.practica_final.ControlSP
-import com.example.practica_final.Pedido
+import com.example.practica_final.aleLib.ControlDB
+import com.example.practica_final.elementos.Pedido
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserViewCardBinding
-import com.example.practica_final.user.UserActivity
+import com.example.practica_final.elementos.EstadoNotificaciones
+import com.example.practica_final.elementos.EstadoPedido
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,7 +53,7 @@ class UserViewCardFragment : Fragment() {
             val formateador = SimpleDateFormat("yyyy-MM-dd")
             val hoy = formateador.format(fecha.time)
             val id = ControlDB.rutaResCartas.push().key
-            ControlDB.rutaResCartas.child(id?:"").setValue(Pedido(id?:"",ma.controlSP.id,elem.id?:"",hoy,0,elem.precio?:0f))
+            ControlDB.rutaResCartas.child(id?:"").setValue(Pedido(id?:"",ma.controlSP.id,elem.id?:"",hoy,EstadoPedido.CREADO,elem.precio?:0f,estadoNotificacion = EstadoNotificaciones.CREADO))
             ma.navController.navigate(R.id.userHomeFragment)
         }
     }

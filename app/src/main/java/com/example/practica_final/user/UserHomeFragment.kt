@@ -1,18 +1,16 @@
 package com.example.practica_final.user
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.practica_final.Carta
+import com.example.practica_final.elementos.Carta
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserHomeBinding
 

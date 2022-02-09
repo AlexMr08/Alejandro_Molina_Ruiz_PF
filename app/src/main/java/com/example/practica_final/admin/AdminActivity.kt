@@ -12,9 +12,13 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.practica_final.*
+import com.example.practica_final.aleLib.ControlDB
+import com.example.practica_final.aleLib.ControlNotif
 import com.example.practica_final.admin.adapters.AdminCardAdapter
 import com.example.practica_final.admin.adapters.AdminEventAdapter
 import com.example.practica_final.databinding.ActivityAdminBinding
+import com.example.practica_final.elementos.*
+import com.example.practica_final.user.UserProfileFragment
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.atomic.AtomicInteger
 
 class AdminActivity : AppCompatActivity() {
 
@@ -35,6 +40,7 @@ class AdminActivity : AppCompatActivity() {
     val adap_pedido by lazy { AdminOrdersAdapter(lista_pedidos, this) }
     val adap_eventos by lazy { AdminEventAdapter(lista_eventos, this) }
     lateinit var lista_eventos: MutableList<Evento>
+    lateinit var generador : AtomicInteger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +61,8 @@ class AdminActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        generador = AtomicInteger(0)
 
         lista_cartas = mutableListOf()
         ControlDB.rutacartas.addChildEventListener(object :
@@ -86,7 +94,7 @@ class AdminActivity : AppCompatActivity() {
         })
 
         lista_pedidos = mutableListOf()
-        ControlDB.rutaResCartas.orderByChild("fecha").addChildEventListener(object : ChildEventListener {
+        ControlDB.rutaResCartas.orderByChild("estado").addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 var pedido = snapshot.getValue(Pedido::class.java)
                 GlobalScope.launch(Dispatchers.IO) {
@@ -117,6 +125,12 @@ class AdminActivity : AppCompatActivity() {
                         })
                         sem.await()
                         lista_pedidos.add(pedido)
+                        if (pedido?.estadoNotificacion== EstadoNotificaciones.CREADO){
+                            ControlNotif.generarNotificacion(this@AdminActivity,generador.incrementAndGet(),"El pedido se ha realizado","Compra aceptada",
+                                UserProfileFragment::class.java)
+                            ControlDB.rutaResCartas.child(pedido.id?:"").child("estadoNotificacion").setValue(EstadoNotificaciones.NOTIFICADO)
+
+                        }
                         runOnUiThread {
                             adap_pedido.notifyDataSetChanged()
                         }
@@ -126,7 +140,6 @@ class AdminActivity : AppCompatActivity() {
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                     var pedido = snapshot.getValue(Pedido::class.java)
-                    val index = lista_pedidos.map { it.id }.indexOf(pedido?.id)
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {}

@@ -9,12 +9,17 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.practica_final.*
+import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.databinding.RvAdminOrderBinding
+import com.example.practica_final.elementos.EstadoNotificaciones
+import com.example.practica_final.elementos.EstadoPedido
+import com.example.practica_final.elementos.Pedido
 
-class AdminOrdersAdapter(lista:List<Pedido>, val con: AdminActivity) : RecyclerView.Adapter<AdminOrdersAdapter.ViewHolder>(),
+class AdminOrdersAdapter(val lista:List<Pedido>, val con: AdminActivity) : RecyclerView.Adapter<AdminOrdersAdapter.ViewHolder>(),
     Filterable {
     private var listaFiltrada = lista
 
+    var check = false
     class ViewHolder(val bind: RvAdminOrderBinding) : RecyclerView.ViewHolder(bind.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,12 +36,11 @@ class AdminOrdersAdapter(lista:List<Pedido>, val con: AdminActivity) : RecyclerV
             rapPrecio.text = con.getString(R.string.carta_precio,elem.precio)
             rapCliente.text = elem.nombreCliente
             rapAceptar.setOnClickListener {
-                elem.estado=EstadoPedido.ACEPTADO
+                elem.estado= EstadoPedido.ACEPTADO
                 con.adap_pedido.notifyItemChanged(position)
                 ControlDB.rutaResCartas.child(elem.id?:"").child("estado").setValue(EstadoPedido.ACEPTADO)
-                if (elem.estado==EstadoPedido.ACEPTADO){
+                ControlDB.rutaResCartas.child(elem.id?:"").child("estadoNotificacion").setValue(EstadoNotificaciones.CREADO_CLIENTE)
                     holder.bind.rapAceptar.visibility = View.GONE
-                }
             }
         }
     }
@@ -48,6 +52,11 @@ class AdminOrdersAdapter(lista:List<Pedido>, val con: AdminActivity) : RecyclerV
     override fun getFilter(): Filter {
         return object : Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
+                if (check){
+                    listaFiltrada = listaFiltrada.filter { it.estado==EstadoPedido.CREADO }
+                }else{
+                    listaFiltrada = lista
+                }
 
                 val filterResults = FilterResults()
                 filterResults.values = listaFiltrada
@@ -62,9 +71,9 @@ class AdminOrdersAdapter(lista:List<Pedido>, val con: AdminActivity) : RecyclerV
     }
 
     fun refreshUI(elem: Pedido, holder: ViewHolder){
-        if (elem.estado==EstadoPedido.ACEPTADO){
+        if (elem.estado== EstadoPedido.ACEPTADO){
             holder.bind.rapAceptar.visibility = View.GONE
-        }else if (elem.estado==EstadoPedido.CREADO){
+        }else if (elem.estado== EstadoPedido.CREADO){
             holder.bind.rapAceptar.visibility = View.VISIBLE
         }
     }

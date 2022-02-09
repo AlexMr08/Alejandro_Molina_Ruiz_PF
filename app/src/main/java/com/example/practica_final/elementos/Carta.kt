@@ -1,4 +1,4 @@
-package com.example.practica_final
+package com.example.practica_final.elementos
 
 import android.R
 import android.graphics.drawable.ColorDrawable
@@ -14,6 +14,7 @@ data class Carta(val id:String?="",
                  var disponible:Boolean?=true){
     companion object{
         val categorias = listOf<String>("Negro","Blanco","Azul","Rojo","Verde")
+        val colores = listOf<String>("#000000", "#CFCFCF", "#0000FF","#FF0000","#00FF00")
     }
 }
 

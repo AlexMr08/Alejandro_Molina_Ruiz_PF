@@ -1,34 +1,38 @@
 package com.example.practica_final
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.practica_final.aleLib.ControlDB
+import com.example.practica_final.aleLib.ControlSP
 import com.example.practica_final.admin.AdminActivity
 import com.example.practica_final.databinding.ActivityMainBinding
+import com.example.practica_final.elementos.Usuario
 import com.example.practica_final.user.UserActivity
 import com.google.firebase.database.*
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     val controlSp by lazy{ ControlSP(this) }
 
+
     private lateinit var buscado : Usuario
-
-
     var nom = ""
     var pass = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        crearCanalNotis(this)
     }
 
     override fun onStart() {
         super.onStart()
-
         if (controlSp.id!=""){
             when(controlSp.tipo) {
                 0 -> {
@@ -92,5 +96,19 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
             }
         })
+    }
+}
+
+fun crearCanalNotis(con: Context){
+    if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+        val nombre = con.getString(R.string.nombre_canal)
+        val idcanal = con.getString(R.string.id_canal)
+        val desc = con.getString(R.string.desc_canal)
+        val importancia = NotificationManager.IMPORTANCE_DEFAULT
+
+        val canal = NotificationChannel(idcanal,nombre,importancia).apply { description = desc }
+
+        val nm : NotificationManager = con.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nm.createNotificationChannel(canal)
     }
 }

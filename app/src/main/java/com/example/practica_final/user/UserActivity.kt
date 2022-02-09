@@ -2,6 +2,7 @@ package com.example.practica_final.user
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,7 +10,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.practica_final.*
+import com.example.practica_final.aleLib.ControlDB
+import com.example.practica_final.aleLib.ControlNotif
+import com.example.practica_final.aleLib.ControlSP
 import com.example.practica_final.databinding.ActivityUserBinding
+import com.example.practica_final.elementos.*
 import com.example.practica_final.user.adapters.UserCardAdapter
 import com.example.practica_final.user.adapters.UserEventAdapter
 import com.example.practica_final.user.adapters.UserProfileCardAdapter
@@ -21,9 +26,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.atomic.AtomicInteger
 
 class UserActivity : AppCompatActivity() {
     lateinit var Menu : Menu
+    private lateinit var generador:AtomicInteger
     val navView by lazy { binding.navView }
     var lista_cartas = buscarCartas()
     var lista_eventos = buscarEventos()
@@ -34,7 +41,7 @@ class UserActivity : AppCompatActivity() {
     val adap_evento by lazy { UserEventAdapter(lista_eventos,this) }
     val appBarConfiguration by lazy { AppBarConfiguration(
         setOf(
-            R.id.userHomeFragment,R.id.userViewCardFragment, R.id.userEventFragment, R.id.userProfileFragment))}
+            R.id.userHomeFragment, R.id.userEventFragment,R.id.userProfileFragment, R.id.userOrdersFragment))}
 
     val controlSP by lazy { ControlSP(this) }
     var usuario = Usuario()
@@ -55,8 +62,6 @@ class UserActivity : AppCompatActivity() {
 
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         navView.setBackgroundResource(R.drawable.gradient_bg)
 
         // Passing each menu ID as a set of Ids because each
@@ -64,17 +69,21 @@ class UserActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-         buscarUsuario()
-
+        generador = AtomicInteger(0)
 //        lista_cartas = mutableListOf()
 //        buscarCartas()
 
+        buscarUsuario()
 
         lista_pedidos = mutableListOf()
         buscarPedidos()
 
-        navView.setOnItemReselectedListener{}
+
+
+
+        navView.setOnItemSelectedListener(this::bottomNavNavigation)
+
+        //navView.setOnItemReselectedListener(this::bottomNavNavigation)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -146,13 +155,13 @@ class UserActivity : AppCompatActivity() {
                 GlobalScope.launch(Dispatchers.IO) {
                     val sem = CountDownLatch(1)
                     var pedido = snapshot.getValue(Pedido::class.java)
-                    if (pedido != null && pedido.idCliente == controlSP.id) {
-                        ControlDB.rutacartas.child(pedido.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
+                    if (pedido?.idCliente?:"" == controlSP.id) {
+                        ControlDB.rutacartas.child(pedido?.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 val carta = snapshot.getValue(Carta::class.java)
-                                pedido.imgCarta = carta?.imagen
-                                pedido.nombreCarta = carta?.nombre
-                                if (pedido.estado==1){
+                                pedido?.imgCarta = carta?.imagen
+                                pedido?.nombreCarta = carta?.nombre
+                                if (pedido?.estado==1){
                                     cartas_usuario++
                                 }
                                 sem.countDown()
@@ -161,7 +170,12 @@ class UserActivity : AppCompatActivity() {
                             override fun onCancelled(error: DatabaseError) {}
                         })
                         sem.await()
-                        lista_pedidos.add(pedido)
+                        if (pedido?.idCliente==controlSP.id
+                            && pedido?.estadoNotificacion == EstadoNotificaciones.CREADO_CLIENTE){
+                            ControlNotif.generarNotificacion(this@UserActivity,generador.incrementAndGet(),"El pedido se ha realizado","Compra aceptada",UserProfileFragment::class.java)
+                            ControlDB.rutaResCartas.child(pedido.id?:"").child("estadoNotificacion").setValue(EstadoNotificaciones.NOTIFICADO_CLIENTE)
+                        }
+                        lista_pedidos.add(pedido?: Pedido())
                     }
                 }
             }
@@ -169,15 +183,14 @@ class UserActivity : AppCompatActivity() {
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 GlobalScope.launch(Dispatchers.IO) {
                     var pedido = snapshot.getValue(Pedido::class.java)
-                    val index = lista_pedidos.map { it.id }.indexOf(pedido?.id)
                     val sem = CountDownLatch(1)
-                    if (pedido != null && pedido.idCliente == controlSP.id) {
-                        ControlDB.rutacartas.child(pedido.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
+                    if (pedido?.idCliente?:"" == controlSP.id) {
+                        ControlDB.rutacartas.child(pedido?.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 val carta = snapshot.getValue(Carta::class.java)
-                                pedido.imgCarta = carta?.imagen
-                                pedido.nombreCarta = carta?.nombre
-                                if (pedido.estado==1){
+                                pedido?.imgCarta = carta?.imagen
+                                pedido?.nombreCarta = carta?.nombre
+                                if (pedido?.estado==1){
                                     cartas_usuario++
                                 }
                                 sem.countDown()
@@ -186,9 +199,13 @@ class UserActivity : AppCompatActivity() {
                             override fun onCancelled(error: DatabaseError) {}
                         })
                         sem.await()
+                        if (pedido?.idCliente==controlSP.id
+                            && pedido?.estadoNotificacion == EstadoNotificaciones.CREADO_CLIENTE){
+                            ControlNotif.generarNotificacion(this@UserActivity,generador.incrementAndGet(),"El pedido se ha realizado","Compra aceptada",UserProfileFragment::class.java)
+                            ControlDB.rutaResCartas.child(pedido.id?:"").child("estadoNotificacion").setValue(EstadoNotificaciones.NOTIFICADO_CLIENTE)
+                        }
                         runOnUiThread {
-                            lista_pedidos[index]=pedido
-                            adaptador_pedidos.notifyItemChanged(index)
+                            adaptador_pedidos.notifyDataSetChanged()
                         }
                     }
 
@@ -238,17 +255,48 @@ class UserActivity : AppCompatActivity() {
         return lista_evento
     }
 
-    fun algoraro(modo:Int){
-        if (modo == 1){
-            navView.setOnItemReselectedListener{ item ->
-                if (item.itemId == R.id.userHomeFragment) {
-                    navController.popBackStack()
-                    return@setOnItemReselectedListener
-                }
-
+    fun bottomNavNavigation(item: MenuItem):Boolean{
+        return when (item.itemId) {
+            R.id.userHomeFragment -> {
+                navController.navigate(R.id.userHomeFragment)
+                true
             }
-        }else{
-            navView.setOnItemReselectedListener{}
+            R.id.userEventFragment -> {
+                navController.navigate(R.id.userEventFragment)
+                true
+            }
+            R.id.userOrdersFragment -> {
+                navController.navigate(R.id.userOrdersFragment)
+                true
+            }
+            R.id.userProfileFragment -> {
+                navController.navigate(R.id.userProfileFragment)
+                true
+            }
+            else -> true
         }
+    }
+
+    fun generarReporte(): MutableList<UserProfileFragment.rep> {
+        val id_pedidos = lista_pedidos.map { it.idCarta }
+        var lista_cartas_indx = mutableListOf<Int>()
+        id_pedidos.forEach { elem ->
+            lista_cartas_indx.add(lista_cartas.map { it.id }.indexOf(elem))
+        }
+        val listaCartas = mutableListOf<Carta>()
+        lista_cartas_indx.forEach { listaCartas.add(lista_cartas[it]) }
+        var reporte = mutableListOf<UserProfileFragment.rep>()
+        Carta.categorias.forEach { cat ->
+            if (listaCartas.filter { it.categoria == cat }.isNotEmpty()) {
+                reporte.add(
+                    UserProfileFragment.rep(
+                        cat,
+                        listaCartas.filter { it.categoria == cat }.size.toFloat()
+                    )
+                )
+            }
+        }
+
+        return reporte
     }
 }

@@ -2,7 +2,6 @@ package com.example.practica_final.admin
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,12 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.animation.doOnEnd
 import com.bumptech.glide.Glide
-import com.example.practica_final.Carta
-import com.example.practica_final.ControlDB
+import com.example.practica_final.elementos.Carta
+import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentAdminAddCardBinding
 import kotlinx.coroutines.Dispatchers

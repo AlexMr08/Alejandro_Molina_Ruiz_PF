@@ -1,4 +1,4 @@
-package com.example.practica_final
+package com.example.practica_final.elementos
 
 class EstadoPedido{
     companion object{
@@ -11,7 +11,7 @@ class EstadoNotificaciones{
     companion object{
         const val NOTIFICADO=0
         const val CREADO=1
-        const val MODIFICADO_NOMBRE=2
-        const val MODIFICADO_DISPONIBLE=3
+        const val NOTIFICADO_CLIENTE=2
+        const val CREADO_CLIENTE=3
     }
 }
