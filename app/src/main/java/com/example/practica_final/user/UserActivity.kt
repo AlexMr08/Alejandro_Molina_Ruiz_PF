@@ -274,7 +274,7 @@ class UserActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val evento = snapshot.getValue(Evento::class.java)?:Evento()
+                val evento = snapshot.getValue(Evento::class.java)?: Evento()
                 val index = lista_evento.map { it.id }.indexOf(evento.id)
                 lista_eventos[index].plazas_ocupadas = evento.plazas_ocupadas
                 adap_evento.notifyDataSetChanged()
@@ -342,15 +342,15 @@ class UserActivity : AppCompatActivity() {
     }
 
     fun buscarReservas(): MutableList<Reserva> {
-        var lista = mutableListOf<Reserva>()
-        ControlDB.rutaEvento.addChildEventListener(object :
+        val lista = mutableListOf<Reserva>()
+        ControlDB.rutaResEventos.addChildEventListener(object :
             ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val reserva = snapshot.getValue(Reserva::class.java)
-                if (reserva?.idCliente == controlSP.id) {
-                    lista.add(reserva!!)
+                val reserva = snapshot.getValue(Reserva::class.java)?:Reserva()
+                if (reserva.idCliente == controlSP.id) {
+                    lista.add(reserva)
                 }
-                adap_evento.notifyDataSetChanged()
+                //adap_evento.notifyDataSetChanged()
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}

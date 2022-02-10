@@ -64,6 +64,9 @@ class UserViewEventFragment : Fragment() {
             ControlDB.rutaResEventos.child(id_res?:"").setValue(evento)
             ControlDB.rutaEvento.child(elem.id?:"").child("plazas_ocupadas").setValue(suma)
         }
+        if (elem.id in ma.lista_reserva.map { it.idEvento }){
+            binding.button.isEnabled = false
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
