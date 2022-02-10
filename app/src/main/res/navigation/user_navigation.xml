@@ -23,7 +23,11 @@
         android:id="@+id/userEventFragment"
         android:name="com.example.practica_final.user.UserEventFragment"
         android:label="fragment_user_event"
-        tools:layout="@layout/fragment_user_event" />
+        tools:layout="@layout/fragment_user_event" >
+        <action
+            android:id="@+id/action_userEventFragment_to_userViewEventFragment2"
+            app:destination="@id/userViewEventFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userViewCardFragment"
         android:name="com.example.practica_final.user.UserViewCardFragment"
@@ -38,4 +42,13 @@
         android:name="com.example.practica_final.user.UserOrdersFragment"
         android:label="fragment_user_orders"
         tools:layout="@layout/fragment_user_orders" />
+    <fragment
+        android:id="@+id/userViewEventFragment"
+        android:name="com.example.practica_final.user.UserViewEventFragment"
+        android:label="fragment_user_view_event"
+        tools:layout="@layout/fragment_user_view_event" >
+        <action
+            android:id="@+id/action_userViewEventFragment_to_userEventFragment"
+            app:destination="@id/userEventFragment" />
+    </fragment>
 </navigation>

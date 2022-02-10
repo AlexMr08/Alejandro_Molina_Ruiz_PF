@@ -18,7 +18,7 @@ import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    val controlSp by lazy{ ControlSP(this) }
+    lateinit var controlSp : ControlSP
 
 
     private lateinit var buscado : Usuario
@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         crearCanalNotis(this)
+        controlSp = ControlSP(this)
     }
 
     override fun onStart() {

@@ -37,7 +37,7 @@
     <!--String Evento-->
     <string name="evento_aforo">Aforo: %1$d/%2$d</string>
     <string name="evento_precio_rv">%1$.2f €</string>
-    <string name="evento_precio">Precio: %1$.2f €</string>
+    <string name="evento_precio">Precio: %1$.2f€ - Plazas %2$d/%3$d</string>
     <string name="evento_aforo_dis">Aun quedan plazas!!</string>
 
     <!--String Carta-->

@@ -6,17 +6,20 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.FitCenter
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserViewEventBinding
 
-class UserViewCardFragment : Fragment() {
+
+class UserViewEventFragment : Fragment() {
 
     private var _binding: FragmentUserViewEventBinding? = null
     lateinit var menu: Menu
-    val ma by lazy {
-        activity as UserActivity
-    }
-
+    val ma by lazy { activity as UserActivity }
+    val elem by lazy{ ma.evento_sel }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -40,15 +43,16 @@ class UserViewCardFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
+        Glide.with(ma).load(elem.imagen).transform(CenterCrop(), RoundedCorners(10)).into(binding.fuveImg)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         this.menu = menu
         //esto indica que se muestra en la appbar
-        this.menu.findItem(R.id.app_bar_search).setVisible(true)
+        this.menu.findItem(R.id.app_bar_search).setVisible(false)
     }
+
 
     override fun onDestroyOptionsMenu() {
         super.onDestroyOptionsMenu()

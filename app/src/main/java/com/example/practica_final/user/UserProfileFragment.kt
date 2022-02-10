@@ -23,6 +23,7 @@ class UserProfileFragment : Fragment() {
     val ma by lazy {
         activity as UserActivity
     }
+    val reporte by lazy { ma.generarReporte() }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -59,21 +60,25 @@ class UserProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val pieEntries = mutableListOf<PieEntry>()
-        ma.generarReporte().map {
-            pieEntries.add(PieEntry(it.num, it.nom))
-        }
-        val label = "JAJA"
-        val pieDataSet = PieDataSet(pieEntries, "JAJA")
-        pieDataSet.valueTextSize = 16f
-        pieData = PieData(pieDataSet)
-        pieData.setDrawValues(true)
+        if (ma.lista_cartas.isEmpty()){
 
+        }else{
+            reporte.map {
+                pieEntries.add(PieEntry(it.num, it.nom))
+            }
+            val label = "JAJA"
+            val pieDataSet = PieDataSet(pieEntries, "JAJA")
+            pieDataSet.valueTextSize = 16f
+            pieData = PieData(pieDataSet)
+            pieData.setDrawValues(true)
+            val pieChart = ma.findViewById<PieChart>(R.id.fup_pieChart)
+            pieChart.data = pieData
+            pieChart.legend.isEnabled = false
+        }
+        
         binding.fupNom.text = ma.usuario.nombre
         Glide.with(ma).load(ma.usuario.img).placeholder(R.drawable.magic_card_back)
             .into(binding.fupImg)
-        val pieChart = ma.findViewById<PieChart>(R.id.fup_pieChart)
-        pieChart.data = pieData
-        pieChart.legend.isEnabled = false
     }
 
     override fun onDestroyView() {

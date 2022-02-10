@@ -1,6 +1,7 @@
 package com.example.practica_final.user
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
@@ -29,27 +30,35 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicInteger
 
 class UserActivity : AppCompatActivity() {
-    lateinit var Menu : Menu
-    private lateinit var generador:AtomicInteger
+    lateinit var Menu: Menu
+    private lateinit var generador: AtomicInteger
     val navView by lazy { binding.navView }
     var lista_cartas = buscarCartas()
     var lista_eventos = buscarEventos()
     private lateinit var binding: ActivityUserBinding
     var carta_sel = Carta()
+    var evento_sel = Evento()
     val navController by lazy { findNavController(R.id.nav_host_fragment_activity_user) }
     val adap_carta by lazy { UserCardAdapter(lista_cartas, this) }
-    val adap_evento by lazy { UserEventAdapter(lista_eventos,this) }
-    val appBarConfiguration by lazy { AppBarConfiguration(
-        setOf(
-            R.id.userHomeFragment, R.id.userEventFragment,R.id.userProfileFragment, R.id.userOrdersFragment))}
+    val adap_evento by lazy { UserEventAdapter(lista_eventos, this) }
+    val appBarConfiguration by lazy {
+        AppBarConfiguration(
+            setOf(
+                R.id.userHomeFragment,
+                R.id.userEventFragment,
+                R.id.userProfileFragment,
+                R.id.userOrdersFragment
+            )
+        )
+    }
 
-    val controlSP by lazy { ControlSP(this) }
+    val controlSP by lazy { ControlSP(applicationContext) }
     var usuario = Usuario()
 
     val adaptador_pedidos by lazy {
         UserProfileCardAdapter(lista_pedidos, this)
     }
-    lateinit var lista_pedidos: MutableList<Pedido>
+    val lista_pedidos = buscarPedidos()
 
     var cartas_usuario = 0
 
@@ -57,6 +66,7 @@ class UserActivity : AppCompatActivity() {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -69,21 +79,20 @@ class UserActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
         generador = AtomicInteger(0)
 //        lista_cartas = mutableListOf()
 //        buscarCartas()
 
         buscarUsuario()
 
-        lista_pedidos = mutableListOf()
-        buscarPedidos()
-
-
+        //lista_pedidos = mutableListOf()
+        //buscarPedidos()
 
 
         navView.setOnItemSelectedListener(this::bottomNavNavigation)
 
-        //navView.setOnItemReselectedListener(this::bottomNavNavigation)
+        navView.setOnItemReselectedListener { }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -91,7 +100,7 @@ class UserActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.user, menu)
         Menu = menu
         (menu.findItem(R.id.app_bar_search).actionView as SearchView)
-            .setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            .setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     return false
                 }
@@ -105,23 +114,24 @@ class UserActivity : AppCompatActivity() {
         return true
     }
 
-    fun buscarUsuario(){
-            ControlDB.rutaUsuario.child(controlSP.id).addListenerForSingleValueEvent(object : ValueEventListener{
+    fun buscarUsuario() {
+        ControlDB.rutaUsuario.child(controlSP.id)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    usuario = snapshot?.getValue(Usuario::class.java)!!
+                    usuario = snapshot?.getValue(Usuario::class.java) ?: Usuario()
                 }
 
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
 
-    fun buscarCartas():MutableList<Carta>{
+    fun buscarCartas(): MutableList<Carta> {
         var lista_cartas = mutableListOf<Carta>()
-        ControlDB.rutacartas.addChildEventListener( object :
+        ControlDB.rutacartas.addChildEventListener(object :
             ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val carta = snapshot.getValue(Carta::class.java)
-                if (carta?.disponible == true){
+                if (carta?.disponible == true) {
                     lista_cartas.add(carta!!)
                 }
                 adap_carta.notifyDataSetChanged()
@@ -129,18 +139,23 @@ class UserActivity : AppCompatActivity() {
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 val carta = snapshot.getValue(Carta::class.java)
-                if (carta?.disponible == true){
+                if (carta?.disponible == true) {
                     lista_cartas.add(carta)
-                }else if(carta?.disponible==false){
+                } else if (carta?.disponible == false) {
                     val cr = lista_cartas.filter { it.id == carta.id }.get(0)
                     lista_cartas.removeAt(lista_cartas.indexOf(cr))
                 }
                 adap_carta.notifyDataSetChanged()
             }
 
-            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/}
+            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/
+            }
 
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {/*como no vamos a cambiar la posicion nada no lo usamos*/}
+            override fun onChildMoved(
+                snapshot: DataSnapshot,
+                previousChildName: String?
+            ) {/*como no vamos a cambiar la posicion nada no lo usamos*/
+            }
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -149,33 +164,40 @@ class UserActivity : AppCompatActivity() {
         return lista_cartas
     }
 
-    fun buscarPedidos(){
+    fun buscarPedidos(): MutableList<Pedido> {
+        var lista = mutableListOf<Pedido>()
         ControlDB.rutaResCartas.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 GlobalScope.launch(Dispatchers.IO) {
                     val sem = CountDownLatch(1)
                     var pedido = snapshot.getValue(Pedido::class.java)
-                    if (pedido?.idCliente?:"" == controlSP.id) {
-                        ControlDB.rutacartas.child(pedido?.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                val carta = snapshot.getValue(Carta::class.java)
-                                pedido?.imgCarta = carta?.imagen
-                                pedido?.nombreCarta = carta?.nombre
-                                if (pedido?.estado==1){
-                                    cartas_usuario++
+                    if (pedido?.idCliente ?: "" == controlSP.id) {
+                        ControlDB.rutacartas.child(pedido?.idCarta ?: "")
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    val carta = snapshot.getValue(Carta::class.java)
+                                    pedido?.imgCarta = carta?.imagen?:""
+                                    pedido?.nombreCarta = carta?.nombre?:""
+                                    sem.countDown()
                                 }
-                                sem.countDown()
-                            }
 
-                            override fun onCancelled(error: DatabaseError) {}
-                        })
+                                override fun onCancelled(error: DatabaseError) {}
+                            })
                         sem.await()
-                        if (pedido?.idCliente==controlSP.id
-                            && pedido?.estadoNotificacion == EstadoNotificaciones.CREADO_CLIENTE){
-                            ControlNotif.generarNotificacion(this@UserActivity,generador.incrementAndGet(),"El pedido se ha realizado","Compra aceptada",UserProfileFragment::class.java)
-                            ControlDB.rutaResCartas.child(pedido.id?:"").child("estadoNotificacion").setValue(EstadoNotificaciones.NOTIFICADO_CLIENTE)
+                        if (pedido?.estadoNotificacion == EstadoNotificaciones.CREADO_CLIENTE
+                            && pedido?.idCliente == controlSP.id) {
+                            ControlNotif.generarNotificacion(
+                                this@UserActivity,
+                                generador.incrementAndGet(),
+                                "El pedido se ha realizado",
+                                "Compra aceptada",
+                                UserProfileFragment::class.java
+                            )
+                            ControlDB.rutaResCartas.child(pedido.id ?: "")
+                                .child("estadoNotificacion")
+                                .setValue(EstadoNotificaciones.NOTIFICADO_CLIENTE)
                         }
-                        lista_pedidos.add(pedido?: Pedido())
+                        lista.add(pedido ?: Pedido())
                     }
                 }
             }
@@ -184,25 +206,35 @@ class UserActivity : AppCompatActivity() {
                 GlobalScope.launch(Dispatchers.IO) {
                     var pedido = snapshot.getValue(Pedido::class.java)
                     val sem = CountDownLatch(1)
-                    if (pedido?.idCliente?:"" == controlSP.id) {
-                        ControlDB.rutacartas.child(pedido?.idCarta?:"").addListenerForSingleValueEvent(object: ValueEventListener{
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                val carta = snapshot.getValue(Carta::class.java)
-                                pedido?.imgCarta = carta?.imagen
-                                pedido?.nombreCarta = carta?.nombre
-                                if (pedido?.estado==1){
-                                    cartas_usuario++
+                    if (pedido?.idCliente ?: "" == controlSP.id) {
+                        ControlDB.rutacartas.child(pedido?.idCarta ?: "")
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    val carta = snapshot.getValue(Carta::class.java)
+                                    pedido?.imgCarta = carta?.imagen
+                                    pedido?.nombreCarta = carta?.nombre
+                                    if (pedido?.estado == 1) {
+                                        cartas_usuario++
+                                    }
+                                    sem.countDown()
                                 }
-                                sem.countDown()
-                            }
 
-                            override fun onCancelled(error: DatabaseError) {}
-                        })
+                                override fun onCancelled(error: DatabaseError) {}
+                            })
                         sem.await()
-                        if (pedido?.idCliente==controlSP.id
-                            && pedido?.estadoNotificacion == EstadoNotificaciones.CREADO_CLIENTE){
-                            ControlNotif.generarNotificacion(this@UserActivity,generador.incrementAndGet(),"El pedido se ha realizado","Compra aceptada",UserProfileFragment::class.java)
-                            ControlDB.rutaResCartas.child(pedido.id?:"").child("estadoNotificacion").setValue(EstadoNotificaciones.NOTIFICADO_CLIENTE)
+                        if (pedido?.idCliente == controlSP.id
+                            && pedido?.estadoNotificacion == EstadoNotificaciones.CREADO_CLIENTE
+                        ) {
+                            ControlNotif.generarNotificacion(
+                                this@UserActivity,
+                                generador.incrementAndGet(),
+                                "El pedido se ha realizado",
+                                "Compra aceptada",
+                                UserProfileFragment::class.java
+                            )
+                            ControlDB.rutaResCartas.child(pedido.id ?: "")
+                                .child("estadoNotificacion")
+                                .setValue(EstadoNotificaciones.NOTIFICADO_CLIENTE)
                         }
                         runOnUiThread {
                             adaptador_pedidos.notifyDataSetChanged()
@@ -219,15 +251,16 @@ class UserActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {}
         })
+        return lista
     }
 
-    fun buscarEventos():MutableList<Evento>{
+    fun buscarEventos(): MutableList<Evento> {
         var lista_evento = mutableListOf<Evento>()
-        ControlDB.rutaEvento.addChildEventListener( object :
+        ControlDB.rutaEvento.addChildEventListener(object :
             ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val evento = snapshot.getValue(Evento::class.java)
-                if (evento?.disponible == true){
+                if (evento?.disponible == true) {
                     lista_evento.add(evento!!)
                 }
                 adap_evento.notifyDataSetChanged()
@@ -235,18 +268,23 @@ class UserActivity : AppCompatActivity() {
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 val evento = snapshot.getValue(Evento::class.java)
-                if (evento?.disponible == true){
+                if (evento?.disponible == true) {
                     lista_evento.add(evento!!)
-                }else if(evento?.disponible==false){
+                } else if (evento?.disponible == false) {
                     val cr = lista_evento.filter { it.id == evento.id }.get(0)
                     lista_evento.removeAt(lista_evento.indexOf(cr))
                 }
                 adap_evento.notifyDataSetChanged()
             }
 
-            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/}
+            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/
+            }
 
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {/*como no vamos a cambiar la posicion nada no lo usamos*/}
+            override fun onChildMoved(
+                snapshot: DataSnapshot,
+                previousChildName: String?
+            ) {/*como no vamos a cambiar la posicion nada no lo usamos*/
+            }
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -255,7 +293,7 @@ class UserActivity : AppCompatActivity() {
         return lista_evento
     }
 
-    fun bottomNavNavigation(item: MenuItem):Boolean{
+    fun bottomNavNavigation(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.userHomeFragment -> {
                 navController.navigate(R.id.userHomeFragment)
