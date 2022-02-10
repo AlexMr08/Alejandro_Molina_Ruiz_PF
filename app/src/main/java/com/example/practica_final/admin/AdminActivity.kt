@@ -30,7 +30,6 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicInteger
 
 class AdminActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityAdminBinding
     val navController by lazy { findNavController(R.id.nav_host_fragment_content_admin) }
@@ -41,6 +40,7 @@ class AdminActivity : AppCompatActivity() {
     val adap_eventos by lazy { AdminEventAdapter(lista_eventos, this) }
     lateinit var lista_eventos: MutableList<Evento>
     lateinit var generador : AtomicInteger
+    var evento_sel = Evento()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

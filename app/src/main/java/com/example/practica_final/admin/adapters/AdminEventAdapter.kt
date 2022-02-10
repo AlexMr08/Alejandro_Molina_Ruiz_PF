@@ -24,12 +24,16 @@ class AdminEventAdapter(val lista:List<Evento>, val con: AdminActivity) : Recycl
         with(holder.bind){
             raeNom.text = elem.nombre
             raePlazas.text = con.getString(R.string.evento_aforo,elem.plazas_ocupadas,elem.plazas_totales)
-            raePre.text = con.getString(R.string.evento_precio,elem.precio)
+            raePre.text = con.getString(R.string.evento_precio_rv,elem.precio)
             Glide.with(con).load(elem.imagen).into(raeImg)
             raeFecha.text = elem.fecha
             raeDis.isChecked = elem.disponible?:false
             raeDis.setOnCheckedChangeListener { button, check ->
                 ControlDB.rutaEvento.child(elem.id?:"").child("disponible").setValue(check)
+            }
+            raeCl.setOnClickListener {
+                con.evento_sel = elem
+                con.navController.navigate(R.id.adminViewEventFragment)
             }
         }
     }

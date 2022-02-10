@@ -1,4 +1,4 @@
-package com.example.practica_final.user
+package com.example.practica_final.admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,16 +6,15 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practica_final.R
-import com.example.practica_final.databinding.FragmentUserOrdersBinding
+import com.example.practica_final.databinding.FragmentAdminViewEventBinding
 
-class UserOrdersFragment : Fragment() {
+class AdminViewEventFragment : Fragment() {
 
-    private var _binding: FragmentUserOrdersBinding? = null
+    private var _binding: FragmentAdminViewEventBinding? = null
     lateinit var menu: Menu
     val ma by lazy {
-        activity as UserActivity
+        activity as AdminActivity
     }
 
 
@@ -28,7 +27,8 @@ class UserOrdersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
-        _binding = FragmentUserOrdersBinding.inflate(inflater, container, false)
+        _binding = FragmentAdminViewEventBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
 
     }
@@ -40,10 +40,8 @@ class UserOrdersFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.fuoRv.adapter = ma.adap_pedidos
-        binding.fuoRv.layoutManager = LinearLayoutManager(ma)
-    }
 
+    }
 
     override fun onResume() {
         super.onResume()

@@ -43,5 +43,10 @@
         android:name="com.example.practica_final.admin.AdminAddEventFragment"
         android:label="@string/admin_add_event"
         tools:layout="@layout/fragment_admin_add_event" />
+    <fragment
+        android:id="@+id/adminViewEventFragment"
+        android:name="com.example.practica_final.admin.AdminViewEventFragment"
+        android:label="fragment_admin_view_event"
+        tools:layout="@layout/fragment_admin_view_event" />
 
 </navigation>

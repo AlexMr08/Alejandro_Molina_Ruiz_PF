@@ -1,6 +1,8 @@
 package com.example.practica_final.user
 
+import android.media.metrics.Event
 import android.os.Bundle
+import android.service.controls.Control
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,7 +13,12 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.practica_final.R
+import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.databinding.FragmentUserViewEventBinding
+import com.example.practica_final.elementos.Evento
+import com.example.practica_final.elementos.Reserva
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class UserViewEventFragment : Fragment() {
@@ -44,6 +51,17 @@ class UserViewEventFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         Glide.with(ma).load(elem.imagen).transform(CenterCrop(), RoundedCorners(10)).into(binding.fuveImg)
+        binding.fuveNom.text = elem.nombre
+        binding.fuveNumAforo.text = ma.getString(R.string.evento_aforo,elem.plazas_ocupadas,elem.plazas_totales)
+        binding.fuveNumPrecio.text = ma.getString(R.string.evento_precio_rv, elem.precio)
+        binding.button.setOnClickListener {
+            val fecha = Calendar.getInstance()
+            val formateador = SimpleDateFormat("yyyy-MM-dd")
+            val hoy = formateador.format(fecha.time)
+            val id_res = ControlDB.rutaResEventos.push().key
+            val evento = Reserva(id_res,ma.controlSP.id,elem.id,hoy, elem.precio)
+            ControlDB.rutaResEventos.child(id_res?:"").setValue(evento)
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
