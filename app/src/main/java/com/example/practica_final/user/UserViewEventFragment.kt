@@ -60,7 +60,9 @@ class UserViewEventFragment : Fragment() {
             val hoy = formateador.format(fecha.time)
             val id_res = ControlDB.rutaResEventos.push().key
             val evento = Reserva(id_res,ma.controlSP.id,elem.id,hoy, elem.precio)
+            var suma = elem.plazas_ocupadas!!+1
             ControlDB.rutaResEventos.child(id_res?:"").setValue(evento)
+            ControlDB.rutaEvento.child(elem.id?:"").child("plazas_ocupadas").setValue(suma)
         }
     }
 

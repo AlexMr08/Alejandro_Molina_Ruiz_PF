@@ -274,13 +274,9 @@ class UserActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val evento = snapshot.getValue(Evento::class.java)
-                if (evento?.disponible == true) {
-                    lista_evento.add(evento!!)
-                } else if (evento?.disponible == false) {
-                    val cr = lista_evento.filter { it.id == evento.id }.get(0)
-                    lista_evento.removeAt(lista_evento.indexOf(cr))
-                }
+                val evento = snapshot.getValue(Evento::class.java)?:Evento()
+                val index = lista_evento.map { it.id }.indexOf(evento.id)
+                lista_eventos[index].plazas_ocupadas = evento.plazas_ocupadas
                 adap_evento.notifyDataSetChanged()
             }
 
