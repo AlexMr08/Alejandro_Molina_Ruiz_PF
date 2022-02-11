@@ -26,7 +26,7 @@ class AdminCardAdapter(val lista:List<Carta>, val con:Context) : RecyclerView.Ad
             rvacNom.text = elem.nombre
             rvacSwi.isChecked = elem.disponible?:false
             Glide.with(con).load(elem.imagen).transform(RoundedCorners(20)).placeholder(R.drawable.magic_card_back).into(rvacImg)
-            rvacSwi.setOnCheckedChangeListener { button, check ->
+            rvacSwi.setOnCheckedChangeListener { _, check ->
                 ControlDB.rutacartas.child(elem.id?:"").child("disponible").setValue(check)
             }
         }

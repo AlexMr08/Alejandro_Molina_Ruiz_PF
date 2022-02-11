@@ -126,7 +126,7 @@ class UserActivity : AppCompatActivity() {
         ControlDB.rutaUsuario.child(controlSP.id)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    usuario = snapshot?.getValue(Usuario::class.java) ?: Usuario()
+                    usuario = snapshot.getValue(Usuario::class.java) ?: Usuario()
                 }
 
                 override fun onCancelled(error: DatabaseError) {}
@@ -214,16 +214,16 @@ class UserActivity : AppCompatActivity() {
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 GlobalScope.launch(Dispatchers.IO) {
-                    var pedido = snapshot.getValue(Pedido::class.java)
+                    val pedido = snapshot.getValue(Pedido::class.java)?:Pedido()
                     val sem = CountDownLatch(1)
-                    if (pedido?.idCliente ?: "" == controlSP.id) {
-                        ControlDB.rutacartas.child(pedido?.idCarta ?: "")
+                    if (pedido.idCliente ?: "" == controlSP.id) {
+                        ControlDB.rutacartas.child(pedido.idCarta ?: "")
                             .addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
                                     val carta = snapshot.getValue(Carta::class.java)
-                                    pedido?.imgCarta = carta?.imagen
-                                    pedido?.nombreCarta = carta?.nombre
-                                    if (pedido?.estado == 1) {
+                                    pedido.imgCarta = carta?.imagen
+                                    pedido.nombreCarta = carta?.nombre
+                                    if (pedido.estado == 1) {
                                         cartas_usuario++
                                     }
                                     sem.countDown()
@@ -232,8 +232,8 @@ class UserActivity : AppCompatActivity() {
                                 override fun onCancelled(error: DatabaseError) {}
                             })
                         sem.await()
-                        if (pedido?.idCliente == controlSP.id
-                            && pedido?.estadoNotificacion == EstadoNotificaciones.CREADO_CLIENTE
+                        if (pedido.idCliente == controlSP.id
+                            && pedido.estadoNotificacion == EstadoNotificaciones.CREADO_CLIENTE
                         ) {
                             ControlNotif.generarNotificacion(
                                 this@UserActivity,

@@ -43,7 +43,7 @@ class AdminAddCardFragment : Fragment() {
             else -> {
                 urlPortadaLocal = uri
                 Glide.with(ma).load(urlPortadaLocal).transform(CenterCrop(),RoundedCorners(20)).into(binding.fancImgCarta)
-                flipCard(ma, binding.fancImgCarta, binding.fancReverso)
+                flipCard(binding.fancImgCarta, binding.fancReverso)
             }
         }
     }
@@ -83,7 +83,7 @@ class AdminAddCardFragment : Fragment() {
             obtenerUrl.launch("image/*")
         }
         binding.fancImgCarta.setOnClickListener {
-            flipCard(ma, binding.fancReverso, binding.fancImgCarta)
+            flipCard(binding.fancReverso, binding.fancImgCarta)
             urlPortadaLocal = null
         }
 
@@ -114,7 +114,7 @@ class AdminAddCardFragment : Fragment() {
         _binding = null
     }
 
-    fun flipCard(ma: AdminActivity, visibleView: View, inVisibleView: View) {
+    fun flipCard( visibleView: View, inVisibleView: View) {
         try {
             visibleView.visibility = View.VISIBLE
             val flipOutAnimatorSet =
@@ -168,7 +168,7 @@ class AdminAddCardFragment : Fragment() {
         val id = ControlDB.rutacartas.push().key
         val img = subirImagenCarta(id!!, urlPortadaLocal!!)
         val carta = Carta(id, nom, cat, img, pre, dis)
-        ControlDB.rutacartas.child(id ?: "").setValue(carta)
+        ControlDB.rutacartas.child(id).setValue(carta)
     }
 
     fun actualizarAdapter(lista: List<String>){

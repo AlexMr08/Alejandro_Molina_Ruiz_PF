@@ -33,6 +33,8 @@ class AdminAddEventFragment : Fragment() {
     val ma by lazy {
         activity as AdminActivity
     }
+    private var urlPortadaLocal: Uri? = null
+
     val obtenerUrl = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         when (uri) {
             null -> println("No hay imagen")
@@ -43,7 +45,6 @@ class AdminAddEventFragment : Fragment() {
             }
         }
     }
-    private var urlPortadaLocal: Uri? = null
 
 
     // This property is only valid between onCreateView and
@@ -123,7 +124,7 @@ class AdminAddEventFragment : Fragment() {
         val id = ControlDB.rutaEvento.push().key
         val img = subirImagenEvento(id!!, urlPortadaLocal!!)
         val evento = Evento(id, nom, fecha, img, pre, afo)
-        ControlDB.rutaEvento.child(id ?: "").setValue(evento)
+        ControlDB.rutaEvento.child(id).setValue(evento)
     }
 
     fun isValid(): Boolean {

@@ -37,13 +37,12 @@ class AdminActivity : AppCompatActivity() {
     lateinit var lista_cartas: MutableList<Carta>
     val adap_carta by lazy { AdminCardAdapter(lista_cartas, this) }
     lateinit var lista_pedidos: MutableList<Pedido>
-    var lista_reservas = mutableListOf<Reserva>()
+
     val adap_pedido by lazy { AdminOrdersAdapter(lista_pedidos, this) }
     val adap_eventos by lazy { AdminEventAdapter(lista_eventos, this) }
     lateinit var lista_eventos: MutableList<Evento>
     lateinit var generador: AtomicInteger
     var evento_sel = Evento()
-    val adap_reserva by lazy { AdminBookingAdapter(lista_reservas, this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +67,6 @@ class AdminActivity : AppCompatActivity() {
         generador = AtomicInteger(0)
 
         lista_cartas = mutableListOf()
-        lista_reservas = buscarReservas()
         ControlDB.rutacartas.addChildEventListener(object :
             ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -238,42 +236,5 @@ class AdminActivity : AppCompatActivity() {
         return lista
     }
 
-    fun buscarReservas(): MutableList<Reserva> {
-        val lista = mutableListOf<Reserva>()
-        ControlDB.rutaResEventos.addChildEventListener(object :
-            ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                GlobalScope.launch(Dispatchers.IO) {
-                    val reserva = snapshot.getValue(Reserva::class.java) ?: Reserva()
-                    val sem = CountDownLatch(1)
-                    ControlDB.rutaUsuario.child(reserva.idCliente ?: "")
-                        .addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                val usu = snapshot.getValue(Usuario::class.java) ?: Usuario()
-                                reserva.imgCliente = usu.img
-                                reserva.nombreCliente = usu.nombre
-                                sem.countDown()
-                            }
 
-                            override fun onCancelled(error: DatabaseError) {
-                            }
-                        })
-                    sem.await()
-                    lista.add(reserva)
-                }
-                adap_reserva.notifyDataSetChanged()
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
-        return lista
-    }
 }

@@ -60,7 +60,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
         bind.registerBtnReg.setOnClickListener {
-            var id_user : String? = null
+            var id_user : String?
             val nom = bind.registerTieNom.text.toString().trim()
             val correo = bind.registerTieMail.text.toString().trim()
             val pass1 = bind.registerTiePass1.text.toString().trim()
@@ -185,7 +185,7 @@ class RegisterActivity : AppCompatActivity() {
         )
 
         if (!passwordRegex.matcher(e.text.toString()).matches()){
-            bind.tilPass1.error = "La contraseña debe tener al menos 8 caracteres y tener un numero, una minuscula y una mayuscula."
+            bind.tilPass1.error = "La contraseña debe tener minimo 8 caracteres, un numero y una mayuscula."
             valid=false
         }
         return valid

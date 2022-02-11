@@ -56,15 +56,16 @@ class UserViewEventFragment : Fragment() {
         binding.fuveNumPrecio.text = ma.getString(R.string.evento_precio_rv, elem.precio)
         binding.button.setOnClickListener {
             val fecha = Calendar.getInstance()
-            val formateador = SimpleDateFormat("yyyy-MM-dd")
+            val formateador = SimpleDateFormat("dd/M/yyyy")
             val hoy = formateador.format(fecha.time)
             val id_res = ControlDB.rutaResEventos.push().key
             val evento = Reserva(id_res,ma.controlSP.id,elem.id,hoy, elem.precio)
             var suma = elem.plazas_ocupadas!!+1
             ControlDB.rutaResEventos.child(id_res?:"").setValue(evento)
             ControlDB.rutaEvento.child(elem.id?:"").child("plazas_ocupadas").setValue(suma)
+            ma.navController.popBackStack()
         }
-        if (elem.id in ma.lista_reserva.map { it.idEvento }){
+        if (elem.id in ma.lista_reserva.map { it.idEvento } || elem.plazas_ocupadas==elem.plazas_totales){
             binding.button.isEnabled = false
         }
     }

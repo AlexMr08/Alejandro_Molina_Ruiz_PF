@@ -17,7 +17,7 @@ import com.example.practica_final.elementos.Pedido
 
 class AdminOrdersAdapter(val lista:List<Pedido>, val con: AdminActivity) : RecyclerView.Adapter<AdminOrdersAdapter.ViewHolder>(),
     Filterable {
-    private var listaFiltrada = lista.sortedBy { it.estado }
+    private var listaFiltrada = lista
 
     var check = false
     class ViewHolder(val bind: RvAdminOrderBinding) : RecyclerView.ViewHolder(bind.root)
@@ -53,7 +53,7 @@ class AdminOrdersAdapter(val lista:List<Pedido>, val con: AdminActivity) : Recyc
         return object : Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
                 if (check){
-                    listaFiltrada = listaFiltrada.filter { it.estado==EstadoPedido.CREADO }
+                    listaFiltrada = lista.filter { it.estado==EstadoPedido.CREADO }
                 }else{
                     listaFiltrada = lista
                 }

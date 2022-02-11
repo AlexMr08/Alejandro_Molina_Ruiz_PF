@@ -35,7 +35,8 @@
         app:layout_constraintEnd_toEndOf="@+id/til_correo"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/til_correo"
-        app:layout_constraintTop_toBottomOf="@+id/til_correo">
+        app:layout_constraintTop_toBottomOf="@+id/til_correo"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerTiePass1"
@@ -70,20 +71,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         android:text="Registrarse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/til_pass2"
-        app:layout_constraintStart_toStartOf="@+id/til_pass1"
-        app:layout_constraintTop_toBottomOf="@+id/til_pass2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="@+id/til_pass1" />
 
     <ImageView
         android:id="@+id/register_iv_pp"
-        android:layout_width="@dimen/imagen_grande"
-        android:layout_height="@dimen/imagen_grande"
+        android:layout_width="@dimen/imagen_mediana"
+        android:layout_height="@dimen/imagen_mediana"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
