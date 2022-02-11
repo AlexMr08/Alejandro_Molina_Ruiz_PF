@@ -30,7 +30,7 @@ class AdminEventAdapter(val lista:List<Evento>, val con: AdminActivity) : Recycl
             Glide.with(con).load(elem.imagen).transform(CenterCrop(), RoundedCorners(50)).into(raeImg)
             raeFecha.text = elem.fecha
             raeCl.setOnClickListener {
-                con.evento_sel = elem
+                con.evento_sel = position
                 con.navController.navigate(R.id.adminViewEventFragment)
             }
         }

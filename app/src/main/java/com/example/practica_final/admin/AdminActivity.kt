@@ -42,7 +42,7 @@ class AdminActivity : AppCompatActivity() {
     val adap_eventos by lazy { AdminEventAdapter(lista_eventos, this) }
     lateinit var lista_eventos: MutableList<Evento>
     lateinit var generador: AtomicInteger
-    var evento_sel = Evento()
+    var evento_sel = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -221,10 +221,10 @@ class AdminActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val evento = snapshot.getValue(Evento::class.java)
-                val modificado =
-                    lista_eventos.indexOf(lista_eventos.filter { it.id == evento?.id }[0])
-                lista_eventos[modificado].disponible = evento?.disponible
+                val evento = snapshot.getValue(Evento::class.java)?:Evento()
+                val modificado = lista_eventos.indexOf(lista_eventos.filter { it.id == evento?.id }[0])
+                lista_eventos[modificado] = evento
+                adap_eventos.notifyDataSetChanged()
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {}

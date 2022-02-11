@@ -59,7 +59,8 @@ class AdminViewEventFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        val elem = ma.evento_sel
+        val index = ma.evento_sel
+        val elem = ma.lista_eventos[index]
         Glide.with(ma).load(elem.imagen).transform(CenterCrop(), RoundedCorners(50))
             .placeholder(R.drawable.ic_baseline_location_on_24).into(binding.faveImg)
         binding.faveNom.text = elem.nombre
