@@ -61,14 +61,9 @@ class AdminViewEventFragment : Fragment() {
         super.onStart()
         val index = ma.evento_sel
         val elem = ma.lista_eventos[index]
-        Glide.with(ma).load(elem.imagen).transform(CenterCrop(), RoundedCorners(50))
-            .placeholder(R.drawable.ic_baseline_location_on_24).into(binding.faveImg)
-        binding.faveNom.text = elem.nombre
-        binding.faveAforo.text =
-            ma.getString(R.string.evento_aforo, elem.plazas_ocupadas, elem.plazas_totales)
-        binding.favePre.text = ma.getString(R.string.evento_precio_rv, elem.precio)
-        binding.faveFec.text = elem.fecha
         val lista = generarLista(elem)
+        refreshUI(elem, lista.size)
+
         adap = AdminBookingAdapter(lista, ma)
         binding.faveRv.adapter = adap
         binding.faveRv.layoutManager = LinearLayoutManager(ma)
@@ -109,6 +104,7 @@ class AdminViewEventFragment : Fragment() {
                         lista.add(snap)
                         ma.runOnUiThread {
                             adap.notifyDataSetChanged()
+                            refreshUI(elem,lista.size)
                         }
                     }
 
@@ -117,7 +113,6 @@ class AdminViewEventFragment : Fragment() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -133,5 +128,15 @@ class AdminViewEventFragment : Fragment() {
             }
         })
         return lista
+    }
+
+    fun refreshUI(elem : Evento, num : Int){
+        Glide.with(ma).load(elem.imagen).transform(CenterCrop(), RoundedCorners(50))
+            .placeholder(R.drawable.ic_baseline_location_on_24).into(binding.faveImg)
+        binding.faveNom.text = elem.nombre
+        binding.faveAforo.text =
+            ma.getString(R.string.evento_aforo, num, elem.plazas_totales)
+        binding.favePre.text = ma.getString(R.string.evento_precio_rv, elem.precio)
+        binding.faveFec.text = elem.fecha
     }
 }
