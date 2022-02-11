@@ -25,7 +25,7 @@ class UserEventAdapter(val lista:List<Evento>, val con: UserActivity) : Recycler
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val elem = lista[position]
         with(holder.bind){
-            Glide.with(con).load(elem.imagen).transform(CenterCrop(),RoundedCorners(10)).placeholder(R.drawable.ic_baseline_event_24).into(rueImg)
+            Glide.with(con).load(elem.imagen).transform(CenterCrop(),RoundedCorners(50)).placeholder(R.drawable.ic_baseline_event_24).into(rueImg)
             rueNom.text = elem.nombre
             ruePre.text = con.getString(R.string.evento_precio,elem.precio, elem.plazas_ocupadas, elem.plazas_totales)
             rueFec.text = elem.fecha

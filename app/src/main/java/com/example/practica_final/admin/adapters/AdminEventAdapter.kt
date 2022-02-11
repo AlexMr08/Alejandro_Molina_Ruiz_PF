@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.elementos.Evento
 import com.example.practica_final.R
@@ -25,7 +27,7 @@ class AdminEventAdapter(val lista:List<Evento>, val con: AdminActivity) : Recycl
             raeNom.text = elem.nombre
             raePlazas.text = con.getString(R.string.evento_aforo,elem.plazas_ocupadas,elem.plazas_totales)
             raePre.text = con.getString(R.string.evento_precio_rv,elem.precio)
-            Glide.with(con).load(elem.imagen).into(raeImg)
+            Glide.with(con).load(elem.imagen).transform(CenterCrop(), RoundedCorners(50)).into(raeImg)
             raeFecha.text = elem.fecha
             raeCl.setOnClickListener {
                 con.evento_sel = elem

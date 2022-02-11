@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/rvac_img"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/imagen_mediana"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"

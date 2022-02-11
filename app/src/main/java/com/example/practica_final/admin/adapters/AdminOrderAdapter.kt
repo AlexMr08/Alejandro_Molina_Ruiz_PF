@@ -17,7 +17,7 @@ import com.example.practica_final.elementos.Pedido
 
 class AdminOrdersAdapter(val lista:List<Pedido>, val con: AdminActivity) : RecyclerView.Adapter<AdminOrdersAdapter.ViewHolder>(),
     Filterable {
-    private var listaFiltrada = lista
+    private var listaFiltrada = lista.sortedBy { it.estado }
 
     var check = false
     class ViewHolder(val bind: RvAdminOrderBinding) : RecyclerView.ViewHolder(bind.root)

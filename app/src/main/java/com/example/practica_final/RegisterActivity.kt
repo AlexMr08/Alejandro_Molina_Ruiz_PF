@@ -184,8 +184,8 @@ class RegisterActivity : AppCompatActivity() {
                     "$"
         )
 
-        if (!passwordRegex.matcher(e.text).matches()){
-            e.error = "La contraseña debe tener al menos 8 caracteres y tener un numero, una minuscula y una mayuscula."
+        if (!passwordRegex.matcher(e.text.toString()).matches()){
+            bind.tilPass1.error = "La contraseña debe tener al menos 8 caracteres y tener un numero, una minuscula y una mayuscula."
             valid=false
         }
         return valid

@@ -37,7 +37,7 @@
         tools:src="@drawable/magic_card_back" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_pass1"
+        android:id="@+id/til_precio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -52,7 +52,8 @@
             android:id="@+id/fanc_pre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Precio" />
+            android:hint="Precio"
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Switch
@@ -61,16 +62,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="Esta disponible?"
-        app:layout_constraintBottom_toBottomOf="@+id/til_pass1"
+        app:layout_constraintBottom_toBottomOf="@+id/til_precio"
         app:layout_constraintEnd_toEndOf="@+id/til_nombre"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/til_pass1"
-        app:layout_constraintTop_toTopOf="@+id/til_pass1" />
+        app:layout_constraintStart_toEndOf="@+id/til_precio"
+        app:layout_constraintTop_toTopOf="@+id/til_precio" />
 
     <ImageView
         android:id="@+id/fanc_reverso"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/imagen_extra_grande"
         android:layout_marginTop="32dp"
         android:adjustViewBounds="true"
         android:src="@drawable/magic_card_back"
@@ -79,12 +80,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/fanc_spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:spinnerMode="dialog"
         app:layout_constraintEnd_toEndOf="@+id/til_nombre"
         app:layout_constraintStart_toStartOf="@+id/til_nombre"
-        app:layout_constraintTop_toBottomOf="@+id/til_pass1" />
+        app:layout_constraintTop_toBottomOf="@+id/til_precio" />
 </androidx.constraintlayout.widget.ConstraintLayout>

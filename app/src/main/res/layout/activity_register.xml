@@ -31,11 +31,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@+id/til_correo"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/til_correo"
-        app:layout_constraintTop_toBottomOf="@+id/til_correo"
-        app:passwordToggleEnabled="true">
+        app:layout_constraintTop_toBottomOf="@+id/til_correo">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerTiePass1"
@@ -50,9 +50,9 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@+id/til_correo"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/til_correo"
         app:layout_constraintTop_toBottomOf="@+id/til_pass1"
         app:passwordToggleEnabled="true">
@@ -70,7 +70,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         android:text="Registrarse"
@@ -82,8 +82,8 @@
 
     <ImageView
         android:id="@+id/register_iv_pp"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/imagen_grande"
+        android:layout_height="@dimen/imagen_grande"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"

@@ -21,19 +21,20 @@
             android:id="@+id/faae_nom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint" />
+            android:hint="@string/nombre_evento" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/faae_img"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/imagen_extra_grande"
+        android:layout_height="@dimen/imagen_extra_grande"
         android:layout_marginTop="8dp"
         android:adjustViewBounds="true"
         android:src="@drawable/magic_card_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu_gallery" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -51,7 +52,7 @@
             android:id="@+id/faae_aforo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint"
+            android:hint="@string/aforo"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +71,10 @@
             android:id="@+id/faae_fecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint" />
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/fecha_evento"
+            android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -89,6 +93,7 @@
             android:id="@+id/faae_precio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint" />
+            android:hint="@string/precio"
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

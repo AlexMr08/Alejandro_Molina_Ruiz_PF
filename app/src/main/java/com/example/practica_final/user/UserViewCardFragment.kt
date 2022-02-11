@@ -6,12 +6,20 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.practica_final.R
+import com.example.practica_final.aleLib.ControlDB
+import com.example.practica_final.databinding.FragmentUserViewCardBinding
 import com.example.practica_final.databinding.FragmentUserViewEventBinding
+import com.example.practica_final.elementos.EstadoNotificaciones
+import com.example.practica_final.elementos.EstadoPedido
+import com.example.practica_final.elementos.Pedido
+import java.text.SimpleDateFormat
+import java.util.*
 
 class UserViewCardFragment : Fragment() {
 
-    private var _binding: FragmentUserViewEventBinding? = null
+    private var _binding: FragmentUserViewCardBinding? = null
     lateinit var menu: Menu
     val ma by lazy {
         activity as UserActivity
@@ -27,7 +35,7 @@ class UserViewCardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
-        _binding = FragmentUserViewEventBinding.inflate(inflater, container, false)
+        _binding = FragmentUserViewCardBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding.root
 
@@ -40,6 +48,19 @@ class UserViewCardFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        val elem = ma.carta_sel
+        binding.textView2.text = elem.nombre
+        binding.textView4.text = elem.categoria
+        binding.textView3.text = ma.getString(R.string.carta_precio,elem.precio)
+        Glide.with(ma).load(elem.imagen).placeholder(R.drawable.magic_card_back).into(binding.imageView3)
+        binding.button3.setOnClickListener {
+            val fecha = Calendar.getInstance()
+            val formateador = SimpleDateFormat("yyyy-MM-dd")
+            val hoy = formateador.format(fecha.time)
+            val id = ControlDB.rutaResCartas.push().key
+            ControlDB.rutaResCartas.child(id?:"").setValue(Pedido(id?:"",ma.controlSP.id,elem.id?:"",hoy,EstadoPedido.CREADO,elem.precio?:0f,estadoNotificacion = EstadoNotificaciones.CREADO))
+            ma.navController.navigate(R.id.userHomeFragment)
+        }
 
     }
 

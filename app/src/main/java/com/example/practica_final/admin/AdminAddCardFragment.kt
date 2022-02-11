@@ -11,9 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.animation.doOnEnd
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.FitCenter
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.practica_final.elementos.Carta
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.R
@@ -37,7 +42,7 @@ class AdminAddCardFragment : Fragment() {
             null -> println("No hay imagen")
             else -> {
                 urlPortadaLocal = uri
-                Glide.with(ma).load(urlPortadaLocal).into(binding.fancImgCarta)
+                Glide.with(ma).load(urlPortadaLocal).transform(CenterCrop(),RoundedCorners(20)).into(binding.fancImgCarta)
                 flipCard(ma, binding.fancImgCarta, binding.fancReverso)
             }
         }
@@ -73,6 +78,7 @@ class AdminAddCardFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        Glide.with(ma).load(R.drawable.magic_card_back).transform(RoundedCorners(20)).into(binding.fancReverso)
         binding.fancReverso.setOnClickListener {
             obtenerUrl.launch("image/*")
         }
@@ -83,7 +89,7 @@ class AdminAddCardFragment : Fragment() {
 
         actualizarAdapter(Carta.categorias)
 
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.fancSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -96,19 +102,6 @@ class AdminAddCardFragment : Fragment() {
                 //hay que ponerlo pero no lo hemos usado :(
             }
         }
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        this.menu = menu
-        //esto indica que se muestra en la appbar
-        //this.menu.findItem(R.id.app_bar_search).setVisible(true)
-    }
-
-    override fun onDestroyOptionsMenu() {
-        super.onDestroyOptionsMenu()
-        //esto indica que se quita de la appbar
-        //menu.findItem(R.id.app_bar_search).setVisible(false)
     }
 
     override fun onResume() {
@@ -146,15 +139,18 @@ class AdminAddCardFragment : Fragment() {
     }
 
     fun subirCarta(v: View) {
-
-        GlobalScope.launch(Dispatchers.IO) {
-
-            if (urlPortadaLocal != null) {
-                nuevaCarta()
-                ma.runOnUiThread {
-                    ma.navController.navigate(R.id.adminHomeFragment)
+        if (urlPortadaLocal == null ) {
+            Toast.makeText(ma, "Selecciona una imagen", Toast.LENGTH_SHORT).show()
+        }else{
+            if (isValid()){
+                GlobalScope.launch(Dispatchers.IO) {
+                    nuevaCarta()
+                    ma.runOnUiThread {
+                        ma.navController.navigate(R.id.adminHomeFragment)
+                    }
                 }
             }
+
         }
     }
 
@@ -165,11 +161,8 @@ class AdminAddCardFragment : Fragment() {
     }
 
     suspend fun nuevaCarta() {
-        val nom = binding.fancNom.text.toString()
-        var pre = binding.fancPre.text.toString().toFloatOrNull()
-        if (pre == null) {
-            pre = 0.0f
-        }
+        val nom = binding.fancNom.text.toString().trim()
+        var pre = binding.fancPre.text.toString().toFloat()
         val cat = Carta.categorias[pos_spi]
         val dis = binding.fancDis.isChecked
         val id = ControlDB.rutacartas.push().key
@@ -181,7 +174,42 @@ class AdminAddCardFragment : Fragment() {
     fun actualizarAdapter(lista: List<String>){
         val spi_adap = ArrayAdapter(ma, android.R.layout.simple_spinner_item, lista)
         spi_adap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinner.adapter=spi_adap
+            binding.fancSpinner.adapter=spi_adap
     }
 
+        fun isValid():Boolean{
+            	var validated = true
+            	val checkers = listOf(
+            		Pair(binding.fancNom, this::validName),
+                    Pair(binding.fancPre, this::validNum)
+                    //Pair(binding.textview, this::funcion)
+            	)
+            	for(c in checkers){
+            		val x = c.first
+            		val f = c.second
+            		val y = f(x)
+            		validated = y
+            		if(!validated) break
+            	}
+            	return validated
+            }
+
+    fun validName(e: EditText):Boolean{
+        var valid = true
+        if (e.text.toString().trim().length<=2){
+            e.error = "El nombre de la carta debe tener al menos 3 caracteres"
+            valid = false
+        }
+        return valid
+    }
+
+    fun validNum(e: EditText):Boolean{
+        var valid = true
+        val num = e.text.toString().trim().toFloatOrNull()
+        if (num==null || num<=0){
+            e.error = "Introduce un precio valido"
+            valid = false
+        }
+        return valid
+    }
 }

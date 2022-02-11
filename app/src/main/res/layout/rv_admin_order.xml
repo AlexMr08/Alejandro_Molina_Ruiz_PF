@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/rap_img_carta"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/imagen_mediana"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/magic_card_back" />
 
     <TextView
         android:id="@+id/rap_nom_carta"

@@ -10,13 +10,13 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/imagen_extra_grande"
         android:layout_marginTop="24dp"
         android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@drawable/magic_card_back" />
 
     <TextView
         android:id="@+id/textView2"

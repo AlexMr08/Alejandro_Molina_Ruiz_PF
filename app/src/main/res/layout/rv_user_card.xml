@@ -53,7 +53,7 @@
             <ImageView
                 android:id="@+id/rv_user_card_img"
                 android:layout_width="wrap_content"
-                android:layout_height="125dp"
+                android:layout_height="@dimen/imagen_grande"
                 android:layout_marginTop="8dp"
                 android:adjustViewBounds="true"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/fuve_img"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/imagen_grande"
+        android:layout_height="@dimen/imagen_grande"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_baseline_location_on_24"

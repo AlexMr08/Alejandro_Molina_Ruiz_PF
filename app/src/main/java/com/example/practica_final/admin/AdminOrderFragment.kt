@@ -48,16 +48,6 @@ class AdminOrderFragment : Fragment() {
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        this.menu = menu
-        //esto indica que se muestra en la appbar
-    }
-
-    override fun onDestroyOptionsMenu() {
-        super.onDestroyOptionsMenu()
-        //esto indica que se quita de la appbar
-    }
 
     override fun onResume() {
         super.onResume()

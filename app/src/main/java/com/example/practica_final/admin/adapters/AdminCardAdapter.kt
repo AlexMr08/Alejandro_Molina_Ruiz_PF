@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.practica_final.elementos.Carta
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.R
@@ -24,7 +25,7 @@ class AdminCardAdapter(val lista:List<Carta>, val con:Context) : RecyclerView.Ad
         with(holder.bind){
             rvacNom.text = elem.nombre
             rvacSwi.isChecked = elem.disponible?:false
-            Glide.with(con).load(elem.imagen).placeholder(R.drawable.magic_card_back).into(rvacImg)
+            Glide.with(con).load(elem.imagen).transform(RoundedCorners(20)).placeholder(R.drawable.magic_card_back).into(rvacImg)
             rvacSwi.setOnCheckedChangeListener { button, check ->
                 ControlDB.rutacartas.child(elem.id?:"").child("disponible").setValue(check)
             }

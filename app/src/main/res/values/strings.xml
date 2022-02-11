@@ -57,6 +57,14 @@
         <item>Verde</item>
     </string-array>
 
+    <string name="precio">Precio</string>
+    <string name="fecha_evento">Fecha del evento</string>
+    <string name="nombre_evento">Nombre del evento</string>
+    <string name="aforo">Aforo</string>
+
+    <string name="admin_rserva_fecha">Se unio el: %1$s</string>
+    <string name="admin_evento_texto">Usuarios que se han unido: </string>
+
     <!--Strings Notificaciones-->
     <string name="nombre_canal">Notificaciones app</string>
     <string name="id_canal">canal_principal</string>

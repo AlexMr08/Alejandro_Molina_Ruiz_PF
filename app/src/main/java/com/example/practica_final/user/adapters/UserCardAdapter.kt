@@ -33,7 +33,7 @@ class UserCardAdapter(val lista:List<Carta>, val con: UserActivity) : RecyclerVi
             rvUserCardNom.text = elem.nombre
             rvUserCardPre.text = con.getString(R.string.carta_precio_rv,elem.precio)
             imageView5.setColorFilter(Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)]))
-            Glide.with(con).load(elem.imagen).transform(RoundedCorners(10)).placeholder(R.drawable.magic_card_back).into(rvUserCardImg)
+            Glide.with(con).load(elem.imagen).transform(RoundedCorners(20)).placeholder(R.drawable.magic_card_back).into(rvUserCardImg)
             rvUserCardCl.setOnClickListener {
                 con.carta_sel = elem
                 con.navController.navigate(R.id.userViewCardFragment)

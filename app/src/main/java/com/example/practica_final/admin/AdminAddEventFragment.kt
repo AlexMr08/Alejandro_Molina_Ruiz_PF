@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.example.di_tema7formularios.DatePickerFragment
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.elementos.Evento
 import com.example.practica_final.R
@@ -18,11 +20,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.time.LocalDate
+import java.time.Period
+import java.time.format.DateTimeFormatter
 
 class AdminAddEventFragment : Fragment() {
 
     private var _binding: FragmentAdminAddEventBinding? = null
     lateinit var menu: Menu
+    val formatter = DateTimeFormatter.ofPattern("d/M/yyyy")
+    var date = LocalDate.now()
     val ma by lazy {
         activity as AdminActivity
     }
@@ -46,7 +53,8 @@ class AdminAddEventFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
 
         _binding = FragmentAdminAddEventBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
@@ -64,20 +72,11 @@ class AdminAddEventFragment : Fragment() {
         binding.faaeImg.setOnClickListener {
             obtenerUrl.launch("image/*")
         }
+        binding.faaeFecha.setOnClickListener {
+            abrirDatePicker()
+        }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        this.menu = menu
-        //esto indica que se muestra en la appbar
-//        this.menu.findItem(R.id.app_bar_search).setVisible(true)
-    }
-
-    override fun onDestroyOptionsMenu() {
-        super.onDestroyOptionsMenu()
-        //esto indica que se quita de la appbar
-//        menu.findItem(R.id.app_bar_search).setVisible(false)
-    }
 
     override fun onResume() {
         super.onResume()
@@ -90,16 +89,15 @@ class AdminAddEventFragment : Fragment() {
     }
 
     fun subirEvento(v: View) {
-        if (urlPortadaLocal==null){
-            Toast.makeText(ma, "via subi un evento", Toast.LENGTH_SHORT).show()
-
-        }
-        GlobalScope.launch(Dispatchers.IO) {
-
-            if (urlPortadaLocal != null) {
-                nuevoEvento()
-                ma.runOnUiThread {
-                    ma.navController.navigate(R.id.adminEventFragment)
+        if (urlPortadaLocal == null) {
+            Toast.makeText(ma, "Selecciona una imagen", Toast.LENGTH_SHORT).show()
+        } else {
+            if (isValid()) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    nuevoEvento()
+                    ma.runOnUiThread {
+                        ma.navController.navigate(R.id.adminEventFragment)
+                    }
                 }
             }
         }
@@ -119,13 +117,83 @@ class AdminAddEventFragment : Fragment() {
         if (pre == null) {
             pre = 0.0f
         }
-        if (afo == null){
+        if (afo == null) {
             afo = 0
         }
         val id = ControlDB.rutaEvento.push().key
         val img = subirImagenEvento(id!!, urlPortadaLocal!!)
-        val evento = Evento(id, nom,fecha,img,pre,afo)
+        val evento = Evento(id, nom, fecha, img, pre, afo)
         ControlDB.rutaEvento.child(id ?: "").setValue(evento)
+    }
+
+    fun isValid(): Boolean {
+        var validated = true
+        val checkers = listOf(
+            Pair(binding.faaeNom, this::validName),
+            Pair(binding.faaeFecha, this::validFec),
+            Pair(binding.faaeAforo, this::validAfo),
+            Pair(binding.faaePrecio, this::validPre)
+            //Pair(binding.textview, this::funcion)
+        )
+        for (c in checkers) {
+            val x = c.first
+            val f = c.second
+            val y = f(x)
+            validated = y
+            if (!validated) break
+        }
+        return validated
+    }
+
+    fun validName(e: EditText): Boolean {
+        var valid = true
+        if (e.text.toString().trim().length <= 2) {
+            e.error = "El nombre del evento debe tener al menos 3 caracteres"
+            valid = false
+        }
+        return valid
+    }
+
+    fun validPre(e: EditText): Boolean {
+        var valid = true
+        val num = e.text.toString().trim().toFloatOrNull()
+        if (num == null || num <= 0) {
+            e.error = "Introduce un precio valido"
+            valid = false
+        }
+        return valid
+    }
+
+    fun validFec(e: EditText): Boolean {
+        var valid = true
+        if (e.text.toString() != "") {
+            e.error = "Introduce una fecha valida"
+            valid = false
+        }
+        return valid
+    }
+
+    fun validAfo(e: EditText): Boolean {
+        var valid = true
+        val num = e.text.toString().trim().toIntOrNull()
+        if (num == null || num <= 0) {
+            e.error = "Introduce un aforo valido"
+            valid = false
+        }
+        return valid
+    }
+
+    fun abrirDatePicker() {
+        val newFragment = DatePickerFragment { day: Int, month: Int, year: Int ->
+            fechaSeleccionada(day, month, year)
+        }
+        newFragment.show(ma.supportFragmentManager, "datePicker")
+    }
+
+    fun fechaSeleccionada(day: Int, month: Int, year: Int) {
+        val birthDate = "$day/${month + 1}/$year"
+        binding.faaeFecha.setText(birthDate)
+        date = LocalDate.parse(birthDate, formatter)
     }
 
 }
