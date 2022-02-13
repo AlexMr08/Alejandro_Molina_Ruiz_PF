@@ -1,5 +1,6 @@
 package com.example.practica_final.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.aleLib.ControlNotif
 import com.example.practica_final.admin.adapters.AdminCardAdapter
 import com.example.practica_final.admin.adapters.AdminEventAdapter
+import com.example.practica_final.aleLib.ControlSP
 import com.example.practica_final.databinding.ActivityAdminBinding
 import com.example.practica_final.elementos.*
 import com.example.practica_final.user.UserProfileFragment
@@ -33,6 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger
 class AdminActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityAdminBinding
+    val controlSP by lazy { ControlSP(this@AdminActivity) }
     val navController by lazy { findNavController(R.id.nav_host_fragment_content_admin) }
     lateinit var lista_cartas: MutableList<Carta>
     val adap_carta by lazy { AdminCardAdapter(lista_cartas, this) }
@@ -49,8 +52,12 @@ class AdminActivity : AppCompatActivity() {
 
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.appBarAdmin.toolbar)
+
+        if (controlSP.tipo!=0 || controlSP.id==""){
+            Intent(this,MainActivity::class.java).also { startActivity(it) }
+            finish()
+        }
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -166,6 +173,27 @@ class AdminActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.admin, menu)
+
+        (menu.findItem(R.id.admin_menu_creador)).setOnMenuItemClickListener {
+            Intent(this,Creador::class.java).also { intent -> startActivity(intent) }
+            return@setOnMenuItemClickListener true
+        }
+
+        (menu.findItem(R.id.admin_menu_ajustes)).setOnMenuItemClickListener {
+            Intent(this,AdminSettingsActivity::class.java).also { intent -> startActivity(intent) }
+            return@setOnMenuItemClickListener true
+        }
+
+        (menu.findItem(R.id.admin_menu_sesion)).setOnMenuItemClickListener {
+            controlSP.id=""
+            controlSP.tipo=1
+            controlSP.moneda_sel=0
+
+            Intent(this,MainActivity::class.java).also { intent -> startActivity(intent) }
+            finish()
+            return@setOnMenuItemClickListener true
+        }
+
         return true
     }
 

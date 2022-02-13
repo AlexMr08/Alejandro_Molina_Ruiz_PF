@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Practica_Final">
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".user.UserSettingsActivity"></activity>
+        <activity android:name=".admin.AdminSettingsActivity" />
+        <activity android:name=".Creador" />
+        <activity android:name=".RegisterActivity" />
         <activity
             android:name=".admin.AdminActivity"
             android:label="@string/title_activity_admin"

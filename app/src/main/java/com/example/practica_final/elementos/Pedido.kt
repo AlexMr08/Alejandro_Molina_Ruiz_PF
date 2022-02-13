@@ -10,4 +10,6 @@ data class Pedido(val id:String?="",
                   var imgCarta:String?="",
                   var nombreCliente:String?="",
                   var imgCliente:String?="",
+                  var categoria:String?="",
+                  var precio_final:Float?=0f,
                   var estadoNotificacion:Int?=EstadoNotificaciones.CREADO)

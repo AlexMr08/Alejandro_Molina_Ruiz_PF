@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sp_usuario">Usuario</string>
+    <string name="sp_pp">Foto de perfil</string>
+    <string name="sp_tipo">Tipo de usuario</string>
+    <integer name="sp_tipo_def">1</integer>
+
+    <string name="sp_moneda">Moneda seleccionada</string>
+    <integer name="sp_moneda_def">0</integer>
+
+    <string name="sp_ultimaComp">Ultima comprobacion monedas</string>¡
+    <string name="sp_ultimaComp_def">86500000</string>
+
+    <string name="sp_eur_usd">USD</string>
+    <string name="sp_eur_usd_def">0</string>
+</resources>

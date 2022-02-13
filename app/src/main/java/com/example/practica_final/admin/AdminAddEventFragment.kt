@@ -167,7 +167,7 @@ class AdminAddEventFragment : Fragment() {
 
     fun validFec(e: EditText): Boolean {
         var valid = true
-        if (e.text.toString() != "") {
+        if (e.text.toString() == "") {
             e.error = "Introduce una fecha valida"
             valid = false
         }

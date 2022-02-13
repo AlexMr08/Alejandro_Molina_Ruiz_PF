@@ -12,8 +12,14 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_alex">Creador</string>
+    <string name="action_sign_out">Cerrar sesion</string>
 
+    <!--Strings filtros-->
+    <string name="filtro_pedido">Mostrar solo pedidos no aceptados</string>
+    <string name="filtro_cartas">Filtrar por categoria</string>
+    <string name="selector_tema">Tema Oscuro</string>
 
     <!--STRINGS ADMIN-->
     <string name="admin_home">Inicio</string>
@@ -22,27 +28,15 @@
     <string name="admin_add_card">Añadir carta</string>
     <string name="admin_add_event">Añadir evento</string>
 
-    <!--SP-->
-    <string name="sp_usuario">Usuario</string>
-    <string name="sp_pp">Foto de perfil</string>
-    <string name="sp_tipo">Tipo de usuario</string>
-    <integer name="sp_tipo_def">1</integer>
-
-    <string name="sp_ultimaComp">Ultima comprobacion mondedas</string>¡
-    <string name="sp_ultimaComp_def">0</string>
-
-    <string name="sp_eur_usd">USD</string>
-    <string name="sp_eur_usd_def">1.37</string>
-
     <!--String Evento-->
     <string name="evento_aforo_rv">Aforo: %1$d/%2$d</string>
-    <string name="evento_precio_rv">%1$.2f €</string>
-    <string name="evento_precio">Precio: %1$.2f€ - Plazas %2$d/%3$d</string>
+    <string name="evento_precio_rv">%1$.2f %2$s</string>
+    <string name="evento_precio">Precio: %1$.2f %2$s</string>
     <string name="evento_aforo">%1$d/%2$d</string>
 
     <!--String Carta-->
-    <string name="carta_precio_rv">%1$.2f €</string>
-    <string name="carta_precio">Precio: %1$.2f €</string>
+    <string name="carta_precio_rv">%1$.2f %2$s</string>
+    <string name="carta_precio">Precio: %1$.2f %2$s</string>
 
     <!--String Perfil Usuario-->
     <string name="num_cartas">Cartas</string>
@@ -61,6 +55,7 @@
     <string name="fecha_evento">Fecha del evento</string>
     <string name="nombre_evento">Nombre del evento</string>
     <string name="aforo">Aforo</string>
+    <string name="boton_reserva">Apuntarse</string>
 
     <string name="admin_rserva_fecha">Se unio el: %1$s</string>
     <string name="admin_evento_texto">Usuarios que se han unido: </string>
@@ -69,6 +64,5 @@
     <string name="nombre_canal">Notificaciones app</string>
     <string name="id_canal">canal_principal</string>
     <string name="desc_canal">Canal para la practica final</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

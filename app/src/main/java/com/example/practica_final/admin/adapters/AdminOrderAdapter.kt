@@ -33,7 +33,7 @@ class AdminOrdersAdapter(val lista:List<Pedido>, val con: AdminActivity) : Recyc
             refreshUI(elem,holder)
             Glide.with(con).load(elem.imgCarta).into(rapImgCarta)
             rapNomCarta.text = elem.nombreCarta
-            rapPrecio.text = con.getString(R.string.carta_precio,elem.precio)
+            rapPrecio.text = con.getString(R.string.carta_precio,elem.precio,"€")
             rapCliente.text = elem.nombreCliente
             rapAceptar.setOnClickListener {
                 elem.estado= EstadoPedido.ACEPTADO

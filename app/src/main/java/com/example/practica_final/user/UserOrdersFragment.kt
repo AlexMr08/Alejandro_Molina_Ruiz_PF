@@ -42,6 +42,7 @@ class UserOrdersFragment : Fragment() {
         super.onStart()
         binding.fuoRv.adapter = ma.adap_pedidos
         binding.fuoRv.layoutManager = LinearLayoutManager(ma)
+
     }
 
 

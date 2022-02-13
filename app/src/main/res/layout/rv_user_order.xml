@@ -7,13 +7,12 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/rue_card"
+        style="@style/carta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
-        app:cardBackgroundColor="#F3F3F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +37,25 @@
 
             <TextView
                 android:id="@+id/rv_profile_nom"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="TextView"
+                android:textAppearance="@style/h1"
+                app:layout_constraintEnd_toStartOf="@+id/rv_profile_checked"
                 app:layout_constraintStart_toEndOf="@+id/rv_profile_img"
                 app:layout_constraintTop_toTopOf="@+id/rv_profile_img" />
+
+            <ImageView
+                android:id="@+id/rv_profile_cat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintStart_toStartOf="@+id/rv_profile_nom"
+                app:layout_constraintTop_toBottomOf="@+id/rv_profile_nom"
+                app:srcCompat="@drawable/ic_twotone_turned_in_24" />
 
             <ImageView
                 android:id="@+id/rv_profile_checked"
@@ -55,6 +67,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_check_24" />
+
+            <TextView
+                android:id="@+id/rv_profile_pre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_profile_cat"
+                app:layout_constraintEnd_toEndOf="@+id/rv_profile_nom"
+                app:layout_constraintStart_toEndOf="@+id/rv_profile_cat"
+                app:layout_constraintTop_toTopOf="@+id/rv_profile_cat" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.example.practica_final.user
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
@@ -18,11 +18,12 @@ import com.example.practica_final.databinding.ActivityUserBinding
 import com.example.practica_final.elementos.*
 import com.example.practica_final.user.adapters.UserCardAdapter
 import com.example.practica_final.user.adapters.UserEventAdapter
-import com.example.practica_final.user.adapters.UserProfileCardAdapter
+import com.example.practica_final.user.adapters.UserOrderAdapter
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,9 +31,9 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicInteger
 
 class UserActivity : AppCompatActivity() {
-    lateinit var Menu: Menu
+    lateinit var menu: Menu
     private lateinit var generador: AtomicInteger
-    val navView by lazy { binding.navView }
+    private val navView by lazy { binding.navView }
 
     var lista_cartas = mutableListOf<Carta>()
     var lista_eventos = mutableListOf<Evento>()
@@ -54,9 +55,11 @@ class UserActivity : AppCompatActivity() {
     }
 
     val controlSP by lazy { ControlSP(applicationContext) }
+    lateinit var lista_monedas : List<Moneda>
+    lateinit var moneda_sel : Moneda
     var usuario = Usuario()
 
-    lateinit var adap_pedidos: UserProfileCardAdapter
+    lateinit var adap_pedidos: UserOrderAdapter
     lateinit var adap_carta: UserCardAdapter
     lateinit var adap_evento: UserEventAdapter
 
@@ -75,6 +78,13 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
         navView.setBackgroundResource(R.drawable.gradient_bg)
 
+        if (controlSP.tipo!=1 || controlSP.id==""){
+            Intent(this,MainActivity::class.java).also { startActivity(it) }
+            finish()
+        }
+        lista_monedas = listOf(Moneda(0,"Euro","€", 1.0f), Moneda(1,"Dolar","$", controlSP.eur_usd))
+        val index_moneda = lista_monedas.map { it.id }.indexOf(controlSP.moneda_sel)
+        moneda_sel = lista_monedas[index_moneda]
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
@@ -89,24 +99,27 @@ class UserActivity : AppCompatActivity() {
 
 
         adap_carta = UserCardAdapter(lista_cartas, this)
-        adap_pedidos = UserProfileCardAdapter(lista_pedidos, this)
+        adap_pedidos = UserOrderAdapter(lista_pedidos, this)
         adap_evento = UserEventAdapter(lista_eventos, this)
 
         buscarUsuario()
-
-        //lista_pedidos = mutableListOf()
-        //buscarPedidos()
-
 
         navView.setOnItemSelectedListener(this::bottomNavNavigation)
 
         navView.setOnItemReselectedListener { }
     }
 
+    override fun onStart() {
+        super.onStart()
+        val index_moneda = lista_monedas.map { it.id }.indexOf(controlSP.moneda_sel)
+        moneda_sel = lista_monedas[index_moneda]
+        adap_carta.notifyDataSetChanged()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.user, menu)
-        Menu = menu
+        this.menu = menu
         (menu.findItem(R.id.app_bar_search).actionView as SearchView)
             .setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -118,6 +131,27 @@ class UserActivity : AppCompatActivity() {
                     return false
                 }
             })
+        (menu.findItem(R.id.user_menu_creador)).setOnMenuItemClickListener {
+            Intent(this,Creador::class.java).also { intent -> startActivity(intent) }
+            return@setOnMenuItemClickListener true
+        }
+
+        (menu.findItem(R.id.user_menu_ajustes)).setOnMenuItemClickListener {
+            val intent = Intent(this,UserSettingsActivity::class.java)
+            intent.putExtra("MONEDAS",ArrayList(lista_monedas))
+            startActivity(intent)
+            return@setOnMenuItemClickListener true
+        }
+
+        (menu.findItem(R.id.user_menu_sesion)).setOnMenuItemClickListener {
+            controlSP.id=""
+            controlSP.tipo=1
+            controlSP.moneda_sel=0
+
+            Intent(this,MainActivity::class.java).also { intent -> startActivity(intent) }
+            finish()
+            return@setOnMenuItemClickListener true
+        }
 
         return true
     }
@@ -134,7 +168,7 @@ class UserActivity : AppCompatActivity() {
     }
 
     fun buscarCartas(): MutableList<Carta> {
-        var lista_cartas = mutableListOf<Carta>()
+        val lista_cartas = mutableListOf<Carta>()
         ControlDB.rutacartas.addChildEventListener(object :
             ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -173,12 +207,12 @@ class UserActivity : AppCompatActivity() {
     }
 
     fun buscarPedidos(): MutableList<Pedido> {
-        var lista = mutableListOf<Pedido>()
+        val lista = mutableListOf<Pedido>()
         ControlDB.rutaResCartas.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 GlobalScope.launch(Dispatchers.IO) {
                     val sem = CountDownLatch(1)
-                    var pedido = snapshot.getValue(Pedido::class.java) ?: Pedido()
+                    val pedido = snapshot.getValue(Pedido::class.java) ?: Pedido()
                     if (pedido.idCliente == controlSP.id) {
                         ControlDB.rutacartas.child(pedido.idCarta ?: "")
                             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -186,21 +220,20 @@ class UserActivity : AppCompatActivity() {
                                     val carta = snapshot.getValue(Carta::class.java) ?: Carta()
                                     pedido.imgCarta = carta.imagen
                                     pedido.nombreCarta = carta.nombre
+                                    pedido.categoria = carta.categoria
                                     sem.countDown()
                                 }
-
                                 override fun onCancelled(error: DatabaseError) {}
                             })
                         sem.await()
                         if (pedido.estadoNotificacion == EstadoNotificaciones.CREADO_CLIENTE
-                            && pedido.idCliente == controlSP.id
-                        ) {
+                            && pedido.idCliente == controlSP.id) {
                             ControlNotif.generarNotificacion(
                                 this@UserActivity,
                                 generador.incrementAndGet(),
                                 "El pedido se ha realizado",
                                 "Compra aceptada",
-                                UserProfileFragment::class.java
+                                UserOrdersFragment::class.java
                             )
                             ControlDB.rutaResCartas.child(pedido.id ?: "")
                                 .child("estadoNotificacion")
@@ -261,8 +294,8 @@ class UserActivity : AppCompatActivity() {
         return lista
     }
 
-    fun buscarEventos(): MutableList<Evento> {
-        var lista_evento = mutableListOf<Evento>()
+    private fun buscarEventos(): MutableList<Evento> {
+        val lista_evento = mutableListOf<Evento>()
         ControlDB.rutaEvento.addChildEventListener(object :
             ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -289,9 +322,7 @@ class UserActivity : AppCompatActivity() {
             ) {/*como no vamos a cambiar la posicion nada no lo usamos*/
             }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
         return lista_evento
     }
@@ -299,6 +330,7 @@ class UserActivity : AppCompatActivity() {
     fun bottomNavNavigation(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.userHomeFragment -> {
+                navView
                 navController.navigate(R.id.userHomeFragment)
                 true
             }
@@ -320,13 +352,13 @@ class UserActivity : AppCompatActivity() {
 
     fun generarReporte(): MutableList<UserProfileFragment.rep> {
         val id_pedidos = lista_pedidos.map { it.idCarta }
-        var lista_cartas_indx = mutableListOf<Int>()
+        val lista_cartas_indx = mutableListOf<Int>()
         id_pedidos.forEach { elem ->
             lista_cartas_indx.add(lista_cartas.map { it.id }.indexOf(elem))
         }
         val listaCartas = mutableListOf<Carta>()
         lista_cartas_indx.forEach { listaCartas.add(lista_cartas[it]) }
-        var reporte = mutableListOf<UserProfileFragment.rep>()
+        val reporte = mutableListOf<UserProfileFragment.rep>()
         Carta.categorias.forEach { cat ->
             if (listaCartas.filter { it.categoria == cat }.isNotEmpty()) {
                 reporte.add(

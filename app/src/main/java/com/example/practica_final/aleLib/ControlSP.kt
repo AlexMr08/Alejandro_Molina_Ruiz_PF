@@ -26,6 +26,14 @@ class ControlSP(c: Context) {
         set(value) = sp.edit().putString(
             contexto.getString(R.string.sp_usuario), value).apply()
 
+    //Moneda seleccionada (0=euro, 1=dolar)
+    var moneda_sel: Int
+        get() = sp.getInt(
+            contexto.getString(R.string.sp_moneda),
+            contexto.resources.getInteger(R.integer.sp_moneda_def)
+        )
+        set(value) = sp.edit().putInt(contexto.getString(R.string.sp_moneda), value).apply()
+
     //Ultima comprobacion API monedas
     var ultimaComp: String
         get() = sp.getString(
@@ -43,7 +51,7 @@ class ControlSP(c: Context) {
             contexto.resources.getString(R.string.sp_eur_usd_def)
         )?.toFloat() ?: contexto.resources.getString(R.string.sp_eur_usd_def).toFloat()
 
-        set(value) = sp.edit().putString(contexto.getString(R.string.sp_tipo), value.toString()).apply()
+        set(value) = sp.edit().putString(contexto.getString(R.string.sp_eur_usd), value.toString()).apply()
 
     fun borrarSPPerfil() {
         with(sp.edit()) {

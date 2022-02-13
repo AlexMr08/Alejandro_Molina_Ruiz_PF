@@ -1,5 +1,6 @@
 package com.example.practica_final.user
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserProfileBinding
 import com.github.mikephil.charting.charts.PieChart
@@ -67,7 +69,7 @@ class UserProfileFragment : Fragment() {
                 pieEntries.add(PieEntry(it.num, it.nom))
             }
             val label = "JAJA"
-            val pieDataSet = PieDataSet(pieEntries, "JAJA")
+            val pieDataSet = PieDataSet(pieEntries, label)
             pieDataSet.valueTextSize = 16f
             pieData = PieData(pieDataSet)
             pieData.setDrawValues(true)
@@ -77,7 +79,7 @@ class UserProfileFragment : Fragment() {
         }
         
         binding.fupNom.text = ma.usuario.nombre
-        Glide.with(ma).load(ma.usuario.img).placeholder(R.drawable.magic_card_back)
+        Glide.with(ma).load(ma.usuario.img).circleCrop().placeholder(R.drawable.magic_card_back)
             .into(binding.fupImg)
     }
 

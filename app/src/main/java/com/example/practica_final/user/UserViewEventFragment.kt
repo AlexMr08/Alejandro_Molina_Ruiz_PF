@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.practica_final.R
+import com.example.practica_final.aleLib.AleLib
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.databinding.FragmentUserViewEventBinding
 import com.example.practica_final.elementos.Evento
@@ -50,13 +51,15 @@ class UserViewEventFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        Glide.with(ma).load(elem.imagen).transform(CenterCrop(), RoundedCorners(10)).into(binding.fuveImg)
+        val signo = ma.moneda_sel.signo
+        val precio = ma.evento_sel.precio?.times(ma.moneda_sel.conversion)
+        AleLib.glide_img(ma,elem.imagen!!,R.drawable.ic_baseline_location_on_24,binding.fuveImg,14)
         binding.fuveNom.text = elem.nombre
         binding.fuveNumAforo.text = ma.getString(R.string.evento_aforo,elem.plazas_ocupadas,elem.plazas_totales)
-        binding.fuveNumPrecio.text = ma.getString(R.string.evento_precio_rv, elem.precio)
+        binding.fuveNumPrecio.text = ma.getString(R.string.evento_precio_rv, precio, signo)
         binding.button.setOnClickListener {
             val fecha = Calendar.getInstance()
-            val formateador = SimpleDateFormat("dd/M/yyyy")
+            val formateador = SimpleDateFormat("d/M/yyyy")
             val hoy = formateador.format(fecha.time)
             val id_res = ControlDB.rutaResEventos.push().key
             val evento = Reserva(id_res,ma.controlSP.id,elem.id,hoy, elem.precio)

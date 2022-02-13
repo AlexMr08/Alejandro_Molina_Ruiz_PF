@@ -8,13 +8,19 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.aleLib.ControlSP
 import com.example.practica_final.admin.AdminActivity
+import com.example.practica_final.aleLib.AleLib
+import com.example.practica_final.aleLib.VolleySingleton
 import com.example.practica_final.databinding.ActivityMainBinding
 import com.example.practica_final.elementos.Usuario
 import com.example.practica_final.user.UserActivity
 import com.google.firebase.database.*
+import org.json.JSONException
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -30,10 +36,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         crearCanalNotis(this)
         controlSp = ControlSP(this)
-    }
 
-    override fun onStart() {
-        super.onStart()
+        val now = System.currentTimeMillis()
+        if(shouldMakeRequ(now)){
+            controlSp.ultimaComp = now.toString()
+            makeRequ()
+        }
+
         if (controlSp.id!=""){
             when(controlSp.tipo) {
                 0 -> {
@@ -47,7 +56,10 @@ class MainActivity : AppCompatActivity() {
             }
             finish()
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
         buscado = Usuario()
         binding.mainIni.setOnClickListener {
             nom = binding.inicioTieUser.text.toString().trim()
@@ -98,6 +110,33 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    fun shouldMakeRequ(now:Long):Boolean{
+        val last = controlSp.ultimaComp.toLong()
+        return now-last > AleLib.MILIS_IN_DAY
+    }
+
+    fun makeRequ(){
+        val url: String = "https://open.er-api.com/v6/latest/EUR"
+
+        val request = JsonObjectRequest(
+            Request.Method.GET, // method
+            url, // url
+            null, // json request
+            { response -> // response listener
+
+                try {
+                    val obj: JSONObject = response
+                    val data = obj.getJSONObject("rates")
+                    controlSp.eur_usd = data.getString("USD").toFloat()
+                }catch (e: JSONException){
+                }
+            },
+            { /*error listener*/ }
+        )
+        //Hacemos la petición http
+        VolleySingleton.getInstance(this).addToRequestQueue(request)
+    }
 }
 
 fun crearCanalNotis(con: Context){
@@ -112,4 +151,6 @@ fun crearCanalNotis(con: Context){
         val nm : NotificationManager = con.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         nm.createNotificationChannel(canal)
     }
+
+
 }

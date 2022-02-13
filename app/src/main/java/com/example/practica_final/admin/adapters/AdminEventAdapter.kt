@@ -10,6 +10,7 @@ import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.elementos.Evento
 import com.example.practica_final.R
 import com.example.practica_final.admin.AdminActivity
+import com.example.practica_final.aleLib.AleLib
 import com.example.practica_final.databinding.RvAdminEventBinding
 
 class AdminEventAdapter(val lista:List<Evento>, val con: AdminActivity) : RecyclerView.Adapter<AdminEventAdapter.ViewHolder>(){
@@ -26,8 +27,8 @@ class AdminEventAdapter(val lista:List<Evento>, val con: AdminActivity) : Recycl
         with(holder.bind){
             raeNom.text = elem.nombre
             raePlazas.text = con.getString(R.string.evento_aforo,elem.plazas_ocupadas,elem.plazas_totales)
-            raePre.text = con.getString(R.string.evento_precio_rv,elem.precio)
-            Glide.with(con).load(elem.imagen).transform(CenterCrop(), RoundedCorners(50)).into(raeImg)
+            raePre.text = con.getString(R.string.evento_precio_rv,elem.precio, "€")
+            AleLib.glide_img(con,elem.imagen!!,R.drawable.ic_baseline_location_on_24,raeImg,50)
             raeFecha.text = elem.fecha
             raeCl.setOnClickListener {
                 con.evento_sel = position

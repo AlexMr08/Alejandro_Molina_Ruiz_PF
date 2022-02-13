@@ -2,7 +2,7 @@ package com.example.practica_final.user.adapters
 
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.RoundedCorner
+
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
@@ -15,11 +15,13 @@ import com.example.practica_final.databinding.RvUserCardBinding
 import com.example.practica_final.user.UserActivity
 import java.util.*
 
-class UserCardAdapter(val lista:List<Carta>, val con: UserActivity) : RecyclerView.Adapter<UserCardAdapter.ViewHolder>(), Filterable {
+class UserCardAdapter(val lista: List<Carta>, val con: UserActivity) :
+    RecyclerView.Adapter<UserCardAdapter.ViewHolder>(), Filterable {
     var listaFiltrada = lista
     var filtroCat = true
-    var listaCategorias = listOf(true,true,true,true,true)
-    class ViewHolder(val bind:RvUserCardBinding) : RecyclerView.ViewHolder(bind.root)
+    var listaCategorias = listOf(true, true, true, true, true)
+
+    class ViewHolder(val bind: RvUserCardBinding) : RecyclerView.ViewHolder(bind.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = RvUserCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,13 +29,15 @@ class UserCardAdapter(val lista:List<Carta>, val con: UserActivity) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         val elem = listaFiltrada[position]
-        with(holder.bind){
+        val precio_final = elem.precio?.times((con.moneda_sel).conversion)
+        val signo = con.moneda_sel.signo
+        with(holder.bind) {
             rvUserCardNom.text = elem.nombre
-            rvUserCardPre.text = con.getString(R.string.carta_precio_rv,elem.precio)
+            rvUserCardPre.text = con.getString(R.string.carta_precio_rv, precio_final, signo)
             imageView5.setColorFilter(Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)]))
-            Glide.with(con).load(elem.imagen).transform(RoundedCorners(20)).placeholder(R.drawable.magic_card_back).into(rvUserCardImg)
+            Glide.with(con).load(elem.imagen).transform(RoundedCorners(20))
+                .placeholder(R.drawable.magic_card_back).into(rvUserCardImg)
             rvUserCardCl.setOnClickListener {
                 con.carta_sel = elem
                 con.navController.navigate(R.id.userViewCardFragment)
@@ -46,25 +50,25 @@ class UserCardAdapter(val lista:List<Carta>, val con: UserActivity) : RecyclerVi
     }
 
     override fun getFilter(): Filter {
-        return object : Filter(){
+        return object : Filter() {
             override fun performFiltering(p0: CharSequence?): FilterResults {
                 val texto = p0.toString()
-                if (texto.isEmpty()) {
-                    listaFiltrada = lista
+                listaFiltrada = if (texto.isEmpty()) {
+                    lista
                 } else {
                     val elemetosFiltrados2 = mutableListOf<Carta>()
                     val textoMinuscula = texto.lowercase(Locale.ROOT)
                     for (e in lista) {
-                        val nombreMinuscula = e.nombre?.lowercase(Locale.ROOT)
-                        if(nombreMinuscula!!.contains(textoMinuscula)){
+                        val nombreMinuscula = e.nombre?.lowercase(Locale.ROOT)?:""
+                        if (nombreMinuscula.contains(textoMinuscula)) {
                             elemetosFiltrados2.add(e)
                         }
                     }
-                    listaFiltrada = elemetosFiltrados2
+                    elemetosFiltrados2
                 }
 
-                if (filtroCat){
-                    listaFiltrada = listaFiltrada.filter{
+                if (filtroCat) {
+                    listaFiltrada = listaFiltrada.filter {
                         val index = Carta.categorias.indexOf(it.categoria)
                         listaCategorias[index]
                     }

@@ -136,7 +136,7 @@ class AdminViewEventFragment : Fragment() {
         binding.faveNom.text = elem.nombre
         binding.faveAforo.text =
             ma.getString(R.string.evento_aforo, num, elem.plazas_totales)
-        binding.favePre.text = ma.getString(R.string.evento_precio_rv, elem.precio)
+        binding.favePre.text = ma.getString(R.string.evento_precio_rv, elem.precio, "€")
         binding.faveFec.text = elem.fecha
     }
 }

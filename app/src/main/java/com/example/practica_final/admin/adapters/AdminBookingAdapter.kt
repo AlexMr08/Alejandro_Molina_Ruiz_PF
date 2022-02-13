@@ -24,7 +24,7 @@ class AdminBookingAdapter(val lista:List<Reserva>, val con:AdminActivity) : Recy
         with(holder.bind){
             rabNom.text = elem.nombreCliente
             Glide.with(con).load(elem.imgCliente).circleCrop().placeholder(R.drawable.ic_baseline_account_circle_24).into(rabImg)
-            rabFec.text = elem.fecha
+            rabFec.text = con.getString(R.string.admin_rserva_fecha,elem.fecha)
         }
     }
 
