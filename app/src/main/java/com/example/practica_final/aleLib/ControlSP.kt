@@ -53,6 +53,13 @@ class ControlSP(c: Context) {
 
         set(value) = sp.edit().putString(contexto.getString(R.string.sp_eur_usd), value.toString()).apply()
 
+    var tema: Boolean
+        get() = sp.getBoolean(
+            contexto.getString(R.string.sp_tema),
+            contexto.resources.getBoolean(R.bool.sp_tema_def)
+        )
+        set(value) = sp.edit().putBoolean(contexto.getString(R.string.sp_tema), value).apply()
+
     fun borrarSPPerfil() {
         with(sp.edit()) {
             putString(contexto.getString(R.string.sp_usuario), "")

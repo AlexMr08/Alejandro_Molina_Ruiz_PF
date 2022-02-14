@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.practica_final.aleLib.ControlDB
@@ -36,6 +37,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         crearCanalNotis(this)
         controlSp = ControlSP(this)
+        val tema = if (controlSp.tema){
+            AppCompatDelegate.MODE_NIGHT_YES
+        }else{
+            AppCompatDelegate.MODE_NIGHT_NO
+        }
+        AppCompatDelegate.setDefaultNightMode(tema)
 
         val now = System.currentTimeMillis()
         if(shouldMakeRequ(now)){

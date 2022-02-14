@@ -13,4 +13,7 @@
 
     <string name="sp_eur_usd">USD</string>
     <string name="sp_eur_usd_def">0</string>
+
+    <string name="sp_tema">Tema seleccionado</string>
+    <bool name="sp_tema_def">false</bool>
 </resources>

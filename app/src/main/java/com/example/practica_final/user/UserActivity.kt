@@ -147,7 +147,7 @@ class UserActivity : AppCompatActivity() {
             controlSP.id=""
             controlSP.tipo=1
             controlSP.moneda_sel=0
-
+            controlSP.tema=false
             Intent(this,MainActivity::class.java).also { intent -> startActivity(intent) }
             finish()
             return@setOnMenuItemClickListener true

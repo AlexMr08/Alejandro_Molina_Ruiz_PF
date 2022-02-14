@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.practica_final.aleLib.ControlSP
 import com.example.practica_final.databinding.ActivityUserSettingsBinding
 import com.example.practica_final.elementos.Moneda
@@ -25,8 +26,19 @@ class UserSettingsActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val id_moneda_sel = controlSP.moneda_sel
+        binding.switch2.isChecked = controlSP.tema
+        binding.switch2.setOnCheckedChangeListener { _, b ->
+            val tema = if (b){
+                AppCompatDelegate.MODE_NIGHT_YES
+            }else{
+                AppCompatDelegate.MODE_NIGHT_NO
+            }
+            controlSP.tema=b
+            AppCompatDelegate.setDefaultNightMode(tema)
+        }
         actualizarAdapter(lista_monedas.map { it.nombre })
         binding.spinner.setSelection(id_moneda_sel)
+
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
                     parent: AdapterView<*>?,
