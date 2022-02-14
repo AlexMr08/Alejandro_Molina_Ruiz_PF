@@ -85,12 +85,9 @@ class UserActivity : AppCompatActivity() {
         lista_monedas = listOf(Moneda(0,"Euro","€", 1.0f), Moneda(1,"Dolar","$", controlSP.eur_usd))
         val index_moneda = lista_monedas.map { it.id }.indexOf(controlSP.moneda_sel)
         moneda_sel = lista_monedas[index_moneda]
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
+        buscarUsuario()
         generador = AtomicInteger(0)
         lista_cartas = buscarCartas()
         lista_eventos = buscarEventos()
@@ -101,8 +98,6 @@ class UserActivity : AppCompatActivity() {
         adap_carta = UserCardAdapter(lista_cartas, this)
         adap_pedidos = UserOrderAdapter(lista_pedidos, this)
         adap_evento = UserEventAdapter(lista_eventos, this)
-
-        buscarUsuario()
 
         navView.setOnItemSelectedListener(this::bottomNavNavigation)
 
@@ -156,7 +151,7 @@ class UserActivity : AppCompatActivity() {
         return true
     }
 
-    fun buscarUsuario() {
+    private fun buscarUsuario() {
         ControlDB.rutaUsuario.child(controlSP.id)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -167,7 +162,7 @@ class UserActivity : AppCompatActivity() {
             })
     }
 
-    fun buscarCartas(): MutableList<Carta> {
+    private fun buscarCartas(): MutableList<Carta> {
         val lista_cartas = mutableListOf<Carta>()
         ControlDB.rutacartas.addChildEventListener(object :
             ChildEventListener {
@@ -206,7 +201,7 @@ class UserActivity : AppCompatActivity() {
         return lista_cartas
     }
 
-    fun buscarPedidos(): MutableList<Pedido> {
+    private fun buscarPedidos(): MutableList<Pedido> {
         val lista = mutableListOf<Pedido>()
         ControlDB.rutaResCartas.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -300,9 +295,7 @@ class UserActivity : AppCompatActivity() {
             ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val evento = snapshot.getValue(Evento::class.java) ?: Evento()
-                if (evento.disponible == true) {
                     lista_evento.add(evento)
-                }
                 adap_evento.notifyDataSetChanged()
             }
 
@@ -373,7 +366,7 @@ class UserActivity : AppCompatActivity() {
         return reporte
     }
 
-    fun buscarReservas(): MutableList<Reserva> {
+    private fun buscarReservas(): MutableList<Reserva> {
         val lista = mutableListOf<Reserva>()
         ControlDB.rutaResEventos.addChildEventListener(object :
             ChildEventListener {

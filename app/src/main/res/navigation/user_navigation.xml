@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.example.practica_final.user.UserProfileFragment"
-        android:label="fragment_user_profile"
+        android:label="@string/user_profile"
         tools:layout="@layout/fragment_user_profile" />
     <fragment
         android:id="@+id/userHomeFragment"
         android:name="com.example.practica_final.user.UserHomeFragment"
-        android:label="fragment_user_home"
-        tools:layout="@layout/fragment_user_home" >
+        android:label="@string/user_home"
+        tools:layout="@layout/fragment_user_home">
         <action
             android:id="@+id/action_userHomeFragment_to_userViewCardFragment"
             app:destination="@id/userViewCardFragment" />
@@ -22,8 +22,8 @@
     <fragment
         android:id="@+id/userEventFragment"
         android:name="com.example.practica_final.user.UserEventFragment"
-        android:label="fragment_user_event"
-        tools:layout="@layout/fragment_user_event" >
+        android:label="@string/user_events"
+        tools:layout="@layout/fragment_user_event">
         <action
             android:id="@+id/action_userEventFragment_to_userViewEventFragment2"
             app:destination="@id/userViewEventFragment" />
@@ -31,8 +31,8 @@
     <fragment
         android:id="@+id/userViewCardFragment"
         android:name="com.example.practica_final.user.UserViewCardFragment"
-        android:label="fragment_user_view_card"
-        tools:layout="@layout/fragment_user_view_card" >
+        android:label="@string/user_viewCards"
+        tools:layout="@layout/fragment_user_view_card">
         <action
             android:id="@+id/action_userViewCardFragment_to_userHomeFragment"
             app:destination="@id/userHomeFragment" />
@@ -40,13 +40,13 @@
     <fragment
         android:id="@+id/userOrdersFragment"
         android:name="com.example.practica_final.user.UserOrdersFragment"
-        android:label="fragment_user_orders"
+        android:label="@string/user_orders"
         tools:layout="@layout/fragment_user_orders" />
     <fragment
         android:id="@+id/userViewEventFragment"
         android:name="com.example.practica_final.user.UserViewEventFragment"
-        android:label="fragment_user_view_event"
-        tools:layout="@layout/fragment_user_view_event" >
+        android:label="@string/user_viewEvents"
+        tools:layout="@layout/fragment_user_view_event">
         <action
             android:id="@+id/action_userViewEventFragment_to_userEventFragment"
             app:destination="@id/userEventFragment" />

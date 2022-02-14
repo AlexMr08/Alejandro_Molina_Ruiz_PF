@@ -23,10 +23,15 @@ import com.example.practica_final.elementos.Carta
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentAdminAddCardBinding
+import com.example.practica_final.elementos.Usuario
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.util.concurrent.CountDownLatch
 
 class AdminAddCardFragment : Fragment() {
 
@@ -144,9 +149,17 @@ class AdminAddCardFragment : Fragment() {
         }else{
             if (isValid()){
                 GlobalScope.launch(Dispatchers.IO) {
-                    nuevaCarta()
+                if (existeCarta(binding.fancNom.text.toString())){
                     ma.runOnUiThread {
-                        ma.navController.navigate(R.id.adminHomeFragment)
+                        binding.tilNombre.error = "El nombre de la carta ya existe"
+
+                    }
+                }else{
+
+                        nuevaCarta()
+                        ma.runOnUiThread {
+                            ma.navController.navigate(R.id.adminHomeFragment)
+                        }
                     }
                 }
             }
@@ -182,7 +195,6 @@ class AdminAddCardFragment : Fragment() {
             	val checkers = listOf(
             		Pair(binding.fancNom, this::validName),
                     Pair(binding.fancPre, this::validNum)
-                    //Pair(binding.textview, this::funcion)
             	)
             	for(c in checkers){
             		val x = c.first
@@ -211,5 +223,24 @@ class AdminAddCardFragment : Fragment() {
             valid = false
         }
         return valid
+    }
+
+    fun existeCarta(nombre: String):Boolean{
+        var res:Boolean?= false
+        val sem = CountDownLatch(1)
+        ControlDB.rutacartas.orderByChild("nombre").equalTo(nombre).addListenerForSingleValueEvent(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.getValue(Carta::class.java)!=null){
+                    res=true
+                }
+                sem.countDown()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+        sem.await()
+        return res!!
     }
 }

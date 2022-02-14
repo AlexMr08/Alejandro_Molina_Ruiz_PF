@@ -1,6 +1,7 @@
 package com.example.practica_final.admin.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class AdminCardAdapter(val lista:List<Carta>, val con:Context) : RecyclerView.Ad
         with(holder.bind){
             rvacNom.text = elem.nombre
             rvacSwi.isChecked = elem.disponible?:false
+            rvacCat.setColorFilter(Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)]))
             Glide.with(con).load(elem.imagen).transform(RoundedCorners(20)).placeholder(R.drawable.magic_card_back).into(rvacImg)
             rvacSwi.setOnCheckedChangeListener { _, check ->
                 ControlDB.rutacartas.child(elem.id?:"").child("disponible").setValue(check)

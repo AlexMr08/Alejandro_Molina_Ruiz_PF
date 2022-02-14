@@ -16,6 +16,10 @@ import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.elementos.Evento
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentAdminAddEventBinding
+import com.example.practica_final.elementos.Carta
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,6 +27,7 @@ import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
+import java.util.concurrent.CountDownLatch
 
 class AdminAddEventFragment : Fragment() {
 
@@ -95,9 +100,19 @@ class AdminAddEventFragment : Fragment() {
         } else {
             if (isValid()) {
                 GlobalScope.launch(Dispatchers.IO) {
-                    nuevoEvento()
-                    ma.runOnUiThread {
-                        ma.navController.navigate(R.id.adminEventFragment)
+                    if (existeEvento(
+                            binding.faaeNom.text.toString(),
+                            binding.faaeFecha.text.toString()
+                        )
+                    ) {
+                        ma.runOnUiThread {
+                            binding.faaeTilFec.error = "El evento ya existe en la fecha dada"
+                        }
+                    } else {
+                        nuevoEvento()
+                        ma.runOnUiThread {
+                            ma.navController.navigate(R.id.adminEventFragment)
+                        }
                     }
                 }
             }
@@ -112,15 +127,9 @@ class AdminAddEventFragment : Fragment() {
 
     suspend fun nuevoEvento() {
         val nom = binding.faaeNom.text.toString()
-        var pre = binding.faaePrecio.text.toString().toFloatOrNull()
-        var afo = binding.faaeAforo.text.toString().toIntOrNull()
+        var pre = binding.faaePrecio.text.toString().toFloat()
+        var afo = binding.faaeAforo.text.toString().toInt()
         var fecha = binding.faaeFecha.text.toString()
-        if (pre == null) {
-            pre = 0.0f
-        }
-        if (afo == null) {
-            afo = 0
-        }
         val id = ControlDB.rutaEvento.push().key
         val img = subirImagenEvento(id!!, urlPortadaLocal!!)
         val evento = Evento(id, nom, fecha, img, pre, afo)
@@ -195,6 +204,27 @@ class AdminAddEventFragment : Fragment() {
         val birthDate = "$day/${month + 1}/$year"
         binding.faaeFecha.setText(birthDate)
         date = LocalDate.parse(birthDate, formatter)
+    }
+
+    fun existeEvento(nombre: String, fecha: String): Boolean {
+        var res: Boolean? = false
+        val sem = CountDownLatch(1)
+        ControlDB.rutaEvento.orderByChild("nombre").addValueEventListener(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.children.filter {
+                        it.getValue(Evento::class.java)?.nombre == nombre && it.getValue(Evento::class.java)?.fecha == fecha
+                    }.isNotEmpty()) {
+                    res = true
+                }
+                sem.countDown()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+        sem.await()
+        return res!!
     }
 
 }

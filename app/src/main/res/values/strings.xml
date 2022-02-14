@@ -5,6 +5,9 @@
     <string name="user_dashboard">Eventos</string>
     <string name="user_orders">Mis cartas</string>
     <string name="user_profile">Perfil</string>
+    <string name="user_viewCards">Ver carta</string>
+    <string name="user_viewEvents">Ver eventos</string>
+    <string name="user_events">Eventos</string>
 
     <string name="title_activity_admin">AdminActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
