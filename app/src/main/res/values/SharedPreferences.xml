@@ -9,7 +9,7 @@
     <integer name="sp_moneda_def">0</integer>
 
     <string name="sp_ultimaComp">Ultima comprobacion monedas</string>¡
-    <string name="sp_ultimaComp_def">86500000</string>
+    <string name="sp_ultimaComp_def">0</string>
 
     <string name="sp_eur_usd">USD</string>
     <string name="sp_eur_usd_def">0</string>

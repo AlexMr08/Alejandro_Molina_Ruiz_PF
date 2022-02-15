@@ -68,24 +68,27 @@ class UserActivity : AppCompatActivity() {
     var cartas_usuario = 0
 
     override fun onSupportNavigateUp(): Boolean {
+//        if (navController.currentDestination == navController.findDestination(R.id.userViewCardFragment)){
+//            navController.navigate(R.id.action_userViewCardFragment_to_userHomeFragment)
+//        }
         onBackPressed()
         return super.onSupportNavigateUp()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val nom_mon = resources.getStringArray(R.array.nom_monedas).toList()
+        val sig_mon = resources.getStringArray(R.array.sig_monedas).toList()
+        val val_mon = listOf<Float>(1.0f, controlSP.eur_usd)
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        navView.setBackgroundResource(R.drawable.gradient_bg)
 
         if (controlSP.tipo!=1 || controlSP.id==""){
             Intent(this,MainActivity::class.java).also { startActivity(it) }
             finish()
         }
-        lista_monedas = listOf(Moneda(0,"Euro","€", 1.0f), Moneda(1,"Dolar","$", controlSP.eur_usd))
-        val index_moneda = lista_monedas.map { it.id }.indexOf(controlSP.moneda_sel)
-        moneda_sel = lista_monedas[index_moneda]
+        lista_monedas = nom_mon.mapIndexed { index, s -> Moneda(s,sig_mon[index],val_mon[index]) }
+        moneda_sel = lista_monedas[controlSP.moneda_sel]
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         buscarUsuario()
@@ -107,8 +110,8 @@ class UserActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val index_moneda = lista_monedas.map { it.id }.indexOf(controlSP.moneda_sel)
-        moneda_sel = lista_monedas[index_moneda]
+        navView.setBackgroundResource(R.drawable.gradient_bg)
+        moneda_sel = lista_monedas[controlSP.moneda_sel]
         adap_carta.notifyDataSetChanged()
     }
 
@@ -345,21 +348,14 @@ class UserActivity : AppCompatActivity() {
     }
 
     fun generarReporte(): MutableList<UserProfileFragment.rep> {
-        val id_pedidos = lista_pedidos.map { it.idCarta }
-        val lista_cartas_indx = mutableListOf<Int>()
         val lista_colores = Carta.colores
-        id_pedidos.forEach { elem ->
-            lista_cartas_indx.add(lista_cartas.map { it.id }.indexOf(elem))
-        }
-        val listaCartas = mutableListOf<Carta>()
-        lista_cartas_indx.forEach { listaCartas.add(lista_cartas[it]) }
         val reporte = mutableListOf<UserProfileFragment.rep>()
         Carta.categorias.forEachIndexed { index, cat ->
-            if (listaCartas.filter { it.categoria == cat }.isNotEmpty()) {
+            if (lista_pedidos.filter { it.categoria == cat }.isNotEmpty()) {
                 reporte.add(
                     UserProfileFragment.rep(
                         cat,
-                        listaCartas.filter { it.categoria == cat }.size.toFloat(),
+                        lista_pedidos.filter { it.categoria == cat }.size.toFloat(),
                         Color.parseColor(lista_colores[index])
                     )
                 )

@@ -43,7 +43,7 @@ class UserCardAdapter(val lista: List<Carta>, val con: UserActivity) :
                 .placeholder(R.drawable.magic_card_back).into(rvUserCardImg)
             rueCard.setOnClickListener {
                 con.carta_sel = elem
-                con.navController.navigate(R.id.userViewCardFragment)
+                con.navController.navigate(R.id.action_userHomeFragment_to_userViewCardFragment)
             }
         }
     }

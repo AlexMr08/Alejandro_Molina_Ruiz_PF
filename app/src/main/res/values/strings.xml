@@ -2,7 +2,7 @@
 
     <!--Comunes-->
 
-    <string name="app_name">Practica_Final</string>
+    <string name="app_name">Magick Alex</string>
     <string name="action_settings">Ajustes</string>
     <string name="action_alex">Creador</string>
     <string name="action_sign_out">Cerrar sesion</string>
@@ -55,6 +55,7 @@
     <string name="admin_add_card">Añadir carta</string>
     <string name="admin_add_event">Añadir evento</string>
 
+    <!--Fin admin-->
 
     <!--Strings filtros-->
     <string name="filtro_pedido">Mostrar solo pedidos no aceptados</string>
@@ -81,5 +82,14 @@
     <string name="admin_reserva_fecha">Se unio el: %1$s</string>
     <string name="admin_evento_texto">Usuarios que se han unido: </string>
 
-    <!--Fin admin-->
+    <string-array name="nom_monedas">
+        <item>Euro</item>
+        <item>Dolar</item>
+    </string-array>
+
+    <string-array name="sig_monedas">
+        <item>€</item>
+        <item>$</item>
+    </string-array>
+
 </resources>

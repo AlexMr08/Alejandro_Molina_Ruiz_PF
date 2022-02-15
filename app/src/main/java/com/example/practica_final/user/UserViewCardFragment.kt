@@ -43,7 +43,6 @@ class UserViewCardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onStart() {
@@ -60,7 +59,7 @@ class UserViewCardFragment : Fragment() {
             val hoy = formateador.format(fecha.time)
             val id = ControlDB.rutaResCartas.push().key
             ControlDB.rutaResCartas.child(id?:"").setValue(Pedido(id?:"",ma.controlSP.id,elem.id?:"",hoy,EstadoPedido.CREADO,elem.precio?:0f,estadoNotificacion = EstadoNotificaciones.CREADO))
-            ma.navController.navigate(R.id.userHomeFragment)
+            ma.navController.popBackStack()
         }
 
     }

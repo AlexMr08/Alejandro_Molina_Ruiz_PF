@@ -1,10 +1,13 @@
 package com.example.practica_final.user
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.CheckBox
 import android.widget.SearchView
 import androidx.core.view.children
@@ -19,6 +22,7 @@ class UserHomeFragment : Fragment() {
 
     private var _binding: FragmentUserHomeBinding? = null
     lateinit var menu: Menu
+
     val ma by lazy {
         activity as UserActivity
     }
@@ -27,6 +31,7 @@ class UserHomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,8 +52,7 @@ class UserHomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-
+        binding.fuhSwitch.bringToFront()
         refreshUI()
         binding.fuhSwitch.setOnClickListener {
             refreshSwitch()

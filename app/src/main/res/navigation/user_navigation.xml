@@ -17,7 +17,8 @@
         tools:layout="@layout/fragment_user_home">
         <action
             android:id="@+id/action_userHomeFragment_to_userViewCardFragment"
-            app:destination="@id/userViewCardFragment" />
+            app:destination="@id/userViewCardFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/userEventFragment"
@@ -26,7 +27,8 @@
         tools:layout="@layout/fragment_user_event">
         <action
             android:id="@+id/action_userEventFragment_to_userViewEventFragment2"
-            app:destination="@id/userViewEventFragment" />
+            app:destination="@id/userViewEventFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/userViewCardFragment"
@@ -35,7 +37,12 @@
         tools:layout="@layout/fragment_user_view_card">
         <action
             android:id="@+id/action_userViewCardFragment_to_userHomeFragment"
-            app:destination="@id/userHomeFragment" />
+            app:destination="@id/userHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/userHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/userOrdersFragment"
