@@ -42,18 +42,13 @@ class AdminAddEventFragment : Fragment() {
 
     val obtenerUrl = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         when (uri) {
-            null -> println("No hay imagen")
+            null -> {}
             else -> {
                 urlPortadaLocal = uri
-                Glide.with(ma).load(urlPortadaLocal).into(binding.faaeImg)
 
             }
         }
     }
-
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -70,7 +65,6 @@ class AdminAddEventFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onStart() {

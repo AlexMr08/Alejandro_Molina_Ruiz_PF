@@ -14,7 +14,7 @@ data class Carta(val id:String?="",
                  var disponible:Boolean?=true){
     companion object{
         val categorias = listOf<String>("Negro","Blanco","Azul","Rojo","Verde")
-        val colores = listOf<String>("#000000", "#CFCFCF", "#0000FF","#FF0000","#00FF00")
+        val colores = listOf<String>("#000000", "#BCBCBC", "#333c87","#9b111e","#287233")
     }
 }
 

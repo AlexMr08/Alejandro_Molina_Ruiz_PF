@@ -21,7 +21,7 @@
             android:id="@+id/faae_nom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/nombre_evento" />
+            android:hint="@string/input_nombre_evento" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="false"
-            android:hint="@string/fecha_evento"
+            android:hint="@string/input_fecha_evento"
             android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
 

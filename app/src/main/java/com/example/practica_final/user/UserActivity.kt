@@ -1,6 +1,7 @@
 package com.example.practica_final.user
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -346,18 +347,20 @@ class UserActivity : AppCompatActivity() {
     fun generarReporte(): MutableList<UserProfileFragment.rep> {
         val id_pedidos = lista_pedidos.map { it.idCarta }
         val lista_cartas_indx = mutableListOf<Int>()
+        val lista_colores = Carta.colores
         id_pedidos.forEach { elem ->
             lista_cartas_indx.add(lista_cartas.map { it.id }.indexOf(elem))
         }
         val listaCartas = mutableListOf<Carta>()
         lista_cartas_indx.forEach { listaCartas.add(lista_cartas[it]) }
         val reporte = mutableListOf<UserProfileFragment.rep>()
-        Carta.categorias.forEach { cat ->
+        Carta.categorias.forEachIndexed { index, cat ->
             if (listaCartas.filter { it.categoria == cat }.isNotEmpty()) {
                 reporte.add(
                     UserProfileFragment.rep(
                         cat,
-                        listaCartas.filter { it.categoria == cat }.size.toFloat()
+                        listaCartas.filter { it.categoria == cat }.size.toFloat(),
+                        Color.parseColor(lista_colores[index])
                     )
                 )
             }

@@ -10,11 +10,11 @@
             android:title="@string/admin_home" />
         <item
             android:id="@+id/adminEventFragment"
-            android:icon="@drawable/ic_baseline_event_24"
+            android:icon="@drawable/ic_baseline_location_on_24"
             android:title="@string/admin_events" />
         <item
             android:id="@+id/adminOrderFragment"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_baseline_view_carousel_24"
             android:title="@string/admin_orders" />
     </group>
 </menu>

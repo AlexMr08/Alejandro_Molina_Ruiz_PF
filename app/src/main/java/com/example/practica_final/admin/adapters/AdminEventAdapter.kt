@@ -28,7 +28,7 @@ class AdminEventAdapter(val lista:List<Evento>, val con: AdminActivity) : Recycl
             raeNom.text = elem.nombre
             raePlazas.text = con.getString(R.string.evento_aforo,elem.plazas_ocupadas,elem.plazas_totales)
             raePre.text = con.getString(R.string.evento_precio_rv,elem.precio, "€")
-            AleLib.glide_img(con,elem.imagen!!,R.drawable.ic_baseline_location_on_24,raeImg,50)
+            Glide.with(con).load(elem.imagen).transform(CenterCrop(), RoundedCorners(50)).placeholder(R.drawable.ic_baseline_location_on_24).into(raeImg)
             raeFecha.text = elem.fecha
             raeCl.setOnClickListener {
                 con.evento_sel = position

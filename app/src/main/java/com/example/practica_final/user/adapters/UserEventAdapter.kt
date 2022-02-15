@@ -1,5 +1,6 @@
 package com.example.practica_final.user.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,7 @@ class UserEventAdapter(val lista:List<Evento>, val con: UserActivity) : Recycler
         val precio_final = elem.precio?.times((con.moneda_sel).conversion)
         val signo = con.moneda_sel.signo
         with(holder.bind){
-            AleLib.glide_img(con,elem.imagen!!,R.drawable.ic_baseline_location_on_24,rueImg,14)
+            Glide.with(con).load(elem.imagen).transform(CenterCrop(), RoundedCorners(14)).placeholder(R.drawable.ic_baseline_location_on_24).into(rueImg)
             rueNom.text = elem.nombre
             ruePre.text = con.getString(R.string.evento_precio, precio_final, signo )
             rueAfo.text = con.getString(R.string.evento_aforo_rv, elem.plazas_ocupadas, elem.plazas_totales)

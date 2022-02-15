@@ -1,5 +1,6 @@
 package com.example.practica_final.user.adapters
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
 
@@ -35,10 +36,12 @@ class UserCardAdapter(val lista: List<Carta>, val con: UserActivity) :
         with(holder.bind) {
             rvUserCardNom.text = elem.nombre
             rvUserCardPre.text = con.getString(R.string.carta_precio_rv, precio_final, signo)
+            rueCard.strokeColor = Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)])
+            rueCard.rippleColor = ColorStateList.valueOf(Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)]))
             imageView5.setColorFilter(Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)]))
             Glide.with(con).load(elem.imagen).transform(RoundedCorners(20))
                 .placeholder(R.drawable.magic_card_back).into(rvUserCardImg)
-            rvUserCardCl.setOnClickListener {
+            rueCard.setOnClickListener {
                 con.carta_sel = elem
                 con.navController.navigate(R.id.userViewCardFragment)
             }

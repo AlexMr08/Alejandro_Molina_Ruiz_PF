@@ -40,14 +40,21 @@ class UserOrdersFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.fuoRv.adapter = ma.adap_pedidos
-        binding.fuoRv.layoutManager = LinearLayoutManager(ma)
-
     }
 
 
     override fun onResume() {
         super.onResume()
+        if (ma.lista_pedidos.size==0){
+            binding.fuoCard.visibility = View.VISIBLE
+            binding.fuoCard.setOnClickListener {
+                ma.navController.navigate(R.id.userHomeFragment)
+            }
+        }else{
+            binding.fuoCard.visibility = View.INVISIBLE
+            binding.fuoRv.adapter = ma.adap_pedidos
+            binding.fuoRv.layoutManager = LinearLayoutManager(ma)
+        }
     }
 
     override fun onDestroyView() {

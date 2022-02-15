@@ -53,7 +53,7 @@ class UserViewEventFragment : Fragment() {
         super.onStart()
         val signo = ma.moneda_sel.signo
         val precio = ma.evento_sel.precio?.times(ma.moneda_sel.conversion)
-        AleLib.glide_img(ma,elem.imagen!!,R.drawable.ic_baseline_location_on_24,binding.fuveImg,14)
+        Glide.with(ma).load(elem.imagen).transform(CenterCrop(), RoundedCorners(14)).placeholder(R.drawable.ic_baseline_location_on_24).into(binding.fuveImg)
         binding.fuveNom.text = elem.nombre
         binding.fuveNumAforo.text = ma.getString(R.string.evento_aforo,elem.plazas_ocupadas,elem.plazas_totales)
         binding.fuveNumPrecio.text = ma.getString(R.string.evento_precio_rv, precio, signo)

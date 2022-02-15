@@ -10,9 +10,9 @@ import android.widget.SearchView
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.practica_final.elementos.Carta
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserHomeBinding
+import com.example.practica_final.elementos.Carta
 
 
 class UserHomeFragment : Fragment() {
@@ -32,7 +32,7 @@ class UserHomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentUserHomeBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
@@ -47,6 +47,8 @@ class UserHomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+
         refreshUI()
         binding.fuhSwitch.setOnClickListener {
             refreshSwitch()
@@ -91,11 +93,6 @@ class UserHomeFragment : Fragment() {
     fun refreshFilter() {
         val query = (menu.findItem(R.id.app_bar_search).actionView as SearchView).query
         ma.adap_carta.filter.filter(query)
-    }
-
-    fun refreshButton(check: Boolean) {
-        binding.fuhCg.children.forEach { it.isEnabled = check }
-        refreshFilter()
     }
 
     fun refreshSwitch(){

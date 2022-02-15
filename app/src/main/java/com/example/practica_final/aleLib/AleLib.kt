@@ -15,9 +15,6 @@ import com.example.practica_final.R
 class AleLib {
     companion object{
         val MILIS_IN_DAY = 24*60*60*1000
-        fun glide_img(con : Context, img:String, ph:Int, view: ImageView, radio:Int){
-            Glide.with(con).load(img).transform(CenterCrop(), RoundedCorners(radio)).placeholder(ph).into(view)
-        }
     }
 }
 

@@ -1,6 +1,5 @@
 package com.example.practica_final.admin.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +23,7 @@ class AdminBookingAdapter(val lista:List<Reserva>, val con:AdminActivity) : Recy
         with(holder.bind){
             rabNom.text = elem.nombreCliente
             Glide.with(con).load(elem.imgCliente).circleCrop().placeholder(R.drawable.ic_baseline_account_circle_24).into(rabImg)
-            rabFec.text = con.getString(R.string.admin_rserva_fecha,elem.fecha)
+            rabFec.text = con.getString(R.string.admin_reserva_fecha,elem.fecha)
         }
     }
 

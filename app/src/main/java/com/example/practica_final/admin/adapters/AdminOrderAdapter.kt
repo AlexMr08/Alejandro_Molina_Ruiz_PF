@@ -31,7 +31,7 @@ class AdminOrdersAdapter(val lista:List<Pedido>, val con: AdminActivity) : Recyc
         val elem = listaFiltrada[position]
         with(holder.bind){
             refreshUI(elem,holder)
-            Glide.with(con).load(elem.imgCarta).into(rapImgCarta)
+            Glide.with(con).load(elem.imgCarta).placeholder(R.drawable.magic_card_back).into(rapImgCarta)
             rapNomCarta.text = elem.nombreCarta
             rapPrecio.text = con.getString(R.string.carta_precio,elem.precio,"€")
             rapCliente.text = elem.nombreCliente

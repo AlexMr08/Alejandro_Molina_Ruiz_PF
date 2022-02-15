@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserProfileBinding
 import com.github.mikephil.charting.charts.PieChart
@@ -17,7 +16,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 
 class UserProfileFragment : Fragment() {
-    data class rep(val nom: String, val num: Float)
+    data class rep(val nom: String, val num: Float, val color: Int)
 
     private var _binding: FragmentUserProfileBinding? = null
     lateinit var menu: Menu
@@ -25,7 +24,7 @@ class UserProfileFragment : Fragment() {
     val ma by lazy {
         activity as UserActivity
     }
-    val reporte by lazy { ma.generarReporte() }
+    lateinit var reporte : List<rep>
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -62,23 +61,33 @@ class UserProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val pieEntries = mutableListOf<PieEntry>()
-        if (ma.lista_cartas.isEmpty()){
-
+        val cartas_usuario = ma.lista_pedidos.size
+        binding.fupCartasUsu.text = cartas_usuario.toString()
+        reporte = ma.generarReporte()
+        if (ma.lista_pedidos.isEmpty()){
+            binding.fupCard.visibility = View.VISIBLE
+            binding.fupBtnVolver.setOnClickListener {
+                ma.navController.navigate(R.id.userHomeFragment)
+            }
         }else{
+            binding.fupCard.visibility = View.INVISIBLE
             reporte.map {
                 pieEntries.add(PieEntry(it.num, it.nom))
             }
-            val label = "JAJA"
+            val label = "Categorias de mis cartas"
             val pieDataSet = PieDataSet(pieEntries, label)
             pieDataSet.valueTextSize = 16f
+            pieDataSet.colors = reporte.map { it.color }
+            pieDataSet.valueTextColor = Color.parseColor("#FFFFFF")
             pieData = PieData(pieDataSet)
             pieData.setDrawValues(true)
             val pieChart = ma.findViewById<PieChart>(R.id.fup_pieChart)
             pieChart.data = pieData
             pieChart.legend.isEnabled = false
+            pieChart.description.text = ""
         }
         
-        binding.fupNom.text = ma.usuario.nombre
+        binding.fupNom.text = getString(R.string.nombre_usuario,ma.usuario.nombre)
         Glide.with(ma).load(ma.usuario.img).circleCrop().placeholder(R.drawable.magic_card_back)
             .into(binding.fupImg)
     }

@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.aleLib.ControlSP
 import com.example.practica_final.databinding.ActivityRegisterBinding
@@ -35,11 +36,10 @@ class RegisterActivity : AppCompatActivity() {
     val obtener_url= registerForActivityResult(ActivityResultContracts.GetContent()){
             uri: Uri?->
         when (uri){
-            null-> Toast.makeText(applicationContext,"No has seleccionado una imagen", Toast.LENGTH_SHORT).show()
+            null-> {}
             else->{
                 url_perfil_local=uri
-                bind.registerIvPp.setImageURI(url_perfil_local)
-                Toast.makeText(applicationContext,"Has seleccionado una imagen", Toast.LENGTH_SHORT).show()
+                Glide.with(this).load(url_perfil_local).placeholder(R.drawable.ic_baseline_account_circle_24).circleCrop().into(bind.registerIvPp)
             }
         }
     }
@@ -66,7 +66,7 @@ class RegisterActivity : AppCompatActivity() {
             val pass1 = bind.registerTiePass1.text.toString().trim()
             val pass2 = bind.registerTiePass2.text.toString().trim()
             val fecha = Calendar.getInstance()
-            val formateador = SimpleDateFormat("yyyy-MM-dd")
+            val formateador = SimpleDateFormat("dd/MM/yyyy")
             val hoy = formateador.format(fecha.time)
             if (isValid()){
                 if (contraseñasIguales(pass1,pass2)){

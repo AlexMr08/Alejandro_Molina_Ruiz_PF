@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/fup_img"
-        android:layout_width="@dimen/imagen_grande"
-        android:layout_height="@dimen/imagen_grande"
+        android:layout_width="@dimen/imagen_mediana"
+        android:layout_height="@dimen/imagen_mediana"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:adjustViewBounds="true"
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
-        android:textAppearance="@style/h1"
+        android:text="@string/nombre_usuario"
+        android:textAppearance="@style/h1_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fup_img"
         app:layout_constraintTop_toTopOf="@+id/fup_img" />
@@ -35,46 +35,85 @@
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fup_img" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/fup_nom"
-        app:layout_constraintTop_toBottomOf="@+id/fup_nom" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="TextView"
+        android:text="@string/num_cartas"
+        android:textAppearance="@style/h1"
+        app:layout_constraintBottom_toBottomOf="@+id/fup_img"
         app:layout_constraintEnd_toEndOf="@+id/fup_nom"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
+        app:layout_constraintStart_toStartOf="@+id/fup_nom"
+        app:layout_constraintTop_toTopOf="@+id/fup_img" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/fup_cartas_usu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textAppearance="@style/h1"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/textView8"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/fup_card"
+        style="@style/carta"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:clickable="true"
+        app:cardElevation="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/fup_pieChart"
+        app:layout_constraintEnd_toEndOf="@+id/fup_pieChart"
+        app:layout_constraintStart_toStartOf="@+id/fup_pieChart"
+        app:layout_constraintTop_toTopOf="@+id/fup_pieChart"
+        app:strokeWidth="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ninguna_carta"
+                android:textAppearance="@style/h1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/fup_btn_volver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/boton_comprar"
+                app:layout_constraintEnd_toEndOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/textView9"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        android:layout_marginTop="24dp"
+        android:text="@string/cartas_por_cat"
+        android:textAppearance="@style/h1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fup_img" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

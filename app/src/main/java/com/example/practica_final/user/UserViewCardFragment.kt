@@ -50,9 +50,8 @@ class UserViewCardFragment : Fragment() {
         super.onStart()
         val elem = ma.carta_sel
         val signo = ma.moneda_sel.signo
-        val precio = ma.carta_sel.precio?.times(ma.moneda_sel.conversion!!)
+        val precio = ma.carta_sel.precio?.times(ma.moneda_sel.conversion)
         binding.textView2.text = elem.nombre
-        binding.textView4.text = elem.categoria
         binding.textView3.text = ma.getString(R.string.carta_precio,precio, signo)
         Glide.with(ma).load(elem.imagen).placeholder(R.drawable.magic_card_back).into(binding.imageView3)
         binding.button3.setOnClickListener {
