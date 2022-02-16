@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.di_tema7formularios.DatePickerFragment
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.elementos.Evento
@@ -45,7 +47,7 @@ class AdminAddEventFragment : Fragment() {
             null -> {}
             else -> {
                 urlPortadaLocal = uri
-
+                Glide.with(ma).load(urlPortadaLocal).transform(CenterCrop(), RoundedCorners(20)).into(binding.faaeImg)
             }
         }
     }

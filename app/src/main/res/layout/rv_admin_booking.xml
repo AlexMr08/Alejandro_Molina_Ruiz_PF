@@ -21,8 +21,7 @@
 
     <ImageView
         android:id="@+id/rab_img"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
+        style="@style/imagen_pequenha"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"

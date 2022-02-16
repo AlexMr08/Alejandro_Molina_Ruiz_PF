@@ -17,8 +17,7 @@
 
     <ImageView
         android:id="@+id/fave_img"
-        android:layout_width="@dimen/imagen_mediana"
-        android:layout_height="@dimen/imagen_mediana"
+        style="@style/imagen_cuadrada_mediana"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:adjustViewBounds="true"

@@ -8,6 +8,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -26,6 +27,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -46,6 +48,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/faae_til_fec"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -68,6 +71,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout5"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -88,8 +92,7 @@
 
     <ImageView
         android:id="@+id/faae_img"
-        android:layout_width="@dimen/imagen_extra_grande"
-        android:layout_height="@dimen/imagen_extra_grande"
+        style="@style/imagen_cuadrada_extra_grande"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_menu_gallery"

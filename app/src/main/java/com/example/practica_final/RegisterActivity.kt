@@ -157,8 +157,10 @@ class RegisterActivity : AppCompatActivity() {
     fun usuarioValido(e: EditText):Boolean{
         var valid = true
         if (e.text.toString().trim().length<=2 || e.text.toString().trim().length>16){
-            e.error = "El nombre de usuario debe tener entre 3 y 16 caracteres"
+            bind.registerTieNom.error = "El nombre de usuario debe tener entre 3 y 16 caracteres"
             valid = false
+        }else{
+            bind.tilNombre.isErrorEnabled = false
         }
         return valid
     }
@@ -166,8 +168,10 @@ class RegisterActivity : AppCompatActivity() {
     fun correoValido(e: EditText):Boolean{
         var valid = true
         if (e.text.isNullOrEmpty() || !Patterns.EMAIL_ADDRESS.matcher(e.text).matches()){
-            e.error = "Introduce un correo valido"
+            bind.tilCorreo.error = "Introduce un correo valido"
             valid=false
+        }else{
+            bind.tilCorreo.isErrorEnabled = false
         }
         return valid
     }
@@ -177,16 +181,18 @@ class RegisterActivity : AppCompatActivity() {
         val passwordRegex = Pattern.compile(
             "^" +
                     "(?=.*[0-9])" +         //at least 1 digit
-                    "(?=.*[a-z])" +        //at least 1 lower case letter
                     "(?=.*[A-Z])" +        //at least 1 upper case letter
                     "(?=\\S+$)" +           //no white spaces
-                    ".{8,}" +               //at least 4 characters
+                    ".{8,}" +               //at least 8 characters
                     "$"
         )
 
         if (!passwordRegex.matcher(e.text.toString()).matches()){
+            bind.tilPass1.isErrorEnabled=true
             bind.tilPass1.error = "La contraseña debe tener minimo 8 caracteres, un numero y una mayuscula."
             valid=false
+        }else{
+            bind.tilPass1.isErrorEnabled = false
         }
         return valid
     }
@@ -194,8 +200,11 @@ class RegisterActivity : AppCompatActivity() {
     fun contraseñasIguales(c1 : String, c2: String):Boolean{
         var valid = true
         if (!(c1==c2)){
+            bind.tilPass2.isErrorEnabled=true
             bind.tilPass2.error = "Las contraseña no coinciden."
             valid=false
+        }else{
+            bind.tilPass2.isErrorEnabled=false
         }
         return valid
     }

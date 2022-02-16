@@ -5,59 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/rap_img_carta"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/imagen_mediana"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:adjustViewBounds="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/magic_card_back" />
-
-    <TextView
-        android:id="@+id/rap_nom_carta"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/rap_card"
+        style="@style/carta"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="TextView"
-        android:textAppearance="@style/h1_bold"
-        app:layout_constraintStart_toEndOf="@+id/rap_img_carta"
-        app:layout_constraintTop_toTopOf="@+id/rap_img_carta" />
 
-    <TextView
-        android:id="@+id/rap_cliente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textAppearance="@style/texto"
-        app:layout_constraintStart_toStartOf="@+id/rap_nom_carta"
-        app:layout_constraintTop_toBottomOf="@+id/rap_nom_carta" />
-
-    <TextView
-        android:id="@+id/rap_precio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textAppearance="@style/texto"
-        app:layout_constraintStart_toStartOf="@+id/rap_nom_carta"
-        app:layout_constraintTop_toBottomOf="@+id/rap_cliente" />
-
-    <ImageButton
-        android:id="@+id/rap_aceptar"
-        style="@android:style/Widget.Holo.Light.ImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:tint="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_check_24" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/rap_img_carta"
+                style="@style/imagen_mediana"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/magic_card_back" />
+
+            <TextView
+                android:id="@+id/rap_nom_carta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                android:textAppearance="@style/h1_bold"
+                app:layout_constraintStart_toEndOf="@+id/rap_img_carta"
+                app:layout_constraintTop_toTopOf="@+id/rap_img_carta" />
+
+            <TextView
+                android:id="@+id/rap_cliente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textAppearance="@style/texto"
+                app:layout_constraintStart_toStartOf="@+id/rap_nom_carta"
+                app:layout_constraintTop_toBottomOf="@+id/rap_nom_carta" />
+
+            <TextView
+                android:id="@+id/rap_precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textAppearance="@style/texto"
+                app:layout_constraintStart_toStartOf="@+id/rap_nom_carta"
+                app:layout_constraintTop_toBottomOf="@+id/rap_cliente" />
+
+            <ImageButton
+                android:id="@+id/rap_aceptar"
+                style="@android:style/Widget.Holo.Light.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:tint="@color/purple_700"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_check_24" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

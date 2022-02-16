@@ -24,8 +24,7 @@
 
             <ImageView
                 android:id="@+id/rv_profile_img"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                style="@style/imagen_mediana"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"

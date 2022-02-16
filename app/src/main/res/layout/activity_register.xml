@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,8 +84,7 @@
 
     <ImageView
         android:id="@+id/register_iv_pp"
-        android:layout_width="@dimen/imagen_grande"
-        android:layout_height="@dimen/imagen_grande"
+        style="@style/imagen_grande"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"

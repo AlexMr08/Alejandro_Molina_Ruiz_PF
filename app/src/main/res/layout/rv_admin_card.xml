@@ -37,16 +37,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="TextView"
                 android:textAppearance="@style/h1_bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/rvac_img"
                 app:layout_constraintTop_toTopOf="@+id/rvac_img" />
 
             <ImageView
                 android:id="@+id/rvac_img"
-                android:layout_width="@dimen/imagen_pequeña"
-                android:layout_height="wrap_content"
+                style="@style/imagen_mediana"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"

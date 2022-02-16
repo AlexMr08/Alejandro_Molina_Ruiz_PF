@@ -26,8 +26,7 @@
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                style="@style/imagen_muy_pequenha"
                 android:adjustViewBounds="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/rv_user_card_img"
@@ -52,8 +51,7 @@
 
             <ImageView
                 android:id="@+id/rv_user_card_img"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/imagen_grande"
+                style="@style/imagen_grande"
                 android:layout_marginTop="8dp"
                 android:adjustViewBounds="true"
                 app:layout_constraintEnd_toEndOf="parent"

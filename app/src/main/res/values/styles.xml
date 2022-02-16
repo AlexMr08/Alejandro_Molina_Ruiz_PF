@@ -47,7 +47,45 @@
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
-
     </style>
 
+    <style name="imagen_cuadrada_mediana" parent="Theme.AppCompat">
+        <item name="android:layout_width">@dimen/imagen_mediana</item>
+        <item name="android:layout_height">@dimen/imagen_mediana</item>
+    </style>
+
+    <style name="imagen_mediana" parent="Theme.AppCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/imagen_mediana</item>
+    </style>
+
+    <style name="imagen_cuadrada_grande" parent="Theme.AppCompat">
+        <item name="android:layout_width">@dimen/imagen_grande</item>
+        <item name="android:layout_height">@dimen/imagen_grande</item>
+    </style>
+
+    <style name="imagen_grande" parent="Theme.AppCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/imagen_grande</item>
+    </style>
+
+    <style name="imagen_pequenha">
+        <item name="android:layout_width">@dimen/imagen_pequeña</item>
+        <item name="android:layout_height">@dimen/imagen_pequeña</item>
+    </style>
+
+    <style name="imagen_muy_pequenha">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/imagen_muy_pequeña</item>
+    </style>
+
+    <style name="imagen_cuadrada_extra_grande" parent="Theme.AppCompat">
+        <item name="android:layout_width">@dimen/imagen_extra_grande</item>
+        <item name="android:layout_height">@dimen/imagen_extra_grande</item>
+    </style>
+
+    <style name="imagen_extra_grande" parent="Theme.AppCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/imagen_extra_grande</item>
+    </style>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.practica_final.admin
 
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.practica_final.*
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.databinding.RvAdminOrderBinding
+import com.example.practica_final.elementos.Carta
 import com.example.practica_final.elementos.EstadoNotificaciones
 import com.example.practica_final.elementos.EstadoPedido
 import com.example.practica_final.elementos.Pedido
@@ -32,6 +34,7 @@ class AdminOrdersAdapter(val lista:List<Pedido>, val con: AdminActivity) : Recyc
         with(holder.bind){
             refreshUI(elem,holder)
             Glide.with(con).load(elem.imgCarta).placeholder(R.drawable.magic_card_back).into(rapImgCarta)
+            rapCard.strokeColor = Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)])
             rapNomCarta.text = elem.nombreCarta
             rapPrecio.text = con.getString(R.string.carta_precio,elem.precio,"€")
             rapCliente.text = con.getString(R.string.nom_cliente,elem.nombreCliente)

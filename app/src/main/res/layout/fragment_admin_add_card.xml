@@ -9,6 +9,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_nombre"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -38,6 +39,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_precio"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -61,8 +63,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:switchTextAppearance="@style/texto"
         android:text="@string/switch_disponible"
+        android:textAppearance="@style/texto"
         app:layout_constraintBottom_toBottomOf="@+id/til_precio"
         app:layout_constraintEnd_toEndOf="@+id/til_nombre"
         app:layout_constraintHorizontal_bias="0.5"
@@ -71,8 +73,7 @@
 
     <ImageView
         android:id="@+id/fanc_reverso"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/imagen_extra_grande"
+        style="@style/imagen_extra_grande"
         android:layout_marginTop="32dp"
         android:adjustViewBounds="true"
         android:src="@drawable/magic_card_back"

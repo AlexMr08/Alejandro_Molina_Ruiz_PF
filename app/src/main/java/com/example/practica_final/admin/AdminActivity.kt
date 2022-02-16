@@ -102,70 +102,8 @@ class AdminActivity : AppCompatActivity() {
             }
         })
 
-        lista_pedidos = mutableListOf()
-        ControlDB.rutaResCartas
-            .addChildEventListener(object : ChildEventListener {
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    GlobalScope.launch(Dispatchers.IO) {
-                        val pedido = snapshot.getValue(Pedido::class.java) ?: Pedido()
-                        val sem = CountDownLatch(2)
-                        //Consulta carta
-                        ControlDB.rutacartas.child(pedido.idCarta ?: "").orderByChild("estado")
-                            .addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(snapshot: DataSnapshot) {
-                                    val carta = snapshot.getValue(Carta::class.java)?: Carta()
-                                    pedido.imgCarta = carta.imagen
-                                    pedido.nombreCarta = carta.nombre
-                                    sem.countDown()
-                                }
+        lista_pedidos = buscarPedidos()
 
-                                override fun onCancelled(error: DatabaseError) {}
-                            })
-
-                        //Consulta usuario
-                        ControlDB.rutaUsuario.child(pedido.idCliente ?: "")
-                            .addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(snapshot: DataSnapshot) {
-                                    val cliente = snapshot.getValue(Usuario::class.java)?:Usuario()
-                                    pedido.imgCliente = cliente.img
-                                    pedido.nombreCliente = cliente.nombre
-                                    sem.countDown()
-                                }
-
-                                override fun onCancelled(error: DatabaseError) {}
-                            })
-                        sem.await()
-                        lista_pedidos.add(pedido)
-                        if (pedido.estadoNotificacion == EstadoNotificaciones.CREADO) {
-                            ControlNotif.generarNotificacion(
-                                this@AdminActivity,
-                                generador.incrementAndGet(),
-                                getString(R.string.texto_noti_admin,pedido.nombreCliente,pedido.nombreCarta),
-                                getString(R.string.titulo_noti_admin),
-                                UserProfileFragment::class.java
-                            )
-                            ControlDB.rutaResCartas.child(pedido.id ?: "")
-                                .child("estadoNotificacion")
-                                .setValue(EstadoNotificaciones.NOTIFICADO)
-
-                        }
-                    }
-                    adap_pedido.notifyDataSetChanged()
-                    adap_pedido.filter.filter("")
-                }
-
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                    var pedido = snapshot.getValue(Pedido::class.java)
-                    adap_pedido.notifyDataSetChanged()
-                    adap_pedido.filter.filter("")
-                }
-
-                override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
 
         lista_eventos = buscarEventos()
     }
@@ -253,6 +191,74 @@ class AdminActivity : AppCompatActivity() {
                 val modificado = lista_eventos.indexOf(lista_eventos.filter { it.id == evento?.id }[0])
                 lista_eventos[modificado] = evento
                 adap_eventos.notifyDataSetChanged()
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+        return lista
+    }
+
+    fun buscarPedidos():MutableList<Pedido>{
+        var lista = mutableListOf<Pedido>()
+        ControlDB.rutaResCartas.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    val pedido = snapshot.getValue(Pedido::class.java) ?: Pedido()
+                    val sem = CountDownLatch(2)
+                    //Consulta carta
+                    ControlDB.rutacartas.child(pedido.idCarta ?: "").orderByChild("estado")
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val carta = snapshot.getValue(Carta::class.java)?: Carta()
+                                pedido.imgCarta = carta.imagen
+                                pedido.nombreCarta = carta.nombre
+                                pedido.categoria = carta.categoria
+                                sem.countDown()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+
+                    //Consulta usuario
+                    ControlDB.rutaUsuario.child(pedido.idCliente ?: "")
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val cliente = snapshot.getValue(Usuario::class.java)?:Usuario()
+                                pedido.imgCliente = cliente.img
+                                pedido.nombreCliente = cliente.nombre
+                                sem.countDown()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+                    sem.await()
+                    lista.add(pedido)
+                    if (pedido.estadoNotificacion == EstadoNotificaciones.CREADO) {
+                        ControlNotif.generarNotificacion(
+                            this@AdminActivity,
+                            generador.incrementAndGet(),
+                            getString(R.string.texto_noti_admin,pedido.nombreCliente,pedido.nombreCarta),
+                            getString(R.string.titulo_noti_admin),
+                            UserProfileFragment::class.java
+                        )
+                        ControlDB.rutaResCartas.child(pedido.id ?: "")
+                            .child("estadoNotificacion")
+                            .setValue(EstadoNotificaciones.NOTIFICADO)
+
+                    }
+                }
+                adap_pedido.notifyDataSetChanged()
+                adap_pedido.filter.filter("")
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                var pedido = snapshot.getValue(Pedido::class.java)
+                adap_pedido.notifyDataSetChanged()
+                adap_pedido.filter.filter("")
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {}

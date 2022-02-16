@@ -41,12 +41,6 @@ class UserEventFragment : Fragment() {
         binding.fueRv.layoutManager = LinearLayoutManager(ma)
     }
 
-    override fun onResume() {
-        super.onResume()
-        //(activity as UserActivity).FAB_manager(1, {})
-        //ma.algoraro(0)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

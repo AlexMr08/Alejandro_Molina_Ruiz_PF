@@ -76,11 +76,9 @@ android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="@dimen/imagen_extra_grande"
-        android:layout_height="@dimen/imagen_extra_grande"
+        style="@style/imagen_cuadrada_extra_grande"
         android:layout_marginTop="32dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

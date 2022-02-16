@@ -135,9 +135,6 @@ class AdminViewEventFragment : Fragment() {
         Glide.with(ma).load(elem.imagen).transform(CenterCrop(), RoundedCorners(50))
             .placeholder(R.drawable.ic_baseline_location_on_24).into(binding.faveImg)
         binding.faveNom.text = elem.nombre
-        binding.faveNom.isSingleLine = true
-        binding.faveNom.isSelected = true
-        binding.faveNom.ellipsize = TextUtils.TruncateAt.MARQUEE
         binding.faveAforo.text =
             ma.getString(R.string.evento_aforo, num, elem.plazas_totales)
         binding.favePre.text = ma.getString(R.string.evento_precio_rv, elem.precio, "€")

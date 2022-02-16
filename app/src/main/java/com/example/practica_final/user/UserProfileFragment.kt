@@ -54,7 +54,6 @@ class UserProfileFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
     }
 
 
