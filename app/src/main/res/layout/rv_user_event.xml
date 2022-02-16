@@ -43,7 +43,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="TextView"
-                android:textAppearance="@style/h1"
+                android:textAppearance="@style/h1_bold"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/rue_img"
@@ -57,6 +57,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="TextView"
+                android:textAppearance="@style/texto"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -65,9 +66,9 @@
                 style="@style/texto"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAppearance="@style/texto"
+                app:layout_constraintBottom_toTopOf="@+id/rue_afo"
                 app:layout_constraintStart_toStartOf="@+id/rue_nom"
                 app:layout_constraintTop_toBottomOf="@+id/rue_nom" />
 
@@ -76,8 +77,8 @@
                 style="@style/texto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/rue_img"
                 app:layout_constraintStart_toStartOf="@+id/rue_pre"
                 app:layout_constraintTop_toBottomOf="@+id/rue_pre" />
 

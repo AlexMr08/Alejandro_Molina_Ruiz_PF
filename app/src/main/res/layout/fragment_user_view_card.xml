@@ -52,13 +52,25 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="?actionBarSize"
 
-        android:text="Comprar"
+        android:text="@string/boton_comprar"
         android:textAllCaps="true"
+        android:textAppearance="@style/h1_boton"
         android:textSize="16sp"
         android:textStyle="bold"
         app:icon="@drawable/ic_round_shopping_cart_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_twotone_turned_in_24"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

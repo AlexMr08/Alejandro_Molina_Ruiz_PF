@@ -12,7 +12,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:text="TextView"
-        android:textSize="20sp"
+        android:textAppearance="@style/h1_bold"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/rab_fec"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textAppearance="@style/texto"
         app:layout_constraintBottom_toBottomOf="@+id/rab_img"
         app:layout_constraintStart_toStartOf="@+id/rab_nom"
         app:layout_constraintTop_toBottomOf="@+id/rab_nom" />

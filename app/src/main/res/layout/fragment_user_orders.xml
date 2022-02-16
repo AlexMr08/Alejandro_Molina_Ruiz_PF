@@ -45,6 +45,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/boton_comprar"
+                android:textAppearance="@style/h1_boton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/fuo_card_tv"
                 app:layout_constraintStart_toStartOf="@+id/fuo_card_tv"

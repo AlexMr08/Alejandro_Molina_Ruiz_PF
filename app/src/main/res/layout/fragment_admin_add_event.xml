@@ -40,7 +40,7 @@
             android:id="@+id/faae_aforo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/aforo"
+            android:hint="@string/input_aforo"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +82,7 @@
             android:id="@+id/faae_precio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/precio"
+            android:hint="@string/input_precio"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 

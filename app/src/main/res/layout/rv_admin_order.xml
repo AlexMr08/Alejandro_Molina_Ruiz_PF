@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="TextView"
+        android:textAppearance="@style/h1_bold"
         app:layout_constraintStart_toEndOf="@+id/rap_img_carta"
         app:layout_constraintTop_toTopOf="@+id/rap_img_carta" />
 
@@ -33,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
+        android:textAppearance="@style/texto"
         app:layout_constraintStart_toStartOf="@+id/rap_nom_carta"
         app:layout_constraintTop_toBottomOf="@+id/rap_nom_carta" />
 
@@ -42,14 +44,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
+        android:textAppearance="@style/texto"
         app:layout_constraintStart_toStartOf="@+id/rap_nom_carta"
         app:layout_constraintTop_toBottomOf="@+id/rap_cliente" />
 
     <ImageButton
         android:id="@+id/rap_aceptar"
+        style="@android:style/Widget.Holo.Light.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:tint="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

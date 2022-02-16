@@ -34,7 +34,7 @@ class AdminOrdersAdapter(val lista:List<Pedido>, val con: AdminActivity) : Recyc
             Glide.with(con).load(elem.imgCarta).placeholder(R.drawable.magic_card_back).into(rapImgCarta)
             rapNomCarta.text = elem.nombreCarta
             rapPrecio.text = con.getString(R.string.carta_precio,elem.precio,"€")
-            rapCliente.text = elem.nombreCliente
+            rapCliente.text = con.getString(R.string.nom_cliente,elem.nombreCliente)
             rapAceptar.setOnClickListener {
                 elem.estado= EstadoPedido.ACEPTADO
                 con.adap_pedido.notifyItemChanged(position)

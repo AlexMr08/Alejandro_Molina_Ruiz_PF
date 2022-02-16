@@ -22,7 +22,7 @@
             android:id="@+id/fanc_nom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre de la carta" />
+            android:hint="@string/input_nombre_carta" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
@@ -52,7 +52,7 @@
             android:id="@+id/fanc_pre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Precio"
+            android:hint="@string/input_precio"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +61,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="Esta disponible?"
+        android:switchTextAppearance="@style/texto"
+        android:text="@string/switch_disponible"
         app:layout_constraintBottom_toBottomOf="@+id/til_precio"
         app:layout_constraintEnd_toEndOf="@+id/til_nombre"
         app:layout_constraintHorizontal_bias="0.5"

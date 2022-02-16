@@ -25,11 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:ellipsize="end"
         android:singleLine="true"
         android:text="TextView"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textAppearance="@style/h1_bold"
         app:layout_constraintBottom_toTopOf="@+id/rae_plazas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -41,9 +39,8 @@
         android:id="@+id/rae_plazas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textAppearance="@style/texto"
         app:layout_constraintBottom_toTopOf="@+id/rae_pre"
         app:layout_constraintStart_toStartOf="@+id/rae_nom"
         app:layout_constraintTop_toBottomOf="@+id/rae_nom" />
@@ -52,20 +49,18 @@
         android:id="@+id/rae_pre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textAppearance="@style/texto"
         app:layout_constraintBottom_toBottomOf="@+id/rae_img"
         app:layout_constraintStart_toStartOf="@+id/rae_plazas"
-        app:layout_constraintTop_toBottomOf="@+id/rae_plazas"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/rae_plazas" />
 
     <TextView
         android:id="@+id/rae_fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textAppearance="@style/texto"
         app:layout_constraintBottom_toBottomOf="@+id/rae_img"
         app:layout_constraintEnd_toEndOf="@+id/rae_nom" />
 </androidx.constraintlayout.widget.ConstraintLayout>

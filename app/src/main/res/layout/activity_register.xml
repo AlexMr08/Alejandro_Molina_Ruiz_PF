@@ -22,7 +22,7 @@
             android:id="@+id/registerTieNom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre de usuario"
+            android:hint="@string/input_nombre_usuario"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,7 +43,7 @@
             android:id="@+id/registerTiePass1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
+            android:hint="@string/input_contraseña"
             android:inputType="textPassword"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,7 +64,7 @@
             android:id="@+id/registerTiePass2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Repite contraseña"
+            android:hint="@string/input_contraseña2"
             android:inputType="textPassword"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -76,7 +76,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:text="Registrarse"
+        android:text="@string/boton_registro"
+        android:textAppearance="@style/h1_boton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/til_pass2"
         app:layout_constraintStart_toStartOf="@+id/til_pass1" />
@@ -84,7 +85,7 @@
     <ImageView
         android:id="@+id/register_iv_pp"
         android:layout_width="@dimen/imagen_grande"
-        android:layout_height="@dimen/imagen_mediana"
+        android:layout_height="@dimen/imagen_grande"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +109,7 @@
             android:id="@+id/registerTieMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo" />
+            android:hint="@string/input_correo" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

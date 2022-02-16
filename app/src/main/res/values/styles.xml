@@ -10,6 +10,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="h1_boton" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
     <style name="h1_card" parent="TextAppearance.AppCompat">
         <item name="android:textSize">20sp</item>
         <item name="fontFamily">@font/aref_ruqaa</item>
@@ -21,8 +27,15 @@
         <item name="fontFamily">@font/aref_ruqaa</item>
     </style>
 
+
+
     <style name="texto" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="texto_bold" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="carta" parent="Theme.Practica_Final">
@@ -30,8 +43,11 @@
         <item name="cardElevation">2dp</item>
         <item name="strokeWidth">2dp</item>
         <item name="cardBackgroundColor">#CDEFEFEF</item>
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
+
     </style>
+
 </resources>

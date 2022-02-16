@@ -9,5 +9,6 @@
     <dimen name="imagen_grande">125dp</dimen>
     <dimen name="imagen_extra_grande">200dp</dimen>
     <dimen name="imagen_pequeña">75dp</dimen>
+    <dimen name="imagen_muy_pequeña">50dp</dimen>
     <dimen name="card_radius">20px</dimen>
 </resources>

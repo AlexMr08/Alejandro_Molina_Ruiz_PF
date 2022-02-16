@@ -33,7 +33,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:text="TextView"
-        android:textSize="20sp"
+        android:textAppearance="@style/h1_bold"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fave_img"
@@ -46,6 +46,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/admin_evento_texto"
+        android:textAppearance="@style/texto"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fave_img"
@@ -57,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textAppearance="@style/texto"
         app:layout_constraintStart_toStartOf="@+id/fave_nom"
         app:layout_constraintTop_toBottomOf="@+id/fave_nom" />
 
@@ -67,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textAppearance="@style/texto"
         app:layout_constraintStart_toStartOf="@+id/fave_aforo"
         app:layout_constraintTop_toBottomOf="@+id/fave_aforo" />
 
@@ -76,6 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textAppearance="@style/texto"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/fave_img"
         app:layout_constraintEnd_toEndOf="@+id/fave_nom" />

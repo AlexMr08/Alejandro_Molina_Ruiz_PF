@@ -1,5 +1,6 @@
 package com.example.practica_final.user
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.example.practica_final.R
 import com.example.practica_final.aleLib.ControlDB
 import com.example.practica_final.databinding.FragmentUserViewCardBinding
 import com.example.practica_final.databinding.FragmentUserViewEventBinding
+import com.example.practica_final.elementos.Carta
 import com.example.practica_final.elementos.EstadoNotificaciones
 import com.example.practica_final.elementos.EstadoPedido
 import com.example.practica_final.elementos.Pedido
@@ -50,6 +52,7 @@ class UserViewCardFragment : Fragment() {
         val elem = ma.carta_sel
         val signo = ma.moneda_sel.signo
         val precio = ma.carta_sel.precio?.times(ma.moneda_sel.conversion)
+        binding.imageView4.setColorFilter(Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)]))
         binding.textView2.text = elem.nombre
         binding.textView3.text = ma.getString(R.string.carta_precio,precio, signo)
         Glide.with(ma).load(elem.imagen).placeholder(R.drawable.magic_card_back).into(binding.imageView3)

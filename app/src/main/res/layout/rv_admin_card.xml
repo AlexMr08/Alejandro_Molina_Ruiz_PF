@@ -40,7 +40,6 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAppearance="@style/h1_bold"
-                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/rvac_img"
                 app:layout_constraintTop_toTopOf="@+id/rvac_img" />
 
@@ -60,11 +59,11 @@
 
             <Switch
                 android:id="@+id/rvac_swi"
-                style="@style/texto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Disponible"
+                android:switchTextAppearance="@style/texto"
+                android:text="@string/switch_disponible"
                 app:layout_constraintStart_toStartOf="@+id/rvac_nom"
                 app:layout_constraintTop_toBottomOf="@+id/rvac_cat" />
 
@@ -74,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
+                android:textAppearance="@style/texto"
                 app:layout_constraintStart_toEndOf="@+id/rvac_cat"
                 app:layout_constraintTop_toBottomOf="@+id/rvac_nom" />
         </androidx.constraintlayout.widget.ConstraintLayout>
