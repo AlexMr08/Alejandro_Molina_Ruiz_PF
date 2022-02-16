@@ -50,17 +50,17 @@ class AdminActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityAdminBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.appBarAdmin.toolbar)
-
         if (controlSP.tipo!=0 || controlSP.id==""){
             Intent(this,MainActivity::class.java).also { startActivity(it) }
             finish()
         }
 
+        binding = ActivityAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.appBarAdmin.toolbar)
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -73,38 +73,8 @@ class AdminActivity : AppCompatActivity() {
 
         generador = AtomicInteger(0)
 
-        lista_cartas = mutableListOf()
-        ControlDB.rutacartas.addChildEventListener(object :
-            ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val carta = snapshot.getValue(Carta::class.java)
-                lista_cartas.add(carta ?: Carta())
-                adap_carta.notifyDataSetChanged()
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val carta = snapshot.getValue(Carta::class.java)
-                val modificada = lista_cartas.indexOf(lista_cartas.filter { it.id == carta?.id }[0])
-                lista_cartas[modificada].disponible = carta?.disponible
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/
-            }
-
-            override fun onChildMoved(
-                snapshot: DataSnapshot,
-                previousChildName: String?
-            ) {/*como no vamos a cambiar la posicion nada no lo usamos*/
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
-
+        lista_cartas = buscarCartas()
         lista_pedidos = buscarPedidos()
-
-
         lista_eventos = buscarEventos()
     }
 
@@ -177,7 +147,7 @@ class AdminActivity : AppCompatActivity() {
     }
 
     fun buscarEventos(): MutableList<Evento> {
-        var lista = mutableListOf<Evento>()
+        val lista = mutableListOf<Evento>()
         ControlDB.rutaEvento.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 if (snapshot != null) {
@@ -203,7 +173,7 @@ class AdminActivity : AppCompatActivity() {
     }
 
     fun buscarPedidos():MutableList<Pedido>{
-        var lista = mutableListOf<Pedido>()
+        val lista = mutableListOf<Pedido>()
         ControlDB.rutaResCartas.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 GlobalScope.launch(Dispatchers.IO) {
@@ -241,7 +211,7 @@ class AdminActivity : AppCompatActivity() {
                         ControlNotif.generarNotificacion(
                             this@AdminActivity,
                             generador.incrementAndGet(),
-                            getString(R.string.texto_noti_admin,pedido.nombreCliente,pedido.nombreCarta),
+                            getString(R.string.texto_noti_admin,pedido.nombreCliente),
                             getString(R.string.titulo_noti_admin),
                             UserProfileFragment::class.java
                         )
@@ -270,5 +240,35 @@ class AdminActivity : AppCompatActivity() {
         return lista
     }
 
+    fun buscarCartas():MutableList<Carta>{
+        val lista = mutableListOf<Carta>()
+        ControlDB.rutacartas.addChildEventListener(object :
+            ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val carta = snapshot.getValue(Carta::class.java)
+                lista.add(carta ?: Carta())
+                adap_carta.notifyDataSetChanged()
+            }
 
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val carta = snapshot.getValue(Carta::class.java)
+                val modificada = lista_cartas.indexOf(lista_cartas.filter { it.id == carta?.id }[0])
+                lista[modificada].disponible = carta?.disponible
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/
+            }
+
+            override fun onChildMoved(
+                snapshot: DataSnapshot,
+                previousChildName: String?
+            ) {/*como no vamos a cambiar la posicion nada no lo usamos*/
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+        return lista
+    }
 }
