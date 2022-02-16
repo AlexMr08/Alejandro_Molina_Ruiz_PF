@@ -140,8 +140,8 @@ class AdminActivity : AppCompatActivity() {
                             ControlNotif.generarNotificacion(
                                 this@AdminActivity,
                                 generador.incrementAndGet(),
-                                "${pedido.nombreCliente} ha realizado un pedido",
-                                "Pedido recibido",
+                                getString(R.string.texto_noti_admin,pedido.nombreCliente,pedido.nombreCarta),
+                                getString(R.string.titulo_noti_admin),
                                 UserProfileFragment::class.java
                             )
                             ControlDB.rutaResCartas.child(pedido.id ?: "")

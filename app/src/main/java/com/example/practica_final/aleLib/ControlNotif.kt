@@ -14,7 +14,7 @@ class ControlNotif {
             val idcanal = con.getString(R.string.id_canal)
             val iconolargo = BitmapFactory.decodeResource(
                 con.resources,
-                R.drawable.ic_baseline_monetization_on_24
+                R.drawable.logov2
             )
             val actividad = Intent(con,destino)
             actividad.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK )
@@ -22,7 +22,7 @@ class ControlNotif {
 
             val notification = NotificationCompat.Builder(con, idcanal)
                 .setLargeIcon(iconolargo)
-                .setSmallIcon(R.drawable.ic_baseline_monetization_on_24)
+                .setSmallIcon(R.drawable.drawing)
                 .setContentTitle(titulo)
                 .setContentText(contenido)
                 .setSubText("sistema de información")

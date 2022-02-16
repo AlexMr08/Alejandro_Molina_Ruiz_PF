@@ -230,8 +230,8 @@ class UserActivity : AppCompatActivity() {
                             ControlNotif.generarNotificacion(
                                 this@UserActivity,
                                 generador.incrementAndGet(),
-                                "El pedido se ha realizado",
-                                "Compra aceptada",
+                                getString(R.string.texto_noti_usuario,pedido.nombreCarta),
+                                getString(R.string.titulo_noti_usuario),
                                 UserOrdersFragment::class.java
                             )
                             ControlDB.rutaResCartas.child(pedido.id ?: "")
@@ -270,7 +270,7 @@ class UserActivity : AppCompatActivity() {
                             ControlNotif.generarNotificacion(
                                 this@UserActivity,
                                 generador.incrementAndGet(),
-                                "El pedido se ha realizado",
+                                getString(R.string.texto_noti_usuario,pedido.nombreCarta),
                                 "Compra aceptada",
                                 UserProfileFragment::class.java
                             )
