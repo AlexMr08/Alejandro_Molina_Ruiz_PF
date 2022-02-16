@@ -24,7 +24,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/nombre_usuario"
-        android:textAppearance="@style/h1_bold"
+        android:textAppearance="@style/h1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fup_img"
         app:layout_constraintTop_toTopOf="@+id/fup_img" />

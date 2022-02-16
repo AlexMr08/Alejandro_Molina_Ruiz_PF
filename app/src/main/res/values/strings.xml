@@ -31,8 +31,8 @@
     <!--Fin comunes-->
 
     <!--Usuario-->
-    <string name="texto_noti_usuario">El pedido de la carta \"%1$s\" ha sido procesado, ya puedes venir a recogerlo.</string>
-    <string name="titulo_noti_usuario">Un pedido ha sido procesado</string>
+    <string name="texto_noti_usuario">Un pedido ha sido procesado, ya puedes recogerlo.</string>
+    <string name="titulo_noti_usuario">Pedido ha sido procesado</string>
 
     <!--Referente a navegacion-->
     <string name="title_activity_user">UserActivity</string>
@@ -57,8 +57,8 @@
     <!--Fin Usuario-->
 
     <!--Admin-->
-    <string name="texto_noti_admin">%1$s ha realizado un pedido de: %2$s</string>
-    <string name="titulo_noti_admin">Se ha realizado un pedido</string>
+    <string name="texto_noti_admin">%1$s ha realizado un pedido</string>
+    <string name="titulo_noti_admin">Pedido realizado</string>
 
     <!--Referente a navegacion-->
     <string name="title_activity_admin">AdminActivity</string>

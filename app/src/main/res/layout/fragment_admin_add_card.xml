@@ -23,7 +23,8 @@
             android:id="@+id/fanc_nom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/input_nombre_carta" />
+            android:hint="@string/input_nombre_carta"
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
@@ -55,7 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/input_precio"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Switch
