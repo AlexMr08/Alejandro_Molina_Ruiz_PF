@@ -1,0 +1,371 @@
+{
+  "tienda" : {
+    "cartas" : {
+      "-MurnqchuFFtlOhoIAFc" : {
+        "categoria" : "Azul",
+        "disponible" : true,
+        "id" : "-MurnqchuFFtlOhoIAFc",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fcartas%2F-MurnqchuFFtlOhoIAFc?alt=media&token=05079f3b-d4bf-40f6-be1f-1477518ee5c7",
+        "nombre" : "Contendiente Aclamada",
+        "precio" : 2
+      },
+      "-MuroDjBPldb7nhpMUIG" : {
+        "categoria" : "Azul",
+        "disponible" : true,
+        "id" : "-MuroDjBPldb7nhpMUIG",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fcartas%2F-MuroDjBPldb7nhpMUIG?alt=media&token=60e6592b-4c0f-4741-9207-89cf566eddd6",
+        "nombre" : "Sacerdote Guerrero Abzano",
+        "precio" : 5
+      },
+      "-Muv4J8yxaHqvJcgQKAt" : {
+        "categoria" : "Negro",
+        "disponible" : false,
+        "id" : "-Muv4J8yxaHqvJcgQKAt",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fcartas%2F-Muv4J8yxaHqvJcgQKAt?alt=media&token=ad635e66-b2cd-4621-88b3-a71fdc97ceaa",
+        "nombre" : "Via de fantasmas",
+        "precio" : 5.900000095367432
+      },
+      "-MuveGTJghW8qWWDtDcD" : {
+        "categoria" : "Rojo",
+        "disponible" : true,
+        "id" : "-MuveGTJghW8qWWDtDcD",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fcartas%2F-MuveGTJghW8qWWDtDcD?alt=media&token=02c97707-6b4d-4161-aa54-c3f497026018",
+        "nombre" : "Gisharh, Avatar del sol",
+        "precio" : 5
+      },
+      "-MuvffEdkCvpCe0PTzXC" : {
+        "categoria" : "Negro",
+        "disponible" : true,
+        "id" : "-MuvffEdkCvpCe0PTzXC",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fcartas%2F-MuvffEdkCvpCe0PTzXC?alt=media&token=1427e4e8-e743-4c47-ab6c-f5eff178a1e3",
+        "nombre" : "Disputa Mortal",
+        "precio" : 0.3799999952316284
+      },
+      "-Mv4KiOMsgKCmWaRAfOB" : {
+        "categoria" : "Blanco",
+        "disponible" : true,
+        "id" : "-Mv4KiOMsgKCmWaRAfOB",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fcartas%2F-Mv4KiOMsgKCmWaRAfOB?alt=media&token=645db4f6-511f-48de-afaa-48da80790e7b",
+        "nombre" : "Beso de amor verdadero",
+        "precio" : 0.5
+      },
+      "-Mv4Kwh2eW1g--tk5uKc" : {
+        "categoria" : "Verde",
+        "disponible" : false,
+        "id" : "-Mv4Kwh2eW1g--tk5uKc",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fcartas%2F-Mv4Kwh2eW1g--tk5uKc?alt=media&token=523d37e1-d257-4b1b-8859-9b3bb9c3273d",
+        "nombre" : "Emboscada de Veloceleste",
+        "precio" : 50
+      },
+      "-Mva4qychLd4E9MTovoj" : {
+        "categoria" : "Verde",
+        "disponible" : true,
+        "id" : "-Mva4qychLd4E9MTovoj",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fcartas%2F-Mva4qychLd4E9MTovoj?alt=media&token=7e5fd63d-f3fb-4b94-9d68-51f093f58f29",
+        "nombre" : "Arqueros de Sacellum",
+        "precio" : 2.5
+      },
+      "-Mva5fWc7GGojKeWnpuG" : {
+        "categoria" : "Blanco",
+        "disponible" : true,
+        "id" : "-Mva5fWc7GGojKeWnpuG",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fcartas%2F-Mva5fWc7GGojKeWnpuG?alt=media&token=8921d996-fdda-46e9-b23b-a4068e21f07f",
+        "nombre" : "Ejecutora celestial",
+        "precio" : 1.8
+      }
+    },
+    "eventos" : {
+      "-MvaDhk3dPvdXHBd2COe" : {
+        "disponible" : true,
+        "fecha" : "10/2/2022",
+        "id" : "-MvaDhk3dPvdXHBd2COe",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Feventos%2F-MvaDhk3dPvdXHBd2COe?alt=media&token=067ef9db-0464-40b3-b4e2-ef6e3deed389",
+        "nombre" : "El evento menos importante del año",
+        "plazas_ocupadas" : 0,
+        "plazas_totales" : 2,
+        "precio" : 4
+      },
+      "-MvnOx4O30Ru9Y4dO2qz" : {
+        "disponible" : true,
+        "fecha" : "16/2/2022",
+        "id" : "-MvnOx4O30Ru9Y4dO2qz",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Feventos%2F-MvnOx4O30Ru9Y4dO2qz?alt=media&token=7d0b4181-fc91-4469-8f52-ae28c88f7b35",
+        "nombre" : "Champions League",
+        "plazas_ocupadas" : 0,
+        "plazas_totales" : 50,
+        "precio" : 5
+      },
+      "-MvoMUsqcViTTNU3zVSO" : {
+        "disponible" : true,
+        "fecha" : "22/7/2023",
+        "id" : "-MvoMUsqcViTTNU3zVSO",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Feventos%2F-MvoMUsqcViTTNU3zVSO?alt=media&token=8299882c-d299-4c02-85d7-02ba2f6b339f",
+        "nombre" : "liga magica",
+        "plazas_ocupadas" : 1,
+        "plazas_totales" : 10000,
+        "precio" : 1
+      },
+      "-Mw3zsok9hUy5SZ9zlAn" : {
+        "disponible" : true,
+        "fecha" : "17/2/2022",
+        "id" : "-Mw3zsok9hUy5SZ9zlAn",
+        "imagen" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Feventos%2F-Mw3zsok9hUy5SZ9zlAn?alt=media&token=cde78d3b-07cf-4cb2-b0a9-6ec3f394e7f3",
+        "nombre" : "El evento el admin",
+        "plazas_ocupadas" : 1,
+        "plazas_totales" : 12,
+        "precio" : 1
+      }
+    },
+    "reserva_cartas" : {
+      "-Mw40bNg5TI2zFXv5_g_" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw40bNg5TI2zFXv5_g_",
+        "idCarta" : "-MuroDjBPldb7nhpMUIG",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 5,
+        "precio_final" : 0
+      },
+      "-Mw44s1mFJJJJn8se5Rc" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw44s1mFJJJJn8se5Rc",
+        "idCarta" : "-MuroDjBPldb7nhpMUIG",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 5,
+        "precio_final" : 0
+      },
+      "-Mw4EJuJu1Ke4U1UXahE" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw4EJuJu1Ke4U1UXahE",
+        "idCarta" : "-MuveGTJghW8qWWDtDcD",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 5,
+        "precio_final" : 0
+      },
+      "-Mw4ILLg7lDQrCAEJ7dT" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw4ILLg7lDQrCAEJ7dT",
+        "idCarta" : "-MuvffEdkCvpCe0PTzXC",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 0.3799999952316284,
+        "precio_final" : 0
+      },
+      "-Mw4Im_6G9PpK6BRHtfl" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw4Im_6G9PpK6BRHtfl",
+        "idCarta" : "-Mv4KiOMsgKCmWaRAfOB",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 0.5,
+        "precio_final" : 0
+      },
+      "-Mw4JgXhbzZmgKspU5uv" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw4JgXhbzZmgKspU5uv",
+        "idCarta" : "-MuvffEdkCvpCe0PTzXC",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 0.3799999952316284,
+        "precio_final" : 0
+      },
+      "-Mw4Mcwmb7m5ZcrrhAla" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw4Mcwmb7m5ZcrrhAla",
+        "idCarta" : "-Muv4J8yxaHqvJcgQKAt",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 5.900000095367432,
+        "precio_final" : 0
+      },
+      "-Mw4MkuIt8I7lQXqurCZ" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw4MkuIt8I7lQXqurCZ",
+        "idCarta" : "-Mva4qychLd4E9MTovoj",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 2.5,
+        "precio_final" : 0
+      },
+      "-Mw4N5xhrXycuzzEWh6H" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw4N5xhrXycuzzEWh6H",
+        "idCarta" : "-Mv4Kwh2eW1g--tk5uKc",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 50,
+        "precio_final" : 0
+      },
+      "-Mw4OIrMkMu_TTWn43D4" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw4OIrMkMu_TTWn43D4",
+        "idCarta" : "-Muv4J8yxaHqvJcgQKAt",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 5.900000095367432,
+        "precio_final" : 0
+      },
+      "-Mw4OS2bqKJO43bPt8hn" : {
+        "categoria" : "",
+        "estado" : 1,
+        "estadoNotificacion" : 2,
+        "fecha" : "2022-02-17",
+        "id" : "-Mw4OS2bqKJO43bPt8hn",
+        "idCarta" : "-MuroDjBPldb7nhpMUIG",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "imgCarta" : "",
+        "imgCliente" : "",
+        "nombreCarta" : "",
+        "nombreCliente" : "",
+        "precio" : 5,
+        "precio_final" : 0
+      }
+    },
+    "reserva_eventos" : {
+      "-Mw4D0F5SjNk-O4mR9BX" : {
+        "fecha" : "17/2/2022",
+        "id" : "-Mw4D0F5SjNk-O4mR9BX",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "idEvento" : "-Mw3zsok9hUy5SZ9zlAn",
+        "imgCliente" : "",
+        "imgEvento" : "",
+        "nombreCliente" : "",
+        "nombreEvento" : "",
+        "precio" : 1
+      },
+      "-Mw4D0tQ9fZavQ2FCmIc" : {
+        "fecha" : "17/2/2022",
+        "id" : "-Mw4D0tQ9fZavQ2FCmIc",
+        "idCliente" : "-MubWnhJSsTwshGjArDn",
+        "idEvento" : "-MvoMUsqcViTTNU3zVSO",
+        "imgCliente" : "",
+        "imgEvento" : "",
+        "nombreCliente" : "",
+        "nombreEvento" : "",
+        "precio" : 1
+      }
+    },
+    "usuarios" : {
+      "-MuWW2NmI8uINidpYhg7" : {
+        "estado_noti" : 1,
+        "fecha" : "2022-01-28",
+        "id" : "-MuWW2NmI8uINidpYhg7",
+        "img" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/usuarios%2Fpp%2F-MuWW2NmI8uINidpYhg7?alt=media&token=a239cba8-7d4e-440b-a6eb-a12077037785",
+        "nombre" : "admin",
+        "pass" : "admin",
+        "tipo" : 0
+      },
+      "-MubWnhJSsTwshGjArDn" : {
+        "estado_noti" : "1234Alex",
+        "fecha" : "2022-01-29",
+        "id" : "-MubWnhJSsTwshGjArDn",
+        "img" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fusuarios%2F-Murm_CcZ8o2klEUzwsj?alt=media&token=0300c919-92e1-4683-8cb8-985974743ede",
+        "nombre" : "alex",
+        "pass" : "1",
+        "tipo" : 1
+      },
+      "-Mv43S_xFSHZswPoJF-V" : {
+        "correo" : "ertitobartolo@gmail.com",
+        "estado_noti" : 0,
+        "fecha" : "2022-02-04",
+        "id" : "-Mv43S_xFSHZswPoJF-V",
+        "img" : "",
+        "nombre" : "el_tito_bartolo",
+        "pass" : "1234Bartolo",
+        "tipo" : 1
+      },
+      "-Mv_l_os3TcXXsHPlce-" : {
+        "correo" : "richar123@gmail.com",
+        "estado_noti" : 0,
+        "fecha" : "2022-02-10",
+        "id" : "-Mv_l_os3TcXXsHPlce-",
+        "img" : "",
+        "nombre" : "Richardo",
+        "pass" : "1234Richardo",
+        "tipo" : 1
+      },
+      "-Mvu_8G7NdM5LyJrkAsu" : {
+        "correo" : "Alepalante@g.c",
+        "estado_noti" : 0,
+        "fecha" : "2022-02-14",
+        "id" : "-Mvu_8G7NdM5LyJrkAsu",
+        "img" : "https://firebasestorage.googleapis.com/v0/b/practica-final-cd6bc.appspot.com/o/tienda%2Fusuarios%2F-Mvu_8G7NdM5LyJrkAsu?alt=media&token=7dab9ec7-e290-488a-ae64-683a6423d3a2",
+        "nombre" : "Cesar",
+        "pass" : "1234Cesar",
+        "tipo" : 1
+      },
+      "-Mw2cX6WIefTrjxQGH0d" : {
+        "correo" : "alexmr08@gmail.com",
+        "estado_noti" : 0,
+        "fecha" : "16/02/2022",
+        "id" : "-Mw2cX6WIefTrjxQGH0d",
+        "img" : "",
+        "nombre" : "alexmr08",
+        "pass" : "1234Alex",
+        "tipo" : 1
+      }
+    }
+  }
+}
