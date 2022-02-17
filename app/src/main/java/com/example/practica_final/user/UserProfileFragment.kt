@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.practica_final.R
 import com.example.practica_final.databinding.FragmentUserProfileBinding
+import com.example.practica_final.elementos.Carta
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -39,7 +40,7 @@ class UserProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
 
@@ -62,7 +63,7 @@ class UserProfileFragment : Fragment() {
         val pieEntries = mutableListOf<PieEntry>()
         val cartas_usuario = ma.lista_pedidos.size
         binding.fupCartasUsu.text = cartas_usuario.toString()
-        reporte = ma.generarReporte()
+        reporte = generarReporte()
         if (ma.lista_pedidos.isEmpty()){
             binding.fupCard.visibility = View.VISIBLE
             binding.fupBtnVolver.setOnClickListener {
@@ -95,6 +96,24 @@ class UserProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
 
+    }
+
+    fun generarReporte(): MutableList<rep> {
+        val lista_colores = Carta.colores
+        val reporte = mutableListOf<rep>()
+        Carta.categorias.forEachIndexed { index, cat ->
+            if (ma.lista_pedidos.filter { it.categoria == cat }.isNotEmpty()) {
+                reporte.add(
+                    rep(
+                        cat,
+                        ma.lista_pedidos.filter { it.categoria == cat }.size.toFloat(),
+                        Color.parseColor(lista_colores[index])
+                    )
+                )
+            }
+        }
+
+        return reporte
     }
 
 }

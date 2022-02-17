@@ -150,16 +150,14 @@ class AdminActivity : AppCompatActivity() {
         val lista = mutableListOf<Evento>()
         ControlDB.rutaEvento.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                if (snapshot != null) {
-                    val evento = snapshot.getValue(Evento::class.java)
+                    val evento = snapshot.getValue(Evento::class.java)?:Evento()
                     lista.add(evento ?: Evento())
-                }
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 val evento = snapshot.getValue(Evento::class.java)?:Evento()
-                val modificado = lista_eventos.indexOf(lista_eventos.filter { it.id == evento?.id }[0])
-                lista_eventos[modificado] = evento
+                val index = lista_eventos.map { it.id }.indexOf(evento.id)
+                lista_eventos[index] = evento
                 adap_eventos.notifyDataSetChanged()
             }
 
@@ -226,7 +224,9 @@ class AdminActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                var pedido = snapshot.getValue(Pedido::class.java)
+                val pedido = snapshot.getValue(Pedido::class.java)?:Pedido()
+                val index = lista_pedidos.map { it.id }.indexOf(pedido.id)
+                lista_pedidos[index].estado = pedido.estado
                 adap_pedido.notifyDataSetChanged()
                 adap_pedido.filter.filter("")
             }
@@ -251,9 +251,10 @@ class AdminActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val carta = snapshot.getValue(Carta::class.java)
-                val modificada = lista_cartas.indexOf(lista_cartas.filter { it.id == carta?.id }[0])
-                lista[modificada].disponible = carta?.disponible
+                val carta = snapshot.getValue(Carta::class.java)?: Carta()
+                val index = lista_cartas.map { it.id }.indexOf(carta.id)
+                lista_cartas[index].disponible = carta.disponible
+                adap_carta.notifyDataSetChanged()
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/
