@@ -28,6 +28,7 @@ class UserOrderAdapter(val lista:List<Pedido>, val con:UserActivity) : RecyclerV
         val precio_final = precio.times((con.moneda_sel).conversion)
         with(holder.bind){
             Glide.with(con).load(elem.imgCarta).placeholder(R.drawable.magic_card_back).into(rvProfileImg)
+            ruoCard.strokeColor = Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)])
             rvProfileCat.setColorFilter(Color.parseColor(Carta.colores[Carta.categorias.indexOf(elem.categoria)]))
             rvProfilePre.text = con.getString(R.string.carta_precio,precio_final,con.moneda_sel.signo)
             rvProfileNom.text = elem.nombreCarta.toString()

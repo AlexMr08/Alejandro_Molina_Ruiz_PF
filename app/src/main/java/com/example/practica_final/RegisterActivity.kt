@@ -78,7 +78,7 @@ class RegisterActivity : AppCompatActivity() {
                                 if (url_perfil_local!=null){
                                     url_portada = subirImagen(id_user!!, url_perfil_local!!)
                                 }
-                                val nuevo_usuario = Usuario(nom,correo,pass1,1,id_user,hoy,url_portada,0)
+                                val nuevo_usuario = Usuario(nom,correo,pass1,1,id_user,hoy,url_portada)
                                 ControlDB.rutaUsuario.child(id_user?:"").setValue(nuevo_usuario)
                                 controlSp.id = nuevo_usuario.id?:""
                                 controlSp.tipo = nuevo_usuario.tipo?:1

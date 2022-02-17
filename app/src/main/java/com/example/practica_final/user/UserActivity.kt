@@ -96,7 +96,7 @@ class UserActivity : AppCompatActivity() {
         lista_cartas = buscarCartas()
         lista_eventos = buscarEventos()
         lista_pedidos = buscarPedidos()
-
+        lista_reserva = buscarReservas()
 
 
         adap_carta = UserCardAdapter(lista_cartas, this)
@@ -289,7 +289,7 @@ class UserActivity : AppCompatActivity() {
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 val evento = snapshot.getValue(Evento::class.java) ?: Evento()
                 val index = lista_evento.map { it.id }.indexOf(evento.id)
-                lista_eventos[index] = evento
+                lista_eventos[index].plazas_ocupadas = evento.plazas_ocupadas
                 adap_evento.notifyDataSetChanged()
             }
 
@@ -305,6 +305,36 @@ class UserActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {}
         })
         return lista_evento
+    }
+
+    private fun buscarReservas(): MutableList<Reserva> {
+        val lista = mutableListOf<Reserva>()
+        ControlDB.rutaResEventos.addChildEventListener(object :
+            ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val reserva = snapshot.getValue(Reserva::class.java)?:Reserva()
+                if (reserva.idCliente == controlSP.id) {
+                    lista.add(reserva)
+                }
+                //adap_evento.notifyDataSetChanged()
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {/*como no vamos a borrar nada no lo usamos*/
+            }
+
+            override fun onChildMoved(
+                snapshot: DataSnapshot,
+                previousChildName: String?
+            ) {/*como no vamos a cambiar la posicion nada no lo usamos*/
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+        return lista
     }
 
     fun bottomNavNavigation(item: MenuItem): Boolean {

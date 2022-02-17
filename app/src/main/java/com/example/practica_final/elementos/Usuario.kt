@@ -9,6 +9,5 @@ data class Usuario(var nombre:String?="",
                    var tipo:Int?=0,
                    var id:String?="",
                    var fecha:String?="",
-                   var img:String?="",
-                   var estado_noti:Int?=0):
+                   var img:String?=""):
     Parcelable

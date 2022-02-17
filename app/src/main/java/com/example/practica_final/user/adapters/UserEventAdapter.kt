@@ -38,21 +38,27 @@ class UserEventAdapter(val lista:List<Evento>, val con: UserActivity) : Recycler
             Glide.with(con).load(elem.imagen).transform(CenterCrop(), RoundedCorners(14)).placeholder(R.drawable.ic_baseline_location_on_24).into(rueImg)
             rueNom.text = elem.nombre
             ruePre.text = con.getString(R.string.evento_precio, precio_final, signo )
-            rueAfo.text = con.getString(R.string.evento_aforo_rv, elem.plazas_ocupadas, elem.plazas_totales)
+            //rueAfo.text = con.getString(R.string.evento_aforo_rv, elem.plazas_ocupadas, elem.plazas_totales)
             rueFec.text = elem.fecha
             rueCard.setOnClickListener {
                 con.evento_sel = elem
                 con.navController.navigate(R.id.userViewEventFragment)
             }
+            if (elem.id in con.lista_reserva.map { it.idEvento }){
+                rueApu.visibility = View.VISIBLE
+            }else{
+                rueApu.visibility = View.INVISIBLE
+            }
+
             val fecha = LocalDate.parse(elem.fecha, DateTimeFormatter.ofPattern("d/M/yyyy"))
             val hoy = LocalDate.now()
             rueCard.isClickable =
-                (fecha.isEqual(hoy) || fecha.isAfter(hoy) && elem.plazas_ocupadas!=elem.plazas_totales)
+                ((fecha.isEqual(hoy) || fecha.isAfter(hoy)) && elem.plazas_ocupadas!=elem.plazas_totales)
 
             if (fecha.isBefore(hoy)){
                 rueAfo.text = ("No disponible")
             }else{
-
+                rueAfo.text = con.getString(R.string.evento_aforo_rv, elem.plazas_ocupadas, elem.plazas_totales)
             }
 
             if (elem.plazas_ocupadas==elem.plazas_totales){
